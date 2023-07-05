@@ -4,9 +4,16 @@ const { PrismaClient } = require('@prisma/client')
 
 const prisma = new PrismaClient()
 
-export default async function MatchesList() {
-  const matches = await prisma.matches.findMany({
-    include: {
+const getMatches = async () => {
+  const res = await prisma.matches.findMany({
+    select: {
+      match_id: true,
+      match_date: true,
+      home_goals: true,
+      visitor_goals: true,
+      odd: true,
+      strategy: true,
+      result: true,
       home_team: {
         select: {
           team_name: true,
@@ -24,6 +31,12 @@ export default async function MatchesList() {
       },
     },
   })
+  return res
+}
+
+export default async function MatchesList() {
+  const matches = await getMatches()
+
   return (
     <>
       <div className="flex flex-col">
