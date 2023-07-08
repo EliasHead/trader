@@ -27,7 +27,7 @@ export function AddMatches({ teams, competitions, rounds }: any) {
 
   return (
     <form onSubmit={handleSubmit} className="w-full max-w-6xl">
-      <div className="mx-3 mb-6 flex items-end border-b border-teal-500 py-2">
+      <div className="mx-3 mb-6 flex flex-col items-center border-b border-teal-500 py-2 sm:flex-row sm:items-end">
         <div className="mb-6 w-full px-3 md:mb-0 md:w-1/2">
           <label
             htmlFor="home_team"
