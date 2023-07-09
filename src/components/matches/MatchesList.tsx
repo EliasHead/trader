@@ -1,4 +1,5 @@
 import { formatDate } from '@/utils/dateUtils'
+// import { match } from 'assert'
 
 const { PrismaClient } = require('@prisma/client')
 
@@ -124,7 +125,7 @@ export default async function MatchesList() {
           return (
             <div
               key={match.match_id}
-              className="space-y-3 rounded-lg bg-green-200 p-4 shadow-lg"
+              className="space-y-3 rounded-lg bg-zinc-200 p-4 font-semibold  shadow-lg"
             >
               <div className="flex items-center space-x-2 text-sm">
                 <span>Data:</span>
@@ -141,7 +142,16 @@ export default async function MatchesList() {
               </div>
               <div className="flex items-center space-x-2 text-sm">
                 <span>Reasultado:</span>
-                <div>{match.result}</div>
+                <div
+                  style={{
+                    backgroundColor: match.result === 'red' ? 'red' : 'green',
+                    padding: '0 8px',
+                    borderRadius: '4px',
+                    color: 'white',
+                  }}
+                >
+                  {match.result}
+                </div>
               </div>
             </div>
           )
