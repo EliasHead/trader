@@ -1,17 +1,31 @@
-import AddTeams from '@/components/teams/addTeams'
-import TeamsList from '@/components/teams/teamsList'
+import SearchTeams from './SearchTeams'
+import AddTeams from './addTeams'
+
 import { prisma } from '@/utils/prisma'
 
+const getTeams = async () => {
+  const res = await prisma.teams.findMany({
+    select: {
+      team_id: true,
+      team_name: true,
+      team_country: true,
+      team_initials: true,
+      createdAt: true,
+    },
+  })
+  return res
+}
+
 export default async function Teams() {
-  const teams = await prisma.teams.findMany()
+  const teams = await getTeams()
 
   return (
     <div className="mt-16 flex h-screen flex-col items-center justify-start gap-4">
       <h1>
         <strong>Times</strong>
       </h1>
-      <AddTeams />
-      <TeamsList teams={teams} />
+      <AddTeams teams={teams} />
+      <SearchTeams teams={teams} />
     </div>
   )
 }
