@@ -3,6 +3,7 @@ import { ChangeEvent, FormEvent, useState } from 'react'
 import type { Competition, Teams } from '@prisma/client'
 import { useRouter } from 'next/navigation'
 import axios from 'axios'
+import Select, { MultiValue } from 'react-select'
 
 type roundsType = {
   round_id: number
@@ -15,12 +16,32 @@ type MatchesProps = {
   rounds: roundsType[]
 }
 
+// TODO: migra array de estrategias
+const strategies = [
+  { label: 'F', value: 1 },
+  { label: 'FD', value: 2 },
+  { label: 'DNB', value: 3 },
+  { label: '+1G', value: 4 },
+]
+// TODO: migra array de reviews
+const reviews = [
+  { label: 'race', value: 1 },
+  { label: 'home', value: 2 },
+  { label: 'way', value: 3 },
+  { label: 'derby', value: 4 },
+  { label: 'must-win', value: 4 },
+]
+
 const AddMatches = ({ teams, competitions, rounds }: MatchesProps) => {
   const [formData, setFormData] = useState({
     home_team: '',
     visitor_team: '',
     competition: '',
     round: '',
+    strategy: '',
+    review: '',
+    odd: '',
+    stake: '',
   })
 
   const [isOpen, setIsOpen] = useState(false)
@@ -37,16 +58,35 @@ const AddMatches = ({ teams, competitions, rounds }: MatchesProps) => {
     setFormData((prevState) => ({ ...prevState, [name]: value }))
   }
 
+  // TODO: melhorar handleChange multiselect
+  const handleChangeStrategy = async (
+    event: MultiValue<{ label: string; value: number }>,
+  ) => {
+    const label = event.map((e) => e.label).toString()
+    setFormData((prevState) => ({ ...prevState, strategy: label }))
+  }
+
+  const handleChangeReview = async (
+    event: MultiValue<{ label: string; value: number }>,
+  ) => {
+    const label = event.map((e) => e.label).toString()
+    setFormData((prevState) => ({ ...prevState, review: label }))
+  }
+
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
 
     setIsLoading(true)
 
     await axios.post('/api/matches', {
-      home_team_id: parseInt(formData.home_team),
-      visitor_team_id: parseInt(formData.visitor_team),
-      competition_id: parseInt(formData.competition),
-      round: parseInt(formData.round),
+      home_team_id: formData.home_team,
+      visitor_team_id: formData.visitor_team,
+      competition_id: formData.competition,
+      round: formData.round,
+      strategy: formData.strategy,
+      review: formData.review,
+      odd: formData.odd,
+      stake: formData.stake,
     })
 
     setIsLoading(false)
@@ -56,6 +96,10 @@ const AddMatches = ({ teams, competitions, rounds }: MatchesProps) => {
       visitor_team: '',
       competition: '',
       round: '',
+      strategy: '',
+      review: '',
+      odd: '',
+      stake: '',
     })
 
     router.refresh()
@@ -68,6 +112,7 @@ const AddMatches = ({ teams, competitions, rounds }: MatchesProps) => {
   }
 
   return (
+    // TODO: alterar lagura da modal
     <div>
       <button className="btn bg-blue-500 text-white" onClick={handleModal}>
         Adicionar novo jogo
@@ -162,6 +207,63 @@ const AddMatches = ({ teams, competitions, rounds }: MatchesProps) => {
                   )
                 })}
               </select>
+            </div>
+            <div className="form-control w-full">
+              <label className="label font-bold" htmlFor="home_team">
+                Estrategias
+              </label>
+              <Select
+                name="strategy"
+                placeholder="Escola a estrategia estrategias"
+                isMulti
+                onChange={handleChangeStrategy}
+                options={strategies}
+              />
+            </div>
+            <div className="form-control w-full">
+              <label className="label font-bold" htmlFor="home_team">
+                Revisão
+              </label>
+              <Select
+                name="strategy"
+                placeholder="Escola a estrategia estrategias"
+                isMulti
+                onChange={handleChangeReview}
+                options={reviews}
+              />
+            </div>
+            <div className="form-control w-full">
+              <label className="label font-bold" htmlFor="odd">
+                Odd
+              </label>
+              <input
+                type="number"
+                name="odd"
+                id="odd"
+                min="0"
+                step=".01"
+                value={formData.odd}
+                className="input-bordered input"
+                placeholder="odd ex: 1.75"
+                aria-label="odd?"
+                onChange={handleChange}
+              />
+            </div>
+            <div className="form-control w-full">
+              <label className="label font-bold" htmlFor="stake">
+                Stake
+              </label>
+              <input
+                type="number"
+                name="stake"
+                id="stake"
+                min="0"
+                value={formData.stake}
+                className="input-bordered input"
+                placeholder="stake ex: 10"
+                aria-label="stake"
+                onChange={handleChange}
+              />
             </div>
             <div className="modal-action">
               <button type="button" className="btn" onClick={handleModal}>

@@ -7,10 +7,14 @@ export const POST = async (request: Request) => {
   const body: Matches = await request.json()
   const matches = await prisma.matches.create({
     data: {
-      home_team_id: body.home_team_id,
-      visitor_team_id: body.visitor_team_id,
-      competition_id: body.competition_id,
-      round: body.round,
+      home_team_id: Number(body.home_team_id),
+      visitor_team_id: Number(body.visitor_team_id),
+      competition_id: Number(body.competition_id),
+      round: Number(body.round),
+      strategy: body.strategy,
+      review: body.review,
+      odd: Number(body.odd),
+      stake: Number(body.stake),
     },
   })
   return NextResponse.json(matches, { status: 201 })
