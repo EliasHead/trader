@@ -99,6 +99,24 @@ export default async function MatchesList({
               >
                 resultado
               </th>
+              <th
+                scope="col"
+                className="px-6 py-4 text-left text-sm font-medium text-gray-900"
+              >
+                Estrategia
+              </th>
+              <th
+                scope="col"
+                className="px-6 py-4 text-left text-sm font-medium text-gray-900"
+              >
+                Revisão
+              </th>
+              <th
+                scope="col"
+                className="px-6 py-4 text-left text-sm font-medium text-gray-900"
+              >
+                Ações
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -131,6 +149,34 @@ export default async function MatchesList({
                     className="whitespace-nowrap px-6 py-4 text-sm font-light text-gray-900"
                   >
                     {match.result}
+                  </td>
+                  <td className="whitespace-nowrap px-6 py-4 text-sm font-light text-gray-900">
+                    {match.strategy?.split(',').map((i) => {
+                      return (
+                        <span
+                          className="mr-2 rounded bg-orange-500 px-2 py-1 font-bold text-cyan-50"
+                          key={i}
+                        >
+                          {i}
+                        </span>
+                      )
+                    })}
+                  </td>
+                  <td className="whitespace-nowrap px-6 py-4 text-sm font-light text-gray-900">
+                    {match.review?.split(',').map((i) => {
+                      return (
+                        <span
+                          className={`mr-2 rounded ${
+                            i === 'race' || i === 'home' || i === 'must-win'
+                              ? 'bg-green-700'
+                              : 'bg-red-600'
+                          } px-2 py-1 font-bold text-cyan-50`}
+                          key={i}
+                        >
+                          {i}
+                        </span>
+                      )
+                    })}
                   </td>
                   <td className="flex justify-center space-x-1 px-6 py-4">
                     <UpdateMatch
