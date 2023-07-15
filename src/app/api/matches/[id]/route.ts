@@ -14,9 +14,12 @@ export const PATCH = async (
     },
     data: {
       home_team_id: Number(body.home_team_id),
+      home_goals: Number(body.home_goals),
       visitor_team_id: Number(body.visitor_team_id),
+      visitor_goals: Number(body.visitor_goals),
       competition_id: Number(body.competition_id),
       round: Number(body.round),
+      result: body.result,
     },
   })
   return NextResponse.json(matches, { status: 200 })

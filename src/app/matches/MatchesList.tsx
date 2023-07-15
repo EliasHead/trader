@@ -37,11 +37,17 @@ type roundsType = {
   round_name: number | string
 }
 
+type Results = {
+  result_id: number
+  label: string
+}
+
 type MatchesProps = {
   competitions: Competition[]
   teams: Teams[]
   rounds: roundsType[]
   matches: Match[]
+  results: Results[]
 }
 
 export default async function MatchesList({
@@ -49,6 +55,7 @@ export default async function MatchesList({
   teams,
   competitions,
   rounds,
+  results,
 }: MatchesProps) {
   return (
     <div className="w-[90%]">
@@ -131,6 +138,7 @@ export default async function MatchesList({
                       competitions={competitions}
                       teams={teams}
                       rounds={rounds}
+                      results={results}
                     />
                     <DeleteMatch match={match} />
                   </td>

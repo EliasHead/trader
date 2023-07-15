@@ -11,8 +11,11 @@ type roundsType = {
 
 type Match = {
   match_id: number
+  home_goals: number
+  visitor_goals: number
   home_team_id: number
   visitor_team_id: number
+  result: string | null
   competition_id?: number
   competition: {
     competition_name: string
@@ -26,19 +29,34 @@ type Match = {
   }
 }
 
+type Results = {
+  result_id: number
+  label: string
+}
+
 type MatchesProps = {
   competitions: Competition[]
   teams: Teams[]
   rounds: roundsType[]
   match: Match
+  results: Results[]
 }
 
-const UpdateMatch = ({ match, teams, competitions, rounds }: MatchesProps) => {
+const UpdateMatch = ({
+  match,
+  teams,
+  competitions,
+  rounds,
+  results,
+}: MatchesProps) => {
   const [formData, setFormData] = useState({
     home_team: match.home_team_id,
+    home_goals: match.home_goals,
     visitor_team: match.visitor_team_id,
+    visitor_goals: match.visitor_goals,
     competition: match.competition_id,
     round: match.round,
+    result: match.result,
   })
   const [isOpen, setIsOpen] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
@@ -59,9 +77,12 @@ const UpdateMatch = ({ match, teams, competitions, rounds }: MatchesProps) => {
     setIsLoading(true)
     await axios.patch(`/api/matches/${match.match_id}`, {
       home_team_id: formData.home_team,
+      home_goals: formData.home_goals,
       visitor_team_id: formData.visitor_team,
+      visitor_goals: formData.visitor_goals,
       competition_id: formData.competition,
       round: formData.round,
+      result: formData.result,
     })
     setIsLoading(false)
     router.refresh()
@@ -103,6 +124,22 @@ const UpdateMatch = ({ match, teams, competitions, rounds }: MatchesProps) => {
               </select>
             </div>
             <div className="form-control w-full">
+              <label className="label font-bold" htmlFor="home_goals">
+                Gols time da casa
+              </label>
+              <input
+                type="number"
+                name="home_goals"
+                id="home_goals"
+                min="0"
+                value={formData.home_goals}
+                className="input-bordered input"
+                placeholder="gols ex: 2"
+                aria-label="gols time da casa"
+                onChange={handleChange}
+              />
+            </div>
+            <div className="form-control w-full">
               <label className="label font-bold" htmlFor="visitor_team">
                 Time visitante
               </label>
@@ -122,6 +159,22 @@ const UpdateMatch = ({ match, teams, competitions, rounds }: MatchesProps) => {
                   )
                 })}
               </select>
+            </div>
+            <div className="form-control w-full">
+              <label className="label font-bold" htmlFor="visitor_goals">
+                Gols time visitante
+              </label>
+              <input
+                type="number"
+                name="visitor_goals"
+                id="visitor_goals"
+                min="0"
+                value={formData.visitor_goals}
+                className="input-bordered input"
+                placeholder="gols ex: 2"
+                aria-label="gols time da visitante"
+                onChange={handleChange}
+              />
             </div>
             <div className="form-control w-full">
               <label className="label font-bold" htmlFor="competition">
@@ -163,6 +216,27 @@ const UpdateMatch = ({ match, teams, competitions, rounds }: MatchesProps) => {
                   return (
                     <option key={round.round_id} value={round.round_id}>
                       {round.round_name}
+                    </option>
+                  )
+                })}
+              </select>
+            </div>
+            <div className="form-control w-full">
+              <label className="label font-bold" htmlFor="result">
+                Resultado
+              </label>
+              <select
+                name="result"
+                id="result"
+                value={formData.result ? formData.result : ''}
+                className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+                onChange={handleChange}
+              >
+                <option>Escolha Resultado</option>
+                {results.map((result) => {
+                  return (
+                    <option key={result.result_id} value={result.label}>
+                      {result.label}
                     </option>
                   )
                 })}

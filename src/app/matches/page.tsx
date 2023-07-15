@@ -1,3 +1,4 @@
+import { resultsData } from '@/utils/results'
 import MatchesList from './MatchesList'
 import AddMatches from './addMatches'
 import { prisma } from '@/utils/prisma'
@@ -50,6 +51,7 @@ export default async function Matches() {
   const competitions = await prisma.competition.findMany()
   const rounds = dataRounds
   const matches = await getMatches()
+  const results = resultsData
 
   return (
     <div className="mt-16 flex h-screen w-full flex-col items-center justify-start gap-4">
@@ -62,6 +64,7 @@ export default async function Matches() {
         matches={matches}
         rounds={rounds}
         teams={teams}
+        results={results}
       />
     </div>
   )
