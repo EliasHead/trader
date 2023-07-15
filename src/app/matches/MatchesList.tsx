@@ -58,9 +58,10 @@ export default async function MatchesList({
   results,
 }: MatchesProps) {
   return (
+    // TODO: concertar margem da tabela
     <div className="w-[90%]">
-      <div className="hidden overflow-auto rounded-lg shadow md:inline-block">
-        <table className="min-w-full md:w-full">
+      <div className="hidden overflow-auto rounded-lg bg-white shadow md:inline-block">
+        <table className="min-w-full  md:w-full">
           <thead className="border-b">
             <tr>
               <th
@@ -141,10 +142,10 @@ export default async function MatchesList({
                     {match.visitor_team.team_name}
                   </td>
                   <td
-                    className={`whitespace-nowrap px-6 py-4 text-center text-sm font-bold text-white `}
+                    className={`whitespace-nowrap px-6 py-4 text-center text-sm text-white `}
                   >
                     <span
-                      className={`rounded px-2 py-1 uppercase ${
+                      className={`rounded px-3 py-1 text-xs font-bold uppercase ${
                         match.result === 'red' ? 'bg-red-600' : 'bg-green-600'
                       }`}
                     >
@@ -155,7 +156,7 @@ export default async function MatchesList({
                     {match.strategy?.split(',').map((i) => {
                       return (
                         <span
-                          className="mr-2 rounded bg-orange-500 px-2 py-1 font-bold text-cyan-50"
+                          className="mr-2 rounded bg-orange-500 px-3 py-1 text-xs font-bold uppercase text-cyan-50"
                           key={i}
                         >
                           {i}
@@ -167,11 +168,11 @@ export default async function MatchesList({
                     {match.review?.split(',').map((i) => {
                       return (
                         <span
-                          className={`mr-2 rounded uppercase ${
+                          className={`mr-2 rounded px-3 py-1 text-xs font-bold uppercase text-white ${
                             i === 'race' || i === 'home' || i === 'must-win'
                               ? 'bg-green-700'
                               : 'bg-red-600'
-                          } px-2 py-1 font-bold text-cyan-50`}
+                          }`}
                           key={i}
                         >
                           {i}

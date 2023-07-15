@@ -26,6 +26,10 @@ export default async function Home() {
     },
   })
 
+  const rateGreens = ((greensCount / matchesCount) * 100).toFixed(0)
+  const rateReds = ((redsCount / matchesCount) * 100).toFixed(0)
+  const rateDraws = ((drawCount / matchesCount) * 100).toFixed(0)
+
   return (
     <div className="relative mt-16 overflow-x-auto rounded-md">
       <table className="w-full text-left text-sm text-gray-500 dark:text-gray-400">
@@ -58,6 +62,36 @@ export default async function Home() {
           </tr>
         </tbody>
       </table>
+      <h4 className="mb-5 mt-10 text-center">Porcentagem de vitorias</h4>
+      <div className="m-auto w-[80%] bg-neutral-200 dark:bg-neutral-600">
+        <div
+          id="vitorias"
+          className="bg-success p-0.5 text-center text-sm font-bold leading-none text-white"
+          style={{ width: rateGreens + '%' }}
+        >
+          {rateGreens}%
+        </div>
+      </div>
+      <h4 className="mb-5 mt-10 text-center">Porcentagem de derotas</h4>
+      <div className="m-auto w-[80%] bg-neutral-200 dark:bg-neutral-600">
+        <div
+          id="vitorias"
+          className="bg-red-600 p-0.5 text-center text-sm font-bold leading-none text-white"
+          style={{ width: rateReds + '%' }}
+        >
+          {rateReds}%
+        </div>
+      </div>
+      <h4 className="mb-5 mt-10 text-center">Porcentagem de empates</h4>
+      <div className="m-auto w-[80%] bg-neutral-200 dark:bg-neutral-600">
+        <div
+          id="vitorias"
+          className="bg-yellow-500 p-0.5 text-center text-sm font-bold leading-none text-white"
+          style={{ width: rateDraws + '%' }}
+        >
+          {rateDraws}%
+        </div>
+      </div>
     </div>
   )
 }
