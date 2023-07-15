@@ -141,14 +141,15 @@ export default async function MatchesList({
                     {match.visitor_team.team_name}
                   </td>
                   <td
-                    style={{
-                      backgroundColor: match.result === 'red' ? 'red' : 'green',
-                      color: 'white',
-                      fontWeight: 'bold',
-                    }}
-                    className="whitespace-nowrap px-6 py-4 text-sm font-light text-gray-900"
+                    className={`whitespace-nowrap px-6 py-4 text-center text-sm font-bold text-white `}
                   >
-                    {match.result}
+                    <span
+                      className={`rounded px-2 py-1 uppercase ${
+                        match.result === 'red' ? 'bg-red-600' : 'bg-green-600'
+                      }`}
+                    >
+                      {match.result}
+                    </span>
                   </td>
                   <td className="whitespace-nowrap px-6 py-4 text-sm font-light text-gray-900">
                     {match.strategy?.split(',').map((i) => {
@@ -166,7 +167,7 @@ export default async function MatchesList({
                     {match.review?.split(',').map((i) => {
                       return (
                         <span
-                          className={`mr-2 rounded ${
+                          className={`mr-2 rounded uppercase ${
                             i === 'race' || i === 'home' || i === 'must-win'
                               ? 'bg-green-700'
                               : 'bg-red-600'
