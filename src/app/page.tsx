@@ -1,38 +1,27 @@
-// import { ProgressBar } from '@/components/ui/progressBar'
-// import { ProgressBar } from '@/components/ui/progressBar'
+import { ProgressBar } from '@/components/ui/progressBar'
 import { prisma } from '@/utils/prisma'
 
 export default async function Home() {
-  // TODO: Filtrar resultados geral
+  // TODO: Filtrar resultados geral(parametro em andamento vazio)
   const matchesCount = await prisma.matches.groupBy({
     by: ['result'],
     _count: {
       result: true,
     },
+    orderBy: {
+      result: 'desc',
+    },
   })
 
-  const [draw, green, progress, red] = matchesCount.map((matchCount) => ({
-    count: matchCount._count.result,
+  const [red, green, draw, progress] = matchesCount.map((matchCount) => ({
+    count: matchCount._count.result | 0,
   }))
 
   const totalGreens = green.count
   const totalReds = red.count
   const totalDraws = draw.count
-  const totalProgress = progress.count
+  const totalProgress = progress?.count | 0
   const totalMatches = totalGreens + totalReds + totalDraws + totalProgress
-
-  console.log(
-    'draw',
-    totalDraws,
-    'green',
-    totalGreens,
-    'red',
-    totalReds,
-    'progress',
-    totalProgress,
-    'matches',
-    totalMatches,
-  )
 
   // // TODO: filtrar resultados por campeonanto
   // const matchesCountSerieB = await prisma.matches.count({
@@ -90,9 +79,9 @@ export default async function Home() {
   // })
 
   // // TODO: porcentagem geral
-  // const rateGreens = ((greensCount / matchesCount) * 100).toFixed(0)
-  // const rateReds = ((redsCount / matchesCount) * 100).toFixed(0)
-  // const rateDraws = ((drawCount / matchesCount) * 100).toFixed(0)
+  const rateGreens = ((totalGreens / totalMatches) * 100).toFixed(0)
+  const rateReds = ((totalReds / totalMatches) * 100).toFixed(0)
+  const rateDraws = ((totalDraws / totalMatches) * 100).toFixed(0)
 
   // // TODO: porcentagem serie b
   // const rateGreensSerieB = (
@@ -141,25 +130,25 @@ export default async function Home() {
           </tr>
         </tbody>
       </table>
-      {/* <ProgressBar
-        // rate={rateGreens}
-        color="success"
+      <ProgressBar
+        rate={rateGreens}
+        bgColor="bg-green-600"
         title="Porcentagem de vitorias"
       />
 
       <ProgressBar
-        // rate={rateReds}
-        color="red-600"
+        rate={rateReds}
+        bgColor="bg-red-600"
         title="Porcentagem de derotas"
       />
 
       <ProgressBar
-        // rate={rateDraws}
-        color="yellow-500"
-        title="Porcentagem de empates"
+        rate={rateDraws}
+        bgColor="bg-orange-600"
+        title="Porcentagem de derotas"
       />
 
-      <ProgressBar
+      {/* <ProgressBar
         // rate={rateGreensSerieB}
         color="success"
         title="Porcentagem de vitorias"

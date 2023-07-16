@@ -3,23 +3,12 @@ import { ChangeEvent, FormEvent, useState } from 'react'
 import type { Competition } from '@prisma/client'
 import { useRouter } from 'next/navigation'
 import axios from 'axios'
-// import MyComponent from '@/components/multiSelect'
-import Select, { MultiValue } from 'react-select'
-// import Competitions from './page'
 
 const AddCompetitions = ({ competitions }: { competitions: Competition[] }) => {
   const [formData, setFormData] = useState({
     name: '',
     season: '',
-    teste: '',
   })
-
-  const options = [
-    { label: '1', value: 1 },
-    { label: '2', value: 2 },
-    { label: '3', value: 3 },
-    { label: '4', value: 4 },
-  ]
 
   const [isOpen, setIsOpen] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
@@ -33,29 +22,17 @@ const AddCompetitions = ({ competitions }: { competitions: Competition[] }) => {
     setFormData((prevState) => ({ ...prevState, [name]: value }))
   }
 
-  const handleChange2 = async (
-    event: MultiValue<{ label: string; value: number }>,
-  ) => {
-    // const { name, value } = event.target
-    const label = event.map((e) => e.label)
-    const value = label.toString()
-    setFormData((prevState) => ({ ...prevState, teste: value }))
-    // setFormData((prevState) => ({ ...prevState, [name]: value }))
-  }
-
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
     setIsLoading(true)
-    // await axios.post('/api/competitions', {
-    //   competition_name: formData.name,
-    //   season_name: formData.season,
-    // })
-    console.log(formData.teste)
+    await axios.post('/api/competitions', {
+      competition_name: formData.name,
+      season_name: formData.season,
+    })
     setIsLoading(false)
     setFormData({
       name: '',
       season: '',
-      teste: '',
     })
     router.refresh()
     setIsOpen(false)
@@ -74,13 +51,6 @@ const AddCompetitions = ({ competitions }: { competitions: Competition[] }) => {
         <div className="modal-box">
           <h3 className="text-lg font-bold">Adicionar novo Campeonato</h3>
           <form onSubmit={handleSubmit}>
-            {/* <MyComponent /> */}
-            <div className="form-control w-full">
-              <label className="label font-bold" htmlFor="nome-do-campeonato">
-                multi
-              </label>
-              <Select onChange={handleChange2} isMulti options={options} />
-            </div>
             <div className="form-control w-full">
               <label className="label font-bold" htmlFor="nome-do-campeonato">
                 Nome do Campeonato

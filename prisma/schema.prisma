@@ -12,8 +12,8 @@ datasource db {
 
 model Competition {
   competition_id   Int       @id @default(autoincrement())
-  competition_name String    
-  season_name      String    
+  competition_name String    @unique
+  season_name      String
   createdAt        DateTime  @default(now())
   Matches          Matches[]
 
@@ -22,10 +22,10 @@ model Competition {
 
 model Teams {
   team_id       Int       @id @default(autoincrement())
-  team_name     String    
-  team_country  String    
-  team_initials String?   
-  createdAt     DateTime  @default(now()) 
+  team_name     String    @unique
+  team_country  String
+  team_initials String?
+  createdAt     DateTime  @default(now())
   homeTeam      Matches[] @relation("homeTeam")
   visitorTeam   Matches[] @relation("visitorTeam")
 
@@ -38,9 +38,9 @@ model Matches {
   home_goals      Int          @default(0)
   visitor_goals   Int          @default(0)
   odd             Float?
-  strategy        String?      
-  result          String?      
-  review          String?      
+  strategy        String?
+  result          String?      @default("progress")
+  review          String?
   stake           Float?
   round           Int          @default(0)
   leverage        Leverage?    @relation(fields: [leverageId], references: [leverageId])
@@ -65,9 +65,8 @@ model Leverage {
   Matches     Matches[]
 }
 
-
 model result {
-  resultId  Int       @id @default(autoincrement())
-  monthly String
-  result String?
+  resultId Int     @id @default(autoincrement())
+  monthly  String
+  result   String?
 }
