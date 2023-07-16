@@ -99,72 +99,118 @@ export default async function Home() {
   // ).toFixed(0)
 
   return (
-    <div className="relative m-auto mb-16 mt-16 w-[95%] overflow-x-auto rounded-md">
-      <table className="w-full bg-white text-left text-sm text-gray-500 dark:text-gray-400">
-        <thead className="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
-          <tr>
-            <th scope="col" className="px-6 py-3">
-              Jogos
-            </th>
-            <th scope="col" className="px-6 py-3">
-              Vitorias
-            </th>
-            <th scope="col" className="px-6 py-3">
-              Empates
-            </th>
-            <th scope="col" className="px-6 py-3">
-              Derotas
-            </th>
-            <th scope="col" className="px-6 py-3">
-              Em andamento
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr className="border-b bg-white dark:border-gray-700 dark:bg-gray-800">
-            <td className="px-6 py-4">{totalMatches}</td>
-            <td className="px-6 py-4">{totalGreens}</td>
-            <td className="px-6 py-4">{totalDraws}</td>
-            <td className="px-6 py-4">{totalReds}</td>
-            <td className="px-6 py-4">{totalProgress}</td>
-          </tr>
-        </tbody>
-      </table>
-      <ProgressBar
-        rate={rateGreens}
-        bgColor="bg-green-600"
-        title="Porcentagem de vitorias"
-      />
+    <>
+      <div className="relative m-auto mb-16 mt-16 hidden w-[95%] overflow-x-auto sm:inline-block sm:rounded-md">
+        <table className="w-full bg-white text-left text-sm text-gray-500 dark:text-gray-400">
+          <thead className="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
+            <tr>
+              <th scope="col" className="px-6 py-3">
+                Jogos
+              </th>
+              <th scope="col" className="px-6 py-3">
+                Vitorias
+              </th>
+              <th scope="col" className="px-6 py-3">
+                Empates
+              </th>
+              <th scope="col" className="px-6 py-3">
+                Derotas
+              </th>
+              <th scope="col" className="px-6 py-3">
+                Em andamento
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr className="border-b bg-white dark:border-gray-700 dark:bg-gray-800">
+              <td className="px-6 py-4">{totalMatches}</td>
+              <td className="px-6 py-4">{totalGreens}</td>
+              <td className="px-6 py-4">{totalDraws}</td>
+              <td className="px-6 py-4">{totalReds}</td>
+              <td className="px-6 py-4">{totalProgress}</td>
+            </tr>
+          </tbody>
+        </table>
+        <ProgressBar
+          rate={rateGreens}
+          bgColor="bg-green-600"
+          title="Porcentagem de vitorias"
+        />
 
-      <ProgressBar
-        rate={rateReds}
-        bgColor="bg-red-600"
-        title="Porcentagem de derotas"
-      />
+        <ProgressBar
+          rate={rateReds}
+          bgColor="bg-red-600"
+          title="Porcentagem de derotas"
+        />
 
-      <ProgressBar
-        rate={rateDraws}
-        bgColor="bg-orange-600"
-        title="Porcentagem de derotas"
-      />
+        <ProgressBar
+          rate={rateDraws}
+          bgColor="bg-orange-600"
+          title="Porcentagem de derotas"
+        />
 
-      {/* <ProgressBar
+        {/* <ProgressBar
         // rate={rateGreensSerieB}
         color="success"
         title="Porcentagem de vitorias"
       /> */}
 
-      {/* <ProgressBar
+        {/* <ProgressBar
         // rate={rateRedsSerieB}
         color="red-600"
         title="Porcentagem de derotas"
       /> */}
 
-      {/* <ProgressBar
+        {/* <ProgressBar
         // rate={rateDrawsSerieB}
         color="yellow-500"
         title="Porcentagem de empates"
       /> */}
-    </div>
+      </div>
+      <div className="mt-16 grid grid-cols-1 gap-4 md:hidden">
+        <div className="mt-4 space-y-3 rounded-lg bg-white p-4 font-semibold  shadow-lg">
+          <div className="flex justify-around">
+            <div className="flex gap-2">
+              <div>Jogos:</div>
+              <div>{totalMatches}</div>
+            </div>
+            <div className="flex gap-2">
+              <div>Vitorias:</div>
+              <div>{totalGreens}</div>
+            </div>
+          </div>
+
+          <div className="flex justify-around">
+            <div className="flex gap-2">
+              <div>Derrotas:</div>
+              <div>{totalReds}</div>
+            </div>
+            <div className="flex gap-2">
+              <div>Empates:</div>
+              <div>{totalDraws}</div>
+            </div>
+          </div>
+        </div>
+
+        <div className="space-y-3 rounded-lg bg-white p-4 font-semibold  shadow-lg">
+          <span className="block text-center">Total dos resultados</span>
+          <ProgressBar
+            rate={rateGreens}
+            bgColor="bg-green-600"
+            title="Porcentagem de vitorias"
+          />
+          <ProgressBar
+            rate={rateReds}
+            bgColor="bg-red-600"
+            title="Porcentagem de derotas"
+          />
+          <ProgressBar
+            rate={rateDraws}
+            bgColor="bg-orange-600"
+            title="Porcentagem de derotas"
+          />
+        </div>
+      </div>
+    </>
   )
 }
