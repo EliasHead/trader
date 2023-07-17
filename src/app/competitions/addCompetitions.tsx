@@ -47,7 +47,7 @@ const AddCompetitions = ({ competitions }: { competitions: Competition[] }) => {
       <button className="btn bg-blue-500 text-white" onClick={handleModal}>
         Adicionar novo campeonato
       </button>
-      <div className={isOpen ? 'modal-open modal' : 'modal'}>
+      <div className={isOpen ? 'modal modal-open' : 'modal'}>
         <div className="modal-box">
           <h3 className="text-lg font-bold">Adicionar novo Campeonato</h3>
           <form onSubmit={handleSubmit}>
@@ -60,7 +60,7 @@ const AddCompetitions = ({ competitions }: { competitions: Competition[] }) => {
                 name="name"
                 id="nome-do-campeonato"
                 value={formData.name}
-                className="input-bordered input"
+                className="input input-bordered"
                 placeholder="Nome do Campeonato"
                 aria-label="Nome do Campeonato"
                 onChange={handleChange}
@@ -75,7 +75,7 @@ const AddCompetitions = ({ competitions }: { competitions: Competition[] }) => {
                 name="season"
                 id="season"
                 value={formData.season}
-                className="input-bordered input"
+                className="input input-bordered"
                 placeholder="Temporada ex: 2023"
                 aria-label="Temporada"
                 onChange={handleChange}
@@ -86,11 +86,11 @@ const AddCompetitions = ({ competitions }: { competitions: Competition[] }) => {
                 Close
               </button>
               {!isLoading ? (
-                <button type="submit" className="btn-primary btn">
+                <button type="submit" className="btn btn-primary">
                   Save
                 </button>
               ) : (
-                <button type="button" className="loading btn">
+                <button type="button" className="btn loading">
                   Saving...
                 </button>
               )}

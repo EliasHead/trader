@@ -1,7 +1,10 @@
+'use client'
 import { formatDate } from '@/utils/dateUtils'
 import DeleteMatch from './deleteMatches'
 import { Competition, Teams } from '@prisma/client'
 import UpdateMatch from './updateMtaches'
+import { useState } from 'react'
+import Pagination from '@/components/pagination/pagination'
 
 type Match = {
   match_id: number
@@ -50,16 +53,40 @@ type MatchesProps = {
   results: Results[]
 }
 
-export default async function MatchesList({
+export default function MatchesList({
   matches,
   teams,
   competitions,
   rounds,
   results,
 }: MatchesProps) {
+  // TODO: melhorar paginação
+  const [currentPage, setCurrentPage] = useState(1)
+
+  const itemsPerPage = 8
+
+  const totalPages = Math.ceil(matches.length / itemsPerPage)
+  // setData(2)
+  const startIndex = (currentPage - 1) * itemsPerPage
+  const endIndex = startIndex + itemsPerPage
+
+  const paginatedItems = matches.slice(startIndex, endIndex)
+
+  const goToNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1)
+    }
+  }
+
+  const goToPreviousPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1)
+    }
+  }
+
   return (
     // TODO: concertar margem da tabela
-    <div className="w-[90%]">
+    <div className="flex w-[90%] flex-col items-center">
       <div className="hidden overflow-auto rounded-lg bg-white shadow md:inline-block">
         <table className="min-w-full  md:w-full">
           <thead className="border-b">
@@ -121,7 +148,7 @@ export default async function MatchesList({
             </tr>
           </thead>
           <tbody>
-            {matches?.map((match) => {
+            {paginatedItems?.map((match) => {
               return (
                 <tr className="border-b" key={match.match_id}>
                   <td className="whitespace-nowrap px-6 py-4 text-sm font-medium text-gray-900">
@@ -233,6 +260,13 @@ export default async function MatchesList({
           )
         })}
       </div>
+      <Pagination
+        totalPages={totalPages}
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+        goToNextPage={goToNextPage}
+        goToPreviousPage={goToPreviousPage}
+      />
     </div>
   )
 }

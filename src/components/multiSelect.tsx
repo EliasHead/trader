@@ -13,6 +13,7 @@ const options: Option[] = [
 ]
 
 const MyComponent = () => {
+  // eslint-disable-next-line no-unused-vars
   const [selectedOptions, setSelectedOptions] = useState<string[]>([])
 
   const handleChange = (options: MultiValue<Option>) => {

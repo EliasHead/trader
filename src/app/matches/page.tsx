@@ -54,7 +54,7 @@ export default async function Matches() {
   const results = resultsData
 
   return (
-    <div className="mt-16 flex h-screen w-full flex-col items-center justify-start gap-4">
+    <div className="container mx-auto mt-16 flex h-screen w-full flex-col items-center justify-start gap-4">
       <h1>
         <strong>Jogos</strong>
       </h1>
