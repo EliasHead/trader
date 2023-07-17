@@ -30,11 +30,11 @@ const DeleteTeam = ({ team }: { team: Team }) => {
 
   return (
     <div>
-      <button className="btn-error btn-sm btn" onClick={handleModal}>
+      <button className="btn btn-error btn-sm" onClick={handleModal}>
         Delete
       </button>
 
-      <div className={isOpen ? 'modal-open modal' : 'modal'}>
+      <div className={isOpen ? 'modal modal-open' : 'modal'}>
         <div className="modal-box">
           <h3 className="text-lg font-bold">
             tem certeza que quer deleta {team.team_name}?
@@ -48,12 +48,12 @@ const DeleteTeam = ({ team }: { team: Team }) => {
               <button
                 type="button"
                 onClick={() => handleDelete(team.team_id)}
-                className="btn-primary btn"
+                className="btn btn-primary"
               >
                 Sim
               </button>
             ) : (
-              <button type="button" className="loading btn">
+              <button type="button" className="btn loading">
                 Deletando...
               </button>
             )}

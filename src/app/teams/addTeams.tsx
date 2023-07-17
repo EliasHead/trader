@@ -46,7 +46,7 @@ const AddTeams = ({ teams }: { teams: Teams[] }) => {
       <button className="btn bg-blue-500 text-white" onClick={handleModal}>
         Adicionar time
       </button>
-      <div className={isOpen ? 'modal-open modal' : 'modal'}>
+      <div className={isOpen ? 'modal modal-open' : 'modal'}>
         <div className="modal-box">
           <h3 className="text-lg font-bold">Adicionar novo time</h3>
           <form onSubmit={handleSubmit}>
@@ -59,7 +59,7 @@ const AddTeams = ({ teams }: { teams: Teams[] }) => {
                 name="name"
                 id="nome-do-time"
                 value={formData.name}
-                className="input-bordered input"
+                className="input input-bordered"
                 placeholder="Nome do Time"
                 aria-label="Nome do Time"
                 onChange={handleChange}
@@ -74,7 +74,7 @@ const AddTeams = ({ teams }: { teams: Teams[] }) => {
                 name="country"
                 id="country"
                 value={formData.country}
-                className="input-bordered input"
+                className="input input-bordered"
                 placeholder="ex: BRAZIL"
                 aria-label="País"
                 onChange={handleChange}
@@ -85,11 +85,11 @@ const AddTeams = ({ teams }: { teams: Teams[] }) => {
                 Close
               </button>
               {!isLoading ? (
-                <button type="submit" className="btn-primary btn">
+                <button type="submit" className="btn btn-primary">
                   Save
                 </button>
               ) : (
-                <button type="button" className="loading btn">
+                <button type="button" className="btn loading">
                   Saving...
                 </button>
               )}
