@@ -8,14 +8,29 @@ export default async function Home() {
     _count: {
       result: true,
     },
-    orderBy: {
-      result: 'desc',
-    },
+    orderBy: [
+      {
+        result: 'desc',
+      },
+    ],
   })
 
   const [red, green, draw, progress] = matchesCount.map((matchCount) => ({
     count: matchCount._count.result | 0,
   }))
+
+  console.log(
+    'm',
+    matchesCount,
+    'r:',
+    red,
+    'g:',
+    green,
+    'd:',
+    draw,
+    'p:',
+    progress,
+  )
 
   const totalGreens = green.count
   const totalReds = red.count

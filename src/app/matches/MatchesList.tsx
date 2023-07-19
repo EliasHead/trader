@@ -173,7 +173,13 @@ export default function MatchesList({
                   >
                     <span
                       className={`rounded px-3 py-1 text-xs font-bold uppercase ${
-                        match.result === 'red' ? 'bg-red-600' : 'bg-green-600'
+                        match.result === 'red'
+                          ? 'bg-red-600'
+                          : match.result === 'green'
+                          ? 'bg-green-600'
+                          : match.result === 'draw'
+                          ? 'bg-yellow-400'
+                          : 'bg-sky-600'
                       }`}
                     >
                       {match.result}
