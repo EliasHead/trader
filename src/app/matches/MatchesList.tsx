@@ -63,7 +63,7 @@ export default function MatchesList({
   // TODO: melhorar paginação
   const [currentPage, setCurrentPage] = useState(1)
 
-  const itemsPerPage = 8
+  const itemsPerPage = 10
 
   const totalPages = Math.ceil(matches.length / itemsPerPage)
   // setData(2)
