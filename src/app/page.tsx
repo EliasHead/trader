@@ -19,19 +19,6 @@ export default async function Home() {
     count: matchCount._count.result | 0,
   }))
 
-  console.log(
-    'm',
-    matchesCount,
-    'r:',
-    red,
-    'g:',
-    green,
-    'd:',
-    draw,
-    'p:',
-    progress,
-  )
-
   const totalGreens = green.count
   const totalReds = red.count
   const totalDraws = draw.count
@@ -114,7 +101,7 @@ export default async function Home() {
   // ).toFixed(0)
 
   return (
-    <>
+    <main className="min-h-screen bg-background">
       <div className="relative m-auto mb-16 mt-16 hidden w-[95%] overflow-x-auto sm:inline-block sm:rounded-md">
         <table className="w-full bg-white text-left text-sm text-gray-500 dark:text-gray-400">
           <thead className="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
@@ -226,6 +213,6 @@ export default async function Home() {
           />
         </div>
       </div>
-    </>
+    </main>
   )
 }
