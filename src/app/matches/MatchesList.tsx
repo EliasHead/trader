@@ -260,13 +260,15 @@ export default function MatchesList({
           )
         })}
       </div>
-      <Pagination
-        totalPages={totalPages}
-        currentPage={currentPage}
-        setCurrentPage={setCurrentPage}
-        goToNextPage={goToNextPage}
-        goToPreviousPage={goToPreviousPage}
-      />
+      {totalPages > 1 && (
+        <Pagination
+          totalPages={totalPages}
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+          goToNextPage={goToNextPage}
+          goToPreviousPage={goToPreviousPage}
+        />
+      )}
     </div>
   )
 }

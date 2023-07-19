@@ -19,23 +19,18 @@ export default function SearchTeams({ teams }: { teams: Teams[] }) {
     )
   }, [teams, searchQuery])
 
-  // Calcular o número total de páginas
   const totalPages = Math.ceil(teamsFilter.length / itemsPerPage)
 
-  // Determinar o índice inicial e final dos itens a serem exibidos
   const startIndex = (currentPage - 1) * itemsPerPage
   const endIndex = startIndex + itemsPerPage
 
-  // Obter os itens da página atual
   const paginatedItems = teamsFilter.slice(startIndex, endIndex)
 
-  // Função para atualizar os filtros
   const handleFiltersChange = (event: ChangeEvent<HTMLInputElement>) => {
     setCurrentPage(1)
     setSearchQuery(event.target.value)
   }
 
-  // Função para ir para a próxima página
   const goToNextPage = () => {
     if (currentPage < totalPages) {
       setCurrentPage(currentPage + 1)
@@ -92,13 +87,15 @@ export default function SearchTeams({ teams }: { teams: Teams[] }) {
             </tbody>
           </table>
         </div>
-        <Pagination
-          totalPages={totalPages}
-          currentPage={currentPage}
-          setCurrentPage={setCurrentPage}
-          goToNextPage={goToNextPage}
-          goToPreviousPage={goToPreviousPage}
-        />
+        {totalPages > 1 && (
+          <Pagination
+            totalPages={totalPages}
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+            goToNextPage={goToNextPage}
+            goToPreviousPage={goToPreviousPage}
+          />
+        )}
       </div>
     </>
   )

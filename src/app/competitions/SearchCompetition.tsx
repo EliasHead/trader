@@ -1,8 +1,9 @@
 'use client'
-import { useMemo, useState } from 'react'
+import { ChangeEvent, useMemo, useState } from 'react'
 import { Competition } from '@prisma/client'
 import UpdateCompetition from './updateCompetition'
 import DeleteCompetition from './deleteCompetition'
+import Pagination from '@/components/pagination/pagination'
 
 export default function SearchCompetition({
   competitions,
@@ -10,6 +11,9 @@ export default function SearchCompetition({
   competitions: Competition[]
 }) {
   const [searchQuery, setSearchQuery] = useState('')
+  const [currentPage, setCurrentPage] = useState(1)
+
+  const itemsPerPage = 10
 
   const competitionsFilter = useMemo(() => {
     const lowerSearch = searchQuery.toLowerCase()
@@ -19,11 +23,35 @@ export default function SearchCompetition({
     )
   }, [competitions, searchQuery])
 
+  const totalPages = Math.ceil(competitionsFilter.length / itemsPerPage)
+
+  const startIndex = (currentPage - 1) * itemsPerPage
+  const endIndex = startIndex + itemsPerPage
+
+  const paginatedItems = competitionsFilter.slice(startIndex, endIndex)
+
+  const handleFiltersChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setCurrentPage(1)
+    setSearchQuery(event.target.value)
+  }
+
+  const goToNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1)
+    }
+  }
+
+  const goToPreviousPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1)
+    }
+  }
+
   return (
     <>
       <input
         value={searchQuery}
-        onChange={(event) => setSearchQuery(event.target.value)}
+        onChange={handleFiltersChange}
         className="flex:1 bg-zinc800 w-2/3 px-5 py-1 text-zinc-900 sm:py-3"
         placeholder="Pesquisar campeonato"
       />
@@ -44,7 +72,7 @@ export default function SearchCompetition({
               </tr>
             </thead>
             <tbody>
-              {competitionsFilter.map((competition) => {
+              {paginatedItems.map((competition) => {
                 return (
                   <tr
                     key={competition.competition_id}
@@ -64,6 +92,15 @@ export default function SearchCompetition({
             </tbody>
           </table>
         </div>
+        {totalPages > 1 && (
+          <Pagination
+            totalPages={totalPages}
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+            goToNextPage={goToNextPage}
+            goToPreviousPage={goToPreviousPage}
+          />
+        )}
       </div>
     </>
   )
