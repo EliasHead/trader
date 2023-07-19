@@ -93,55 +93,55 @@ export default function MatchesList({
             <tr>
               <th
                 scope="col"
-                className="px-6 py-4 text-left text-sm font-medium text-gray-900"
+                className="px-6 py-3 text-left text-sm font-medium text-gray-900"
               >
                 #
               </th>
               <th
                 scope="col"
-                className="px-6 py-4 text-left text-sm font-medium text-gray-900"
+                className="px-6 py-3 text-left text-sm font-medium text-gray-900"
               >
                 data
               </th>
               <th
                 scope="col"
-                className="px-6 py-4 text-left text-sm font-medium text-gray-900"
+                className="px-6 py-3 text-left text-sm font-medium text-gray-900"
               >
                 Home
               </th>
               <th
                 scope="col"
-                className="px-6 py-4 text-left text-sm font-medium text-gray-900"
+                className="px-6 py-3 text-left text-sm font-medium text-gray-900"
               >
                 -
               </th>
               <th
                 scope="col"
-                className="px-6 py-4 text-left text-sm font-medium text-gray-900"
+                className="px-6 py-3 text-left text-sm font-medium text-gray-900"
               >
                 Visitante
               </th>
               <th
                 scope="col"
-                className="px-6 py-4 text-left text-sm font-medium text-gray-900"
+                className="px-6 py-2 text-left text-sm font-medium text-gray-900"
               >
                 resultado
               </th>
               <th
                 scope="col"
-                className="px-6 py-4 text-left text-sm font-medium text-gray-900"
+                className="px-6 py-3 text-left text-sm font-medium text-gray-900"
               >
                 Estrategia
               </th>
               <th
                 scope="col"
-                className="px-6 py-4 text-left text-sm font-medium text-gray-900"
+                className="px-6 py-3 text-left text-sm font-medium text-gray-900"
               >
                 Revisão
               </th>
               <th
                 scope="col"
-                className="px-6 py-4 text-left text-sm font-medium text-gray-900"
+                className="px-6 py-3 text-left text-sm font-medium text-gray-900"
               >
                 Ações
               </th>
@@ -151,25 +151,25 @@ export default function MatchesList({
             {paginatedItems?.map((match) => {
               return (
                 <tr className="border-b" key={match.match_id}>
-                  <td className="whitespace-nowrap px-6 py-4 text-sm font-medium text-gray-900">
+                  <td className="whitespace-nowrap px-6 py-3 text-sm font-medium text-gray-900">
                     {match.match_id}
                   </td>
-                  <td className="whitespace-nowrap px-6 py-4 text-sm font-medium text-gray-900">
+                  <td className="whitespace-nowrap px-6 py-3 text-sm font-medium text-gray-900">
                     {formatDate(match.match_date)}
                   </td>
-                  <td className="whitespace-nowrap px-6 py-4 text-sm font-light text-gray-900">
+                  <td className="whitespace-nowrap px-6 py-3 text-sm font-light text-gray-900">
                     {match.home_team.team_name}
                   </td>
-                  <td className="whitespace-nowrap px-6 py-4 text-sm font-light text-gray-900">
+                  <td className="whitespace-nowrap px-6 py-3 text-sm font-light text-gray-900">
                     {match.home_goals}
                     <span> x </span>
                     {match.visitor_goals}
                   </td>
-                  <td className="whitespace-nowrap px-6 py-4 text-sm font-light text-gray-900">
+                  <td className="whitespace-nowrap px-6 py-3 text-sm font-light text-gray-900">
                     {match.visitor_team.team_name}
                   </td>
                   <td
-                    className={`whitespace-nowrap px-6 py-4 text-center text-sm text-white `}
+                    className={`whitespace-nowrap px-6 py-3 text-center text-sm text-white `}
                   >
                     <span
                       className={`rounded px-3 py-1 text-xs font-bold uppercase ${
@@ -179,7 +179,7 @@ export default function MatchesList({
                       {match.result}
                     </span>
                   </td>
-                  <td className="whitespace-nowrap px-6 py-4 text-sm font-light text-gray-900">
+                  <td className="whitespace-nowrap px-6 py-3 text-sm font-light text-gray-900">
                     {match.strategy?.split(',').map((i) => {
                       return (
                         <span
@@ -191,7 +191,7 @@ export default function MatchesList({
                       )
                     })}
                   </td>
-                  <td className="whitespace-nowrap px-6 py-4 text-sm font-light text-gray-900">
+                  <td className="whitespace-nowrap px-6 py-3 text-sm font-light text-gray-900">
                     {match.review?.split(',').map((i) => {
                       return (
                         <span
@@ -207,7 +207,7 @@ export default function MatchesList({
                       )
                     })}
                   </td>
-                  <td className="flex justify-center space-x-1 px-6 py-4">
+                  <td className="flex justify-center space-x-1 px-6 py-3">
                     <UpdateMatch
                       match={match}
                       competitions={competitions}

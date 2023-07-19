@@ -1,5 +1,5 @@
 import SearchTeams from './SearchTeams'
-import AddTeams from './addTeams'
+// import AddTeams from './addTeams'
 
 import { prisma } from '@/utils/prisma'
 
@@ -22,9 +22,8 @@ export default async function Teams() {
   return (
     <div className="container mt-16 flex h-screen flex-col items-center justify-start gap-4">
       <h1>
-        <strong>Times</strong>
+        <strong>Campeonatos</strong>
       </h1>
-      <AddTeams teams={teams} />
       <SearchTeams teams={teams} />
     </div>
   )

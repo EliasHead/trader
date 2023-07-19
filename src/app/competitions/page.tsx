@@ -1,5 +1,4 @@
 import SearchCompetition from './SearchCompetition'
-import AddCompetitions from './addCompetitions'
 import { prisma } from '@/utils/prisma'
 
 const getCompetitions = async () => {
@@ -22,7 +21,6 @@ const Competitions = async () => {
       <h1>
         <strong>Campeonatos</strong>
       </h1>
-      <AddCompetitions competitions={competitions} />
       <SearchCompetition competitions={competitions} />
     </div>
   )

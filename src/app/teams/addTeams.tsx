@@ -43,7 +43,10 @@ const AddTeams = ({ teams }: { teams: Teams[] }) => {
 
   return (
     <div>
-      <button className="btn bg-blue-500 text-white" onClick={handleModal}>
+      <button
+        className="btn whitespace-nowrap bg-blue-500 text-white"
+        onClick={handleModal}
+      >
         Adicionar time
       </button>
       <div className={isOpen ? 'modal modal-open' : 'modal'}>

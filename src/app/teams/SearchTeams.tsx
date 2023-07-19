@@ -4,6 +4,7 @@ import { Teams } from '@prisma/client'
 import UpdateTeams from './updateTeams'
 import DeleteTeam from './deleteTeam'
 import Pagination from '@/components/pagination/pagination'
+import AddTeams from './addTeams'
 
 export default function SearchTeams({ teams }: { teams: Teams[] }) {
   const [searchQuery, setSearchQuery] = useState('')
@@ -46,12 +47,16 @@ export default function SearchTeams({ teams }: { teams: Teams[] }) {
 
   return (
     <>
-      <input
-        value={searchQuery}
-        onChange={handleFiltersChange}
-        className="flex:1 bg-zinc800 w-2/3 px-5 py-1 text-zinc-900 sm:py-3"
-        placeholder="Pesquisar time"
-      />
+      <div className="mt-2 flex gap-3">
+        <AddTeams teams={teams} />
+        <input
+          value={searchQuery}
+          onChange={handleFiltersChange}
+          className="flex:1 bg-zinc800 w-2/3 px-5 py-1 text-zinc-900 sm:py-3"
+          placeholder="Pesquisar time"
+        />
+      </div>
+
       <div>
         <div className="relative overflow-x-auto rounded-md">
           <table className="w-full text-left text-sm text-gray-500 dark:text-gray-400">
@@ -75,9 +80,9 @@ export default function SearchTeams({ teams }: { teams: Teams[] }) {
                     key={team.team_id}
                     className="border-b bg-white dark:border-gray-700 dark:bg-gray-800"
                   >
-                    <td className="px-6 py-4">{team.team_id}</td>
-                    <td className="px-6 py-4">{team.team_name}</td>
-                    <td className="flex justify-center space-x-1 px-6 py-4">
+                    <td className="px-6 py-3">{team.team_id}</td>
+                    <td className="px-6 py-3">{team.team_name}</td>
+                    <td className="flex justify-center space-x-1 px-6 py-3">
                       <UpdateTeams team={team} />
                       <DeleteTeam team={team} />
                     </td>

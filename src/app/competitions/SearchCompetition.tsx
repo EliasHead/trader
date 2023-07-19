@@ -4,6 +4,7 @@ import { Competition } from '@prisma/client'
 import UpdateCompetition from './updateCompetition'
 import DeleteCompetition from './deleteCompetition'
 import Pagination from '@/components/pagination/pagination'
+import AddCompetitions from './addCompetitions'
 
 export default function SearchCompetition({
   competitions,
@@ -49,12 +50,16 @@ export default function SearchCompetition({
 
   return (
     <>
-      <input
-        value={searchQuery}
-        onChange={handleFiltersChange}
-        className="flex:1 bg-zinc800 w-2/3 px-5 py-1 text-zinc-900 sm:py-3"
-        placeholder="Pesquisar campeonato"
-      />
+      <div className="mt-2 flex gap-3">
+        <AddCompetitions competitions={competitions} />
+        <input
+          value={searchQuery}
+          onChange={handleFiltersChange}
+          className="flex:1 bg-zinc800 w-2/3 px-5 py-1 text-zinc-900 sm:py-3"
+          placeholder="Pesquisar campeonato"
+        />
+      </div>
+
       <div>
         <div className="relative overflow-x-auto rounded-md">
           <table className="w-full text-left text-sm text-gray-500 dark:text-gray-400">
@@ -78,11 +83,11 @@ export default function SearchCompetition({
                     key={competition.competition_id}
                     className="border-b bg-white dark:border-gray-700 dark:bg-gray-800"
                   >
-                    <td className="px-6 py-4">{competition.competition_id}</td>
-                    <td className="px-6 py-4">
+                    <td className="px-6 py-3">{competition.competition_id}</td>
+                    <td className="px-6 py-3">
                       {competition.competition_name}
                     </td>
-                    <td className="flex justify-center space-x-1 px-6 py-4">
+                    <td className="flex justify-center space-x-1 px-6 py-3">
                       <UpdateCompetition competition={competition} />
                       <DeleteCompetition competition={competition} />
                     </td>
