@@ -42,6 +42,7 @@ const getMatches = async () => {
       },
       visitor_team_id: true,
     },
+    orderBy: [{ match_id: 'desc' }],
   })
   return res
 }
