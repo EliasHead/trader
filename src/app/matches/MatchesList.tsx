@@ -88,54 +88,54 @@ export default function MatchesList({
     // TODO: concertar margem da tabela
     <div className="flex w-[90%] flex-col items-center">
       <div className="hidden overflow-auto rounded-lg bg-white shadow md:inline-block">
-        <table className="min-w-full  md:w-full">
-          <thead className="border-b">
+        <table className="min-w-full text-gray-900 dark:text-gray-400 md:w-full">
+          <thead className="border-b dark:bg-gray-700 dark:text-gray-400">
             <tr>
               <th
                 scope="col"
-                className="px-6 py-3 text-left text-sm font-medium text-gray-900"
+                className="px-6 py-3 text-left text-sm font-medium"
               >
                 #
               </th>
               <th
                 scope="col"
-                className="px-6 py-3 text-left text-sm font-medium text-gray-900"
+                className="px-6 py-3 text-left text-sm font-medium"
               >
                 data
               </th>
               <th
                 scope="col"
-                className="px-6 py-3 text-left text-sm font-medium text-gray-900"
+                className="px-6 py-3 text-left text-sm font-medium"
               >
                 Home
               </th>
               <th
                 scope="col"
-                className="px-6 py-3 text-left text-sm font-medium text-gray-900"
+                className="px-6 py-3 text-left text-sm font-medium"
               >
                 -
               </th>
               <th
                 scope="col"
-                className="px-6 py-3 text-left text-sm font-medium text-gray-900"
+                className="px-6 py-3 text-left text-sm font-medium"
               >
                 Visitante
               </th>
               <th
                 scope="col"
-                className="px-6 py-2 text-left text-sm font-medium text-gray-900"
+                className="px-6 py-2 text-left text-sm font-medium"
               >
                 resultado
               </th>
               <th
                 scope="col"
-                className="px-6 py-3 text-left text-sm font-medium text-gray-900"
+                className="px-6 py-3 text-left text-sm font-medium"
               >
                 Estrategia
               </th>
               <th
                 scope="col"
-                className="px-6 py-3 text-left text-sm font-medium text-gray-900"
+                className="px-6 py-3 text-left text-sm font-medium"
               >
                 Revisão
               </th>
@@ -150,22 +150,25 @@ export default function MatchesList({
           <tbody>
             {paginatedItems?.map((match) => {
               return (
-                <tr className="border-b" key={match.match_id}>
-                  <td className="whitespace-nowrap px-6 py-3 text-sm font-medium text-gray-900">
+                <tr
+                  className="border-b dark:border-gray-700 dark:bg-gray-800"
+                  key={match.match_id}
+                >
+                  <td className="whitespace-nowrap px-6 py-3 text-sm font-medium">
                     {match.match_id}
                   </td>
-                  <td className="whitespace-nowrap px-6 py-3 text-sm font-medium text-gray-900">
+                  <td className="whitespace-nowrap px-6 py-3 text-sm font-medium">
                     {formatDate(match.match_date)}
                   </td>
-                  <td className="whitespace-nowrap px-6 py-3 text-sm font-light text-gray-900">
+                  <td className="whitespace-nowrap px-6 py-3 text-sm font-light">
                     {match.home_team.team_name}
                   </td>
-                  <td className="whitespace-nowrap px-6 py-3 text-sm font-light text-gray-900">
+                  <td className="whitespace-nowrap px-6 py-3 text-sm font-light">
                     {match.home_goals}
                     <span> x </span>
                     {match.visitor_goals}
                   </td>
-                  <td className="whitespace-nowrap px-6 py-3 text-sm font-light text-gray-900">
+                  <td className="whitespace-nowrap px-6 py-3 text-sm font-light">
                     {match.visitor_team.team_name}
                   </td>
                   <td
@@ -185,7 +188,7 @@ export default function MatchesList({
                       {match.result}
                     </span>
                   </td>
-                  <td className="whitespace-nowrap px-6 py-3 text-sm font-light text-gray-900">
+                  <td className="whitespace-nowrap px-6 py-3 text-sm font-light">
                     {match.strategy?.split(',').map((i) => {
                       return (
                         <span
@@ -197,7 +200,7 @@ export default function MatchesList({
                       )
                     })}
                   </td>
-                  <td className="whitespace-nowrap px-6 py-3 text-sm font-light text-gray-900">
+                  <td className="whitespace-nowrap px-6 py-3 text-sm font-light">
                     {match.review?.split(',').map((i) => {
                       return (
                         <span
