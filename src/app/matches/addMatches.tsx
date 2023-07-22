@@ -117,7 +117,7 @@ const AddMatches = ({ teams, competitions, rounds }: MatchesProps) => {
       <button className="btn bg-blue-500 text-white" onClick={handleModal}>
         Adicionar novo jogo
       </button>
-      <div className={isOpen ? 'modal-open modal' : 'modal'}>
+      <div className={isOpen ? 'modal modal-open' : 'modal'}>
         <div className="modal-box">
           <h3 className="text-lg font-bold">Adicionar novo jogo</h3>
           <form onSubmit={handleSubmit}>
@@ -243,7 +243,7 @@ const AddMatches = ({ teams, competitions, rounds }: MatchesProps) => {
                 min="0"
                 step=".01"
                 value={formData.odd}
-                className="input-bordered input"
+                className="input input-bordered"
                 placeholder="odd ex: 1.75"
                 aria-label="odd?"
                 onChange={handleChange}
@@ -259,7 +259,7 @@ const AddMatches = ({ teams, competitions, rounds }: MatchesProps) => {
                 id="stake"
                 min="0"
                 value={formData.stake}
-                className="input-bordered input"
+                className="input input-bordered"
                 placeholder="stake ex: 10"
                 aria-label="stake"
                 onChange={handleChange}
@@ -270,11 +270,11 @@ const AddMatches = ({ teams, competitions, rounds }: MatchesProps) => {
                 Close
               </button>
               {!isLoading ? (
-                <button type="submit" className="btn-primary btn">
+                <button type="submit" className="btn btn-primary">
                   Save
                 </button>
               ) : (
-                <button type="button" className="loading btn">
+                <button type="button" className="btn loading">
                   Saving...
                 </button>
               )}
