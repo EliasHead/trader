@@ -22,7 +22,7 @@ export default async function Teams() {
   return (
     <div className="container mt-16 flex h-screen flex-col items-center justify-start gap-4">
       <h1>
-        <strong>Campeonatos</strong>
+        <strong>Times</strong>
       </h1>
       <SearchTeams teams={teams} />
     </div>

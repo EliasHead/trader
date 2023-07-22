@@ -34,8 +34,8 @@ export const FilterCompetitions = ({
 
   const progress = matches.filter((match) =>
     competiton
-      ? match.result === '_progress' && match.competition_id === competiton
-      : match.result === '_progress',
+      ? match.result === 'progress' && match.competition_id === competiton
+      : match.result === 'progress',
   )
 
   const totalGreens = Number(greens.length)

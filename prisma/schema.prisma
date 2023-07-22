@@ -39,7 +39,7 @@ model Matches {
   visitor_goals   Int          @default(0)
   odd             Float?
   strategy        String?
-  result          String?      @default("_progress")
+  result          String?      @default("progress")
   review          String?
   stake           Float?
   round           Int          @default(0)
