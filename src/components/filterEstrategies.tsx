@@ -1,55 +1,47 @@
 'use client'
-import { Matches, Competition } from '@prisma/client'
-import React, { ChangeEvent, useState } from 'react'
+import { Matches } from '@prisma/client'
+import { ChangeEvent, useState } from 'react'
 import { ProgressBar } from './ui/progressBar'
+import { strategies } from '@/utils/estrategies'
+export const FilterEstrategies = ({ matches }: { matches: Matches[] }) => {
+  const [param, setParam] = useState('F')
+  // F - Favorito
+  const greens = matches.filter((item) => {
+    const strategySplit = item.strategy?.split(',')
 
-type CountPerCompetitionType = {
-  matches: Matches[]
-  competitions: Competition[]
-}
+    return strategySplit?.includes(param) && item.result === 'green'
+  }).length
 
-export const FilterCompetitions = ({
-  matches,
-  competitions,
-}: CountPerCompetitionType) => {
-  const [competiton, setCompetition] = useState(0)
+  const reds = matches.filter((item) => {
+    const strategySplit = item.strategy?.split(',')
 
-  const reds = matches.filter((match) =>
-    competiton
-      ? match.result === 'red' && match.competition_id === competiton
-      : match.result === 'red',
-  ).length
+    return strategySplit?.includes(param) && item.result === 'red'
+  }).length
 
-  const greens = matches.filter((match) =>
-    competiton
-      ? match.result === 'green' && match.competition_id === competiton
-      : match.result === 'green',
-  ).length
+  const draws = matches.filter((item) => {
+    const strategySplit = item.strategy?.split(',')
 
-  const draws = matches.filter((match) =>
-    competiton
-      ? match.result === 'draw' && match.competition_id === competiton
-      : match.result === 'draw',
-  ).length
+    return strategySplit?.includes(param) && item.result === 'draw'
+  }).length
 
-  const progress = matches.filter((match) =>
-    competiton
-      ? match.result === 'progress' && match.competition_id === competiton
-      : match.result === 'progress',
-  ).length
+  const progress = matches.filter((item) => {
+    const strategySplit = item.strategy?.split(',')
+
+    return strategySplit?.includes(param) && item.result === 'progress'
+  }).length
 
   const totalMatches = greens + reds + draws + progress
 
-  const rateGreens = ((greens / totalMatches) * 100).toFixed(0)
-  const rateReds = ((reds / totalMatches) * 100).toFixed(0)
-  const rateDraws = ((draws / totalMatches) * 100).toFixed(0)
+  const rateGreens = (((greens / totalMatches) * 100) | 0).toFixed(0)
+  const rateReds = (((reds / totalMatches) * 100) | 0).toFixed(0)
+  const rateDraws = (((draws / totalMatches) * 100) | 0).toFixed(0)
 
   const handleChang = (
     event: ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
     >,
   ) => {
-    setCompetition(Number(event.target.value))
+    setParam(event.target.value)
   }
 
   return (
@@ -58,23 +50,19 @@ export const FilterCompetitions = ({
         <form className="mb-4 w-4/12">
           <div className="form-control w-full items-center sm:flex sm:flex-col">
             <label className="label font-bold" htmlFor="home_team">
-              Filtrar por competição
+              Filtrar por Estrategia
             </label>
             <select
               name="home_team"
               id="home_team"
-              value={competiton}
+              value={param}
               className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
               onChange={handleChang}
             >
-              <option>Geral</option>
-              {competitions?.map((competition) => {
+              {strategies?.map((strategy) => {
                 return (
-                  <option
-                    key={competition.competition_id}
-                    value={competition.competition_id}
-                  >
-                    {competition.competition_name}
+                  <option key={strategy.value} value={strategy.label}>
+                    {strategy.label}
                   </option>
                 )
               })}
@@ -130,6 +118,24 @@ export const FilterCompetitions = ({
             title="Porcentagem de derotas"
           />
         </div>
+
+        {/* <ProgressBar
+        // rate={rateGreensSerieB}
+        color="success"
+        title="Porcentagem de vitorias"
+      /> */}
+
+        {/* <ProgressBar
+        // rate={rateRedsSerieB}
+        color="red-600"
+        title="Porcentagem de derotas"
+      /> */}
+
+        {/* <ProgressBar
+        // rate={rateDrawsSerieB}
+        color="yellow-500"
+        title="Porcentagem de empates"
+      /> */}
       </div>
     </div>
   )

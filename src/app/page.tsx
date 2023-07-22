@@ -1,4 +1,5 @@
 import { FilterCompetitions } from '@/components/filterCompetitions'
+import { FilterEstrategies } from '@/components/filterEstrategies'
 import { prisma } from '@/utils/prisma'
 
 export default async function Home() {
@@ -8,6 +9,7 @@ export default async function Home() {
   return (
     <main className="min-h-screen bg-background">
       <FilterCompetitions competitions={competitions} matches={matches} />
+      <FilterEstrategies matches={matches} />
     </main>
   )
 }

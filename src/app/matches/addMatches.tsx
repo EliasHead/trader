@@ -4,6 +4,7 @@ import type { Competition, Teams } from '@prisma/client'
 import { useRouter } from 'next/navigation'
 import axios from 'axios'
 import Select, { MultiValue } from 'react-select'
+import { strategies } from '@/utils/estrategies'
 
 type roundsType = {
   round_id: number
@@ -16,13 +17,6 @@ type MatchesProps = {
   rounds: roundsType[]
 }
 
-// TODO: migra array de estrategias
-const strategies = [
-  { label: 'F', value: 1 },
-  { label: 'FD', value: 2 },
-  { label: 'DNB', value: 3 },
-  { label: '+1G', value: 4 },
-]
 // TODO: migra array de reviews
 const reviews = [
   { label: 'race', value: 1 },
