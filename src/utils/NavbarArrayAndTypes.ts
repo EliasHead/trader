@@ -16,4 +16,8 @@ export const NavbarArray: Array<NavbarItemType> = [
     label: 'Campeonatos',
     href: '/competitions',
   },
+  {
+    label: 'Bilhetes',
+    href: '/tickets',
+  },
 ]
