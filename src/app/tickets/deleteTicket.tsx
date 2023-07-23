@@ -34,7 +34,7 @@ export const DeleteTicket = ({ ticket }: { ticket: TicketType }) => {
       <div className={isOpen ? 'modal modal-open' : 'modal'}>
         <div className="modal-box">
           <h3 className="text-lg font-bold">
-            tem certeza que quer deleta {ticket.ticketId}?
+            deletar o bilhete {ticket.ticketId}?
           </h3>
 
           <div className="modal-action">

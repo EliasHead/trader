@@ -3,13 +3,14 @@ import axios from 'axios'
 import { useRouter } from 'next/navigation'
 import { ChangeEvent, FormEvent, useState } from 'react'
 
+// TODO: melhorar json
 const results = [
   { label: 'progress', value: 1 },
   { label: 'green', value: 2 },
   { label: 'red', value: 3 },
 ]
 
-export const TicketAdd = () => {
+export const AddTicket = () => {
   const [formData, setFormData] = useState({
     result: 'progress',
   })

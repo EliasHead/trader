@@ -1,14 +1,14 @@
 'use client'
 import { Tickets } from '@prisma/client'
-import { TicketUpdate } from './ticketUpdate'
-import { TicketAdd } from './ticketAdd'
 import { DeleteTicket } from './deleteTicket'
+import { UpdateTicket } from './updateTicket'
+import { AddTicket } from './addTicket'
 
-export const TicketsList = ({ tickets }: { tickets: Tickets[] }) => {
+export const ListTickets = ({ tickets }: { tickets: Tickets[] }) => {
   return (
     <div>
       <div>
-        <TicketAdd />
+        <AddTicket />
       </div>
       {tickets.map((ticket) => {
         return (
@@ -16,7 +16,7 @@ export const TicketsList = ({ tickets }: { tickets: Tickets[] }) => {
             <div>{ticket.ticketId}</div>
             <div>{ticket.result}</div>
             <div>
-              <TicketUpdate />
+              <UpdateTicket ticket={ticket} />
             </div>
             <div>
               <DeleteTicket ticket={ticket} />
