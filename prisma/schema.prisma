@@ -51,6 +51,8 @@ model Matches {
   home_team       Teams        @relation("homeTeam", fields: [home_team_id], references: [team_id])
   visitor_team_id Int
   visitor_team    Teams        @relation("visitorTeam", fields: [visitor_team_id], references: [team_id])
+  ticket          Tickets?     @relation(fields: [ticketId], references: [ticketId])
+  ticketId        Int?
   // @@id([round, home_team_id, visitor_team_id])
 
   @@unique(fields: [round, home_team_id, visitor_team_id], name: "matchUnique")
@@ -69,4 +71,14 @@ model result {
   resultId Int     @id @default(autoincrement())
   monthly  String
   result   String?
+}
+
+model Tickets {
+  ticketId  Int       @id @default(autoincrement())
+  result    String?   @default("progress")
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  Matches   Matches[]
+
+  @@map("tickets")
 }
