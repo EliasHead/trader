@@ -1,7 +1,8 @@
+'use client'
 import { Tickets } from '@prisma/client'
-import { TicketDelete } from './ticketDelete'
 import { TicketUpdate } from './ticketUpdate'
 import { TicketAdd } from './ticketAdd'
+import { DeleteTicket } from './deleteTicket'
 
 export const TicketsList = ({ tickets }: { tickets: Tickets[] }) => {
   return (
@@ -18,7 +19,7 @@ export const TicketsList = ({ tickets }: { tickets: Tickets[] }) => {
               <TicketUpdate />
             </div>
             <div>
-              <TicketDelete />
+              <DeleteTicket ticket={ticket} />
             </div>
           </div>
         )

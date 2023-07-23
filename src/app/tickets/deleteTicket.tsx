@@ -1,34 +1,21 @@
-'use client'
-import { useState } from 'react'
-import { useRouter } from 'next/navigation'
 import axios from 'axios'
+import { useRouter } from 'next/navigation'
+import { useState } from 'react'
 
-type Match = {
-  match_id: number
-  match_date: Date | null
-  home_goals: number
-  visitor_goals: number
-  odd?: number | null
-  strategy?: string | null
+type TicketType = {
+  ticketId: number
   result?: string | null
-  review?: string | null
-  stake?: number | null
-  round: number
-  leverage_id?: number | null
-  competition_id?: number | null
-  home_team_id: number
-  visitor_team_id: number
 }
 
-const DeleteMatch = ({ match }: { match: Match }) => {
+export const DeleteTicket = ({ ticket }: { ticket: TicketType }) => {
   const [isOpen, setIsOpen] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
 
   const router = useRouter()
 
-  const handleDelete = async (matchId: number) => {
+  const handleDelete = async (ticketId: number) => {
     setIsLoading(true)
-    await axios.delete(`/api/matches/${matchId}`)
+    await axios.delete(`/api/tickets/${ticketId}`)
     setIsLoading(false)
     router.refresh()
     setIsOpen(false)
@@ -47,7 +34,7 @@ const DeleteMatch = ({ match }: { match: Match }) => {
       <div className={isOpen ? 'modal modal-open' : 'modal'}>
         <div className="modal-box">
           <h3 className="text-lg font-bold">
-            tem certeza que quer deleta {match.match_id}?
+            tem certeza que quer deleta {ticket.ticketId}?
           </h3>
 
           <div className="modal-action">
@@ -57,7 +44,7 @@ const DeleteMatch = ({ match }: { match: Match }) => {
             {!isLoading ? (
               <button
                 type="button"
-                onClick={() => handleDelete(match.match_id)}
+                onClick={() => handleDelete(ticket.ticketId)}
                 className="btn btn-primary"
               >
                 Sim
@@ -73,5 +60,3 @@ const DeleteMatch = ({ match }: { match: Match }) => {
     </div>
   )
 }
-
-export default DeleteMatch
