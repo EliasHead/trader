@@ -10,7 +10,7 @@ const Tickets = async () => {
   const tickets = await getTickets()
 
   return (
-    <main className="container mt-16 flex h-screen flex-col items-center justify-start gap-4">
+    <main className="container mt-16 flex h-screen flex-col items-center justify-start gap-4 bg-white">
       <h1>Tickets</h1>
       <ListTickets tickets={tickets} />
     </main>

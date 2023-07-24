@@ -47,14 +47,14 @@ export const AddTicket = () => {
   }
 
   return (
-    <div>
+    <div className="flex items-center">
       <button
-        className="btn whitespace-nowrap bg-blue-500 text-white"
+        className="btn m-auto whitespace-nowrap rounded-lg border-none bg-blue-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-blue-800 focus:outline-none dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
         onClick={handleModal}
       >
         Adicionar bilhete
       </button>
-      <div className={isOpen ? 'modal modal-open' : 'modal'}>
+      <div className={isOpen ? 'modal-open modal' : 'modal'}>
         <div className="modal-box">
           <h3 className="text-lg font-bold">Adicionar novo time</h3>
           <form onSubmit={handleSubmit}>
@@ -85,11 +85,11 @@ export const AddTicket = () => {
                 Close
               </button>
               {!isLoading ? (
-                <button type="submit" className="btn btn-primary">
+                <button type="submit" className="btn-primary btn">
                   Save
                 </button>
               ) : (
-                <button type="button" className="btn loading">
+                <button type="button" className="loading btn">
                   Saving...
                 </button>
               )}

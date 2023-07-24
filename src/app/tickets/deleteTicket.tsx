@@ -27,11 +27,11 @@ export const DeleteTicket = ({ ticket }: { ticket: TicketType }) => {
 
   return (
     <div>
-      <button className="btn btn-error btn-sm" onClick={handleModal}>
+      <button className="btn-error btn-sm btn" onClick={handleModal}>
         Delete
       </button>
 
-      <div className={isOpen ? 'modal modal-open' : 'modal'}>
+      <div className={isOpen ? 'modal-open modal' : 'modal'}>
         <div className="modal-box">
           <h3 className="text-lg font-bold">
             deletar o bilhete {ticket.ticketId}?
@@ -45,12 +45,12 @@ export const DeleteTicket = ({ ticket }: { ticket: TicketType }) => {
               <button
                 type="button"
                 onClick={() => handleDelete(ticket.ticketId)}
-                className="btn btn-primary"
+                className="btn-primary btn"
               >
                 Sim
               </button>
             ) : (
-              <button type="button" className="btn loading">
+              <button type="button" className="loading btn">
                 Deletando...
               </button>
             )}
