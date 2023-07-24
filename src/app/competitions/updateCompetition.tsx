@@ -3,6 +3,7 @@
 import { ChangeEvent, FormEvent, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import axios from 'axios'
+import { Pencil } from '@phosphor-icons/react'
 
 type Competition = {
   competition_id: number
@@ -47,7 +48,7 @@ const UpdateCompetition = ({ competition }: { competition: Competition }) => {
   return (
     <div>
       <button className="btn btn-info btn-sm" onClick={handleModal}>
-        Editar
+        <Pencil size={24} />
       </button>
       <div className={isOpen ? `modal modal-open` : 'modal'}>
         <div className="modal-box">

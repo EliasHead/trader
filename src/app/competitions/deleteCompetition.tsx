@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import axios from 'axios'
+import { Trash } from '@phosphor-icons/react'
 
 type Competition = {
   competition_id: number
@@ -29,11 +30,11 @@ const DeleteCompetition = ({ competition }: { competition: Competition }) => {
 
   return (
     <div>
-      <button className="btn-error btn-sm btn" onClick={handleModal}>
-        Delete
+      <button className="btn btn-error btn-sm" onClick={handleModal}>
+        <Trash size={24} />
       </button>
 
-      <div className={isOpen ? 'modal-open modal' : 'modal'}>
+      <div className={isOpen ? 'modal modal-open' : 'modal'}>
         <div className="modal-box">
           <h3 className="text-lg font-bold">
             tem certeza que quer deleta {competition.competition_name}?
@@ -47,12 +48,12 @@ const DeleteCompetition = ({ competition }: { competition: Competition }) => {
               <button
                 type="button"
                 onClick={() => handleDelete(competition.competition_id)}
-                className="btn-primary btn"
+                className="btn btn-primary"
               >
                 Sim
               </button>
             ) : (
-              <button type="button" className="loading btn">
+              <button type="button" className="btn loading">
                 Deletando...
               </button>
             )}

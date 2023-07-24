@@ -43,9 +43,9 @@ const AddCompetitions = ({ competitions }: { competitions: Competition[] }) => {
   }
 
   return (
-    <div>
+    <div className="flex items-center">
       <button
-        className="btn whitespace-nowrap bg-blue-500 text-white"
+        className="btn m-auto whitespace-nowrap rounded-lg border-none bg-blue-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-blue-800 focus:outline-none dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
         onClick={handleModal}
       >
         Adicionar novo campeonato

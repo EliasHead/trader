@@ -17,12 +17,12 @@ const Competitions = async () => {
   const competitions = await getCompetitions()
 
   return (
-    <div className="mt-16 flex h-screen flex-col items-center justify-start gap-4">
+    <main className="mt-16 flex h-screen flex-col items-center justify-start gap-4">
       <h1>
         <strong>Campeonatos</strong>
       </h1>
       <SearchCompetition competitions={competitions} />
-    </div>
+    </main>
   )
 }
 

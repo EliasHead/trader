@@ -49,19 +49,34 @@ export default function SearchCompetition({
   }
 
   return (
-    <>
-      <div className="mt-2 flex gap-3">
+    <div className="text-sm">
+      <div className="mb-2 grid w-full grid-cols-1 items-center gap-2">
         <AddCompetitions competitions={competitions} />
         <input
           value={searchQuery}
           onChange={handleFiltersChange}
-          className="flex:1 bg-zinc800 w-2/3 px-5 py-1 text-zinc-900 sm:py-3"
+          className="flex:1 bg-zinc800 m-auto w-2/3 px-5 py-1 text-zinc-900 sm:py-3"
           placeholder="Pesquisar campeonato"
         />
       </div>
 
       <div>
-        <div className="relative overflow-x-auto rounded-md">
+        {paginatedItems.map((competition) => {
+          return (
+            <div
+              className="flex items-center gap-1 rounded p-2 shadow-lg sm:m-auto sm:px-8"
+              key={competition.competition_id}
+            >
+              <div className="px-2 py-1">{competition.competition_id}</div>
+              <div className="flex-1">{competition.competition_name}</div>
+              <div className="flex items-center gap-1">
+                <UpdateCompetition competition={competition} />
+                <DeleteCompetition competition={competition} />
+              </div>
+            </div>
+          )
+        })}
+        {/* <div className="relative overflow-x-auto rounded-md">
           <table className="w-full text-left text-sm text-gray-500 dark:text-gray-400">
             <thead className="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
               <tr>
@@ -96,7 +111,7 @@ export default function SearchCompetition({
               })}
             </tbody>
           </table>
-        </div>
+        </div> */}
         {totalPages > 1 && (
           <Pagination
             totalPages={totalPages}
@@ -107,6 +122,6 @@ export default function SearchCompetition({
           />
         )}
       </div>
-    </>
+    </div>
   )
 }
