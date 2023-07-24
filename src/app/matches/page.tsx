@@ -23,12 +23,19 @@ const getMatches = async () => {
           description: true,
         },
       },
+      leverageId: true,
       competition: {
         select: {
           competition_name: true,
         },
       },
       competition_id: true,
+      ticket: {
+        select: {
+          result: true,
+        },
+      },
+      ticketId: true,
       home_team: {
         select: {
           team_name: true,

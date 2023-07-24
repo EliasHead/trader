@@ -20,7 +20,7 @@ type Match = {
   leverage: {
     description: string | null
   } | null
-  leverageId?: number
+  leverageId?: number | null
   competition: {
     competition_name: string
   } | null
@@ -33,6 +33,10 @@ type Match = {
     team_name: string
   }
   visitor_team_id: number
+  ticket: {
+    result: string | null
+  } | null
+  ticketId?: number | null
 }
 
 type roundsType = {

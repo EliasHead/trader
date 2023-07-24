@@ -27,6 +27,10 @@ type Match = {
   visitor_team: {
     team_name: string
   }
+  ticketId?: number | null
+  ticket: {
+    result: string | null
+  } | null
 }
 
 type Results = {
@@ -57,6 +61,7 @@ const UpdateMatch = ({
     competition: match.competition_id,
     round: match.round,
     result: match.result,
+    ticket: match.ticketId,
   })
   const [isOpen, setIsOpen] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
@@ -83,6 +88,7 @@ const UpdateMatch = ({
       competition_id: formData.competition,
       round: formData.round,
       result: formData.result,
+      ticket: formData.ticket,
     })
     setIsLoading(false)
     router.refresh()
@@ -95,10 +101,10 @@ const UpdateMatch = ({
 
   return (
     <div>
-      <button className="btn-info btn-sm btn" onClick={handleModal}>
+      <button className="btn btn-info btn-sm" onClick={handleModal}>
         Editar
       </button>
-      <div className={isOpen ? `modal-open modal` : 'modal'}>
+      <div className={isOpen ? `modal modal-open` : 'modal'}>
         <div className="modal-box">
           <h3 className="text-lg font-bold">Atualizar jogo {match.match_id}</h3>
           <form onSubmit={handleUpdate}>
@@ -133,7 +139,7 @@ const UpdateMatch = ({
                 id="home_goals"
                 min="0"
                 value={formData.home_goals}
-                className="input-bordered input"
+                className="input input-bordered"
                 placeholder="gols ex: 2"
                 aria-label="gols time da casa"
                 onChange={handleChange}
@@ -170,7 +176,7 @@ const UpdateMatch = ({
                 id="visitor_goals"
                 min="0"
                 value={formData.visitor_goals}
-                className="input-bordered input"
+                className="input input-bordered"
                 placeholder="gols ex: 2"
                 aria-label="gols time da visitante"
                 onChange={handleChange}
@@ -183,7 +189,7 @@ const UpdateMatch = ({
               <select
                 name="competition"
                 id="competition"
-                value={formData.competition}
+                value={formData.competition!}
                 className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
                 onChange={handleChange}
               >
@@ -242,16 +248,40 @@ const UpdateMatch = ({
                 })}
               </select>
             </div>
+            <div className="form-control w-full">
+              <label className="label font-bold" htmlFor="ticket">
+                Bilhete
+              </label>
+              <select
+                name="ticket"
+                id="ticket"
+                value={formData.ticket!}
+                className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+                onChange={handleChange}
+              >
+                <option>Escolha a competição</option>
+                {competitions.map((competition) => {
+                  return (
+                    <option
+                      key={competition.competition_id}
+                      value={competition.competition_id}
+                    >
+                      {competition.competition_name}
+                    </option>
+                  )
+                })}
+              </select>
+            </div>
             <div className="modal-action">
               <button type="button" className="btn" onClick={handleModal}>
                 Fechar
               </button>
               {!isLoading ? (
-                <button type="submit" className="btn-primary btn">
+                <button type="submit" className="btn btn-primary">
                   Salvar
                 </button>
               ) : (
-                <button type="button" className="loading btn">
+                <button type="button" className="btn loading">
                   Salva...
                 </button>
               )}
