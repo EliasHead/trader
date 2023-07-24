@@ -57,6 +57,7 @@ const getMatches = async () => {
 export default async function Matches() {
   const teams = await prisma.teams.findMany()
   const competitions = await prisma.competition.findMany()
+  const tickets = await prisma.tickets.findMany()
   const rounds = dataRounds
   const matches = await getMatches()
   const results = resultsData
@@ -73,6 +74,7 @@ export default async function Matches() {
         rounds={rounds}
         teams={teams}
         results={results}
+        tickets={tickets}
       />
     </div>
   )

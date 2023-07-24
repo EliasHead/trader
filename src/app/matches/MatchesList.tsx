@@ -49,12 +49,18 @@ type Results = {
   label: string
 }
 
+type Tickets = {
+  ticketId: number
+  result: string | null
+}
+
 type MatchesProps = {
   competitions: Competition[]
   teams: Teams[]
   rounds: roundsType[]
   matches: Match[]
   results: Results[]
+  tickets: Tickets[]
 }
 
 export default function MatchesList({
@@ -63,6 +69,7 @@ export default function MatchesList({
   competitions,
   rounds,
   results,
+  tickets,
 }: MatchesProps) {
   // TODO: melhorar paginação
   const [currentPage, setCurrentPage] = useState(1)
@@ -227,6 +234,7 @@ export default function MatchesList({
                       teams={teams}
                       rounds={rounds}
                       results={results}
+                      tickets={tickets}
                     />
                     <DeleteMatch match={match} />
                   </td>

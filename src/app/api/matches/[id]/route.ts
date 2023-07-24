@@ -20,6 +20,7 @@ export const PATCH = async (
       competition_id: Number(body.competition_id),
       round: Number(body.round),
       result: body.result,
+      ticketId: Number(body.ticketId),
     },
   })
   return NextResponse.json(matches, { status: 200 })

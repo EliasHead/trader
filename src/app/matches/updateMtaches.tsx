@@ -38,12 +38,18 @@ type Results = {
   label: string
 }
 
+type Tickets = {
+  ticketId: number
+  result: string | null
+}
+
 type MatchesProps = {
   competitions: Competition[]
   teams: Teams[]
   rounds: roundsType[]
   match: Match
   results: Results[]
+  tickets: Tickets[]
 }
 
 const UpdateMatch = ({
@@ -52,6 +58,7 @@ const UpdateMatch = ({
   competitions,
   rounds,
   results,
+  tickets,
 }: MatchesProps) => {
   const [formData, setFormData] = useState({
     home_team: match.home_team_id,
@@ -63,6 +70,7 @@ const UpdateMatch = ({
     result: match.result,
     ticket: match.ticketId,
   })
+
   const [isOpen, setIsOpen] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
 
@@ -79,6 +87,7 @@ const UpdateMatch = ({
 
   async function handleUpdate(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
+
     setIsLoading(true)
     await axios.patch(`/api/matches/${match.match_id}`, {
       home_team_id: formData.home_team,
@@ -88,7 +97,7 @@ const UpdateMatch = ({
       competition_id: formData.competition,
       round: formData.round,
       result: formData.result,
-      ticket: formData.ticket,
+      ticketId: formData.ticket,
     })
     setIsLoading(false)
     router.refresh()
@@ -101,10 +110,10 @@ const UpdateMatch = ({
 
   return (
     <div>
-      <button className="btn btn-info btn-sm" onClick={handleModal}>
+      <button className="btn-info btn-sm btn" onClick={handleModal}>
         Editar
       </button>
-      <div className={isOpen ? `modal modal-open` : 'modal'}>
+      <div className={isOpen ? `modal-open modal` : 'modal'}>
         <div className="modal-box">
           <h3 className="text-lg font-bold">Atualizar jogo {match.match_id}</h3>
           <form onSubmit={handleUpdate}>
@@ -139,7 +148,7 @@ const UpdateMatch = ({
                 id="home_goals"
                 min="0"
                 value={formData.home_goals}
-                className="input input-bordered"
+                className="input-bordered input"
                 placeholder="gols ex: 2"
                 aria-label="gols time da casa"
                 onChange={handleChange}
@@ -176,7 +185,7 @@ const UpdateMatch = ({
                 id="visitor_goals"
                 min="0"
                 value={formData.visitor_goals}
-                className="input input-bordered"
+                className="input-bordered input"
                 placeholder="gols ex: 2"
                 aria-label="gols time da visitante"
                 onChange={handleChange}
@@ -259,14 +268,11 @@ const UpdateMatch = ({
                 className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
                 onChange={handleChange}
               >
-                <option>Escolha a competição</option>
-                {competitions.map((competition) => {
+                <option>Escolha o bilhete</option>
+                {tickets.map((ticket) => {
                   return (
-                    <option
-                      key={competition.competition_id}
-                      value={competition.competition_id}
-                    >
-                      {competition.competition_name}
+                    <option key={ticket.ticketId} value={ticket.ticketId}>
+                      {ticket.ticketId}
                     </option>
                   )
                 })}
@@ -277,11 +283,11 @@ const UpdateMatch = ({
                 Fechar
               </button>
               {!isLoading ? (
-                <button type="submit" className="btn btn-primary">
+                <button type="submit" className="btn-primary btn">
                   Salvar
                 </button>
               ) : (
-                <button type="button" className="btn loading">
+                <button type="button" className="loading btn">
                   Salva...
                 </button>
               )}
