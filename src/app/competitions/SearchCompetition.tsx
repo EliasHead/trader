@@ -50,12 +50,12 @@ export default function SearchCompetition({
 
   return (
     <div className="text-sm">
-      <div className="mb-2 grid w-full grid-cols-1 items-center gap-2">
+      <div className="mb-2 flex justify-around">
         <AddCompetitions competitions={competitions} />
         <input
           value={searchQuery}
           onChange={handleFiltersChange}
-          className="flex:1 bg-zinc800 m-auto w-2/3 px-5 py-1 text-zinc-900 sm:py-3"
+          className="bg-zinc800 w-[45%] px-2 py-1 text-zinc-900 sm:py-3"
           placeholder="Pesquisar campeonato"
         />
       </div>
@@ -76,42 +76,7 @@ export default function SearchCompetition({
             </div>
           )
         })}
-        {/* <div className="relative overflow-x-auto rounded-md">
-          <table className="w-full text-left text-sm text-gray-500 dark:text-gray-400">
-            <thead className="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
-              <tr>
-                <th scope="col" className="px-6 py-3">
-                  Id
-                </th>
-                <th scope="col" className="px-6 py-3">
-                  Competição
-                </th>
-                <th scope="col" className="px-6 py-3">
-                  Ações
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {paginatedItems.map((competition) => {
-                return (
-                  <tr
-                    key={competition.competition_id}
-                    className="border-b bg-white dark:border-gray-700 dark:bg-gray-800"
-                  >
-                    <td className="px-6 py-3">{competition.competition_id}</td>
-                    <td className="px-6 py-3">
-                      {competition.competition_name}
-                    </td>
-                    <td className="flex justify-center space-x-1 px-6 py-3">
-                      <UpdateCompetition competition={competition} />
-                      <DeleteCompetition competition={competition} />
-                    </td>
-                  </tr>
-                )
-              })}
-            </tbody>
-          </table>
-        </div> */}
+
         {totalPages > 1 && (
           <Pagination
             totalPages={totalPages}

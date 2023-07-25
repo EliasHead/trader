@@ -20,11 +20,11 @@ export default async function Teams() {
   const teams = await getTeams()
 
   return (
-    <div className="container mt-16 flex h-screen flex-col items-center justify-start gap-4">
+    <main className="container mt-16 flex h-screen flex-col items-center justify-start gap-4">
       <h1>
         <strong>Times</strong>
       </h1>
       <SearchTeams teams={teams} />
-    </div>
+    </main>
   )
 }

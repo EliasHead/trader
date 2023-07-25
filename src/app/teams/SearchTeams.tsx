@@ -46,52 +46,34 @@ export default function SearchTeams({ teams }: { teams: Teams[] }) {
   }
 
   return (
-    <>
-      <div className="mt-2 flex gap-3">
+    <div className="text-sm">
+      <div className="mb-2 flex justify-around">
         <AddTeams teams={teams} />
         <input
           value={searchQuery}
           onChange={handleFiltersChange}
-          className="flex:1 bg-zinc800 w-2/3 px-5 py-1 text-zinc-900 sm:py-3"
+          className="flex:1 bg-zinc800 w-2/3 px-4 py-1 text-zinc-900 sm:py-3"
           placeholder="Pesquisar time"
         />
       </div>
 
       <div>
-        <div className="relative overflow-x-auto rounded-md">
-          <table className="w-full text-left text-sm text-gray-500 dark:text-gray-400">
-            <thead className="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
-              <tr>
-                <th scope="col" className="px-6 py-3">
-                  Id
-                </th>
-                <th scope="col" className="px-6 py-3">
-                  Time
-                </th>
-                <th scope="col" className="px-6 py-3">
-                  Ações
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {paginatedItems.map((team) => {
-                return (
-                  <tr
-                    key={team.team_id}
-                    className="border-b bg-white dark:border-gray-700 dark:bg-gray-800"
-                  >
-                    <td className="px-6 py-3">{team.team_id}</td>
-                    <td className="px-6 py-3">{team.team_name}</td>
-                    <td className="flex justify-center space-x-1 px-6 py-3">
-                      <UpdateTeams team={team} />
-                      <DeleteTeam team={team} />
-                    </td>
-                  </tr>
-                )
-              })}
-            </tbody>
-          </table>
-        </div>
+        {paginatedItems.map((team) => {
+          return (
+            <div
+              className="flex items-center gap-1 rounded p-2 shadow-lg sm:m-auto sm:px-8"
+              key={team.team_id}
+            >
+              <div className="px-2 py-1">{team.team_id}</div>
+              <div className="flex-1">{team.team_name}</div>
+              <div className="flex items-center gap-1">
+                <UpdateTeams team={team} />
+                <DeleteTeam team={team} />
+              </div>
+            </div>
+          )
+        })}
+
         {totalPages > 1 && (
           <Pagination
             totalPages={totalPages}
@@ -102,6 +84,6 @@ export default function SearchTeams({ teams }: { teams: Teams[] }) {
           />
         )}
       </div>
-    </>
+    </div>
   )
 }

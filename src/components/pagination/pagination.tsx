@@ -25,7 +25,7 @@ const Pagination = ({
         {Array.from({ length: end - start + 1 })
           .map((_, index) => start + index)
           .map((page) => (
-            <li key={page}>
+            <li className="hidden sm:list-item" key={page}>
               <a
                 onClick={() => setCurrentPage(page)}
                 className={`${

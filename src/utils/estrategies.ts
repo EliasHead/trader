@@ -10,4 +10,5 @@ export const strategies = [
   { label: 'HA-1', value: 5 },
   { label: '+0.5GHT', value: 6 },
   { label: '-3.5G', value: 7 },
+  { label: 'HA-0.75', value: 8 },
 ]
