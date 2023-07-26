@@ -10,9 +10,9 @@ export const ProgressBar = ({ rate, bgColor, title }: ProgressBarType) => {
       <span className="block text-center text-xs uppercase dark:text-neutral-200">
         {title}
       </span>
-      <div className="mx-auto my-4 w-[90%] bg-neutral-200 dark:bg-neutral-600">
+      <div className="mx-auto my-4 w-[90%] rounded-lg bg-neutral-200 dark:bg-neutral-600">
         <div
-          className={`${bgColor} p-0.5 text-center text-sm font-bold leading-none text-white`}
+          className={`${bgColor} rounded-lg p-0.5 text-center text-sm font-bold leading-none text-white`}
           style={{ width: rate + '%' }}
         >
           {rate}%

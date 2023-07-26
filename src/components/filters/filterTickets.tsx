@@ -10,17 +10,19 @@ export const FilterTickets = ({ tickets }: { tickets: Tickets[] }) => {
   const rateReds = ((reds / totalTickets) * 100).toFixed(0)
 
   return (
-    <div className="w-full">
-      <div className="flex flex-col justify-around py-4">
-        <div className="flex items-center justify-around">
-          <div>Total</div>
-          <div>Vitorias</div>
-          <div>Derrotas</div>
+    <div className="mx-auto w-[90%]">
+      <div className="col-auto grid grid-cols-3 justify-items-center gap-4 py-4">
+        <div className="text-center">
+          <div className="p-2">Total</div>
+          <div className="p-2">{totalTickets}</div>
         </div>
-        <div className="flex items-center justify-around p-2">
-          <div>{totalTickets}</div>
-          <div>{greens}</div>
-          <div>{reds}</div>
+        <div className="text-center">
+          <div className="p-2">Vitorias</div>
+          <div className="p-2">{greens}</div>
+        </div>
+        <div className="text-center">
+          <div className="p-2">Derrotas</div>
+          <div className="p-2">{reds}</div>
         </div>
       </div>
       <ProgressBar rate={rateGreens} bgColor="bg-green-600" title="Vitorias" />
