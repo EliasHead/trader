@@ -2,8 +2,8 @@ import { Tickets } from '@prisma/client'
 import { ProgressBar } from '../ui/progressBar'
 
 export const FilterTickets = ({ tickets }: { tickets: Tickets[] }) => {
-  const greens = tickets.filter((ticket) => ticket.result === 'g').length
-  const reds = tickets.filter((ticket) => ticket.result === 'r').length
+  const greens = tickets.filter((ticket) => ticket.result === 'green').length
+  const reds = tickets.filter((ticket) => ticket.result === 'red').length
   const totalTickets = greens + reds
 
   const rateGreens = ((greens / totalTickets) * 100).toFixed(0)
