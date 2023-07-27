@@ -75,7 +75,7 @@ model result {
 
 model Tickets {
   ticketId  Int       @id @default(autoincrement())
-  result    String?   @default("p")
+  result    String?   @default("progress")
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   Matches   Matches[]
