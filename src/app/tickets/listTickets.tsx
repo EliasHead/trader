@@ -4,7 +4,12 @@ import { DeleteTicket } from './deleteTicket'
 import { UpdateTicket } from './updateTicket'
 import { AddTicket } from './addTicket'
 
-export const ListTickets = ({ tickets }: { tickets: Tickets[] }) => {
+interface Match extends Tickets {
+  Matches?: object[]
+  match_id?: number | null
+}
+
+export const ListTickets = ({ tickets }: { tickets: Match[] }) => {
   return (
     <div className="grid w-full grid-cols-1 gap-1">
       <div>
@@ -13,10 +18,13 @@ export const ListTickets = ({ tickets }: { tickets: Tickets[] }) => {
       {tickets.map((ticket) => {
         return (
           <div
-            className="grid grid-cols-4 items-center gap-4 rounded px-4 py-4 shadow-lg sm:m-auto sm:px-8"
+            className="grid grid-cols-5 items-center gap-4 rounded px-4 py-4 shadow-lg sm:m-auto sm:px-8"
             key={ticket.ticketId}
           >
             <div>{ticket.ticketId}</div>
+            <div>
+              <strong>{ticket.Matches?.length}x</strong>
+            </div>
             <div
               className={`rounded-full text-center font-bold text-white ${
                 ticket.result === 'green'
