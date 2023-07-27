@@ -19,7 +19,11 @@ export const ListTickets = ({ tickets }: { tickets: Tickets[] }) => {
             <div>{ticket.ticketId}</div>
             <div
               className={`rounded-full text-center font-bold text-white ${
-                ticket.result === 'green' ? 'bg-green-600' : 'bg-red-600'
+                ticket.result === 'green'
+                  ? 'bg-green-600'
+                  : ticket.result === 'draw'
+                  ? 'bg-yellow-400'
+                  : 'bg-red-600'
               }`}
             >
               {ticket.result}

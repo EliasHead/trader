@@ -13,6 +13,7 @@ const results = [
   { label: 'progress', value: 1 },
   { label: 'green', value: 2 },
   { label: 'red', value: 3 },
+  { label: 'draw', value: 4 },
 ]
 
 export const UpdateTicket = ({ ticket }: { ticket: TicketType }) => {

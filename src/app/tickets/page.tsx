@@ -3,7 +3,19 @@ import { ListTickets } from './listTickets'
 import { FilterTickets } from '@/components/filters/filterTickets'
 
 const getTickets = async () => {
-  const res = prisma.tickets.findMany()
+  const res = prisma.tickets.findMany({
+    select: {
+      Matches: {
+        select: {
+          match_id: true,
+        },
+      },
+      result: true,
+      ticketId: true,
+      createdAt: true,
+      updatedAt: true,
+    },
+  })
 
   return res
 }
