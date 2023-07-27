@@ -11,10 +11,10 @@ type TicketType = {
 
 // TODO: melhorar json
 const results = [
-  { label: 'progress', value: 1 },
-  { label: 'green', value: 2 },
-  { label: 'red', value: 3 },
-  { label: 'draw', value: 4 },
+  { label: 'p', value: 1 },
+  { label: 'g', value: 2 },
+  { label: 'r', value: 3 },
+  { label: 'd', value: 4 },
 ]
 
 export const UpdateTicket = ({ ticket }: { ticket: TicketType }) => {

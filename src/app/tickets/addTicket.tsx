@@ -5,15 +5,15 @@ import { ChangeEvent, FormEvent, useState } from 'react'
 
 // TODO: melhorar json
 const results = [
-  { label: 'progress', value: 1 },
-  { label: 'green', value: 2 },
-  { label: 'red', value: 3 },
-  { label: 'draw', value: 4 },
+  { label: 'p', value: 1 },
+  { label: 'g', value: 2 },
+  { label: 'r', value: 3 },
+  { label: 'd', value: 4 },
 ]
 
 export const AddTicket = () => {
   const [formData, setFormData] = useState({
-    result: 'progress',
+    result: 'p',
   })
   const [isOpen, setIsOpen] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
@@ -37,7 +37,7 @@ export const AddTicket = () => {
     })
     setIsLoading(false)
     setFormData({
-      result: 'progress',
+      result: 'p',
     })
     router.refresh()
     setIsOpen(false)
@@ -70,7 +70,6 @@ export const AddTicket = () => {
                 className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
                 onChange={handleChange}
               >
-                <option>Escolha o time</option>
                 {results.map((result) => {
                   return (
                     <option key={result.value} value={result.label}>
