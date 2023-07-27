@@ -1,3 +1,4 @@
+import { Trash } from '@phosphor-icons/react'
 import axios from 'axios'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
@@ -27,11 +28,11 @@ export const DeleteTicket = ({ ticket }: { ticket: TicketType }) => {
 
   return (
     <div>
-      <button className="btn-error btn-sm btn" onClick={handleModal}>
-        Delete
+      <button className="btn btn-error btn-sm" onClick={handleModal}>
+        <Trash size={24} />
       </button>
 
-      <div className={isOpen ? 'modal-open modal' : 'modal'}>
+      <div className={isOpen ? 'modal modal-open' : 'modal'}>
         <div className="modal-box">
           <h3 className="text-lg font-bold">
             deletar o bilhete {ticket.ticketId}?
@@ -45,12 +46,12 @@ export const DeleteTicket = ({ ticket }: { ticket: TicketType }) => {
               <button
                 type="button"
                 onClick={() => handleDelete(ticket.ticketId)}
-                className="btn-primary btn"
+                className="btn btn-primary"
               >
                 Sim
               </button>
             ) : (
-              <button type="button" className="loading btn">
+              <button type="button" className="btn loading">
                 Deletando...
               </button>
             )}

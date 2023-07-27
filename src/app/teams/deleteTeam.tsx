@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import axios from 'axios'
+import { Trash } from '@phosphor-icons/react'
 
 type Team = {
   team_id: number
@@ -31,7 +32,7 @@ const DeleteTeam = ({ team }: { team: Team }) => {
   return (
     <div>
       <button className="btn btn-error btn-sm" onClick={handleModal}>
-        Delete
+        <Trash size={24} />
       </button>
 
       <div className={isOpen ? 'modal modal-open' : 'modal'}>

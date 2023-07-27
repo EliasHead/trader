@@ -2,6 +2,7 @@
 import { ChangeEvent, FormEvent, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import axios from 'axios'
+import { Pencil } from '@phosphor-icons/react'
 
 type Team = {
   team_id: number
@@ -46,10 +47,10 @@ const UpdateTeams = ({ team }: { team: Team }) => {
 
   return (
     <div>
-      <button className="btn-info btn-sm btn" onClick={handleModal}>
-        Editar
+      <button className="btn btn-info btn-sm" onClick={handleModal}>
+        <Pencil size={24} />
       </button>
-      <div className={isOpen ? `modal-open modal` : 'modal'}>
+      <div className={isOpen ? `modal modal-open` : 'modal'}>
         <div className="modal-box">
           <h3 className="text-lg font-bold">Atualizar{team.team_name}</h3>
           <form onSubmit={handleUpdate}>
@@ -62,7 +63,7 @@ const UpdateTeams = ({ team }: { team: Team }) => {
                 name="name"
                 id="team_name"
                 value={formData.name}
-                className="input-bordered input"
+                className="input input-bordered"
                 placeholder="Nome do time"
                 aria-label="Nome do time"
                 onChange={handleChange}
@@ -77,7 +78,7 @@ const UpdateTeams = ({ team }: { team: Team }) => {
                 name="country"
                 id="team_country"
                 value={formData.country}
-                className="input-bordered input"
+                className="input input-bordered"
                 placeholder="ex: BRAZIL"
                 aria-label="País"
                 onChange={handleChange}
@@ -88,11 +89,11 @@ const UpdateTeams = ({ team }: { team: Team }) => {
                 Fechar
               </button>
               {!isLoading ? (
-                <button type="submit" className="btn-primary btn">
+                <button type="submit" className="btn btn-primary">
                   Salvar
                 </button>
               ) : (
-                <button type="button" className="loading btn">
+                <button type="button" className="btn loading">
                   Salva...
                 </button>
               )}
