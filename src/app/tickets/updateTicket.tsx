@@ -7,6 +7,8 @@ import { Pencil } from '@phosphor-icons/react'
 type TicketType = {
   ticketId: number
   result: string | null
+  odd: number | null
+  stake: number | null
 }
 
 // TODO: melhorar json
@@ -20,6 +22,8 @@ const results = [
 export const UpdateTicket = ({ ticket }: { ticket: TicketType }) => {
   const [formData, setFormData] = useState({
     result: ticket.result,
+    odd: ticket.odd,
+    stake: ticket.stake,
   })
 
   const [isOpen, setIsOpen] = useState(false)
@@ -41,6 +45,8 @@ export const UpdateTicket = ({ ticket }: { ticket: TicketType }) => {
     setIsLoading(true)
     await axios.patch(`/api/tickets/${ticket.ticketId}`, {
       result: formData.result,
+      odd: formData.odd,
+      stake: formData.stake,
     })
     setIsLoading(false)
     router.refresh()
@@ -62,6 +68,39 @@ export const UpdateTicket = ({ ticket }: { ticket: TicketType }) => {
             Atualizar o ticket {ticket.ticketId}
           </h3>
           <form onSubmit={handleUpdate}>
+            <div className="form-control w-full">
+              <label className="label font-bold" htmlFor="stake">
+                Stake
+              </label>
+              <input
+                type="number"
+                name="stake"
+                id="stake"
+                min="0"
+                value={formData.stake!}
+                className="input input-bordered"
+                placeholder="stake ex: 10"
+                aria-label="stake"
+                onChange={handleChange}
+              />
+            </div>
+            <div className="form-control w-full">
+              <label className="label font-bold" htmlFor="odd">
+                Odd
+              </label>
+              <input
+                type="number"
+                name="odd"
+                id="odd"
+                min="0"
+                step=".01"
+                value={formData.odd!}
+                className="input input-bordered"
+                placeholder="odd ex: 1.75"
+                aria-label="odd?"
+                onChange={handleChange}
+              />
+            </div>
             <div className="form-control w-full">
               <label className="label font-bold" htmlFor="result">
                 Selecione o resultado

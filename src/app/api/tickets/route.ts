@@ -8,6 +8,8 @@ export const POST = async (request: Request) => {
   const team = await prisma.tickets.create({
     data: {
       result: body.result,
+      odd: Number(body.odd),
+      stake: Number(body.stake),
     },
   })
   return NextResponse.json(team, { status: 201 })
