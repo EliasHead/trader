@@ -110,10 +110,10 @@ const UpdateMatch = ({
 
   return (
     <div>
-      <button className="btn-info btn-sm btn" onClick={handleModal}>
+      <button className="btn btn-info btn-sm" onClick={handleModal}>
         Editar
       </button>
-      <div className={isOpen ? `modal-open modal` : 'modal'}>
+      <div className={isOpen ? `modal modal-open` : 'modal'}>
         <div className="modal-box">
           <h3 className="text-lg font-bold">Atualizar jogo {match.match_id}</h3>
           <form onSubmit={handleUpdate}>
@@ -148,7 +148,7 @@ const UpdateMatch = ({
                 id="home_goals"
                 min="0"
                 value={formData.home_goals}
-                className="input-bordered input"
+                className="input input-bordered"
                 placeholder="gols ex: 2"
                 aria-label="gols time da casa"
                 onChange={handleChange}
@@ -185,7 +185,7 @@ const UpdateMatch = ({
                 id="visitor_goals"
                 min="0"
                 value={formData.visitor_goals}
-                className="input-bordered input"
+                className="input input-bordered"
                 placeholder="gols ex: 2"
                 aria-label="gols time da visitante"
                 onChange={handleChange}
@@ -283,11 +283,11 @@ const UpdateMatch = ({
                 Fechar
               </button>
               {!isLoading ? (
-                <button type="submit" className="btn-primary btn">
+                <button type="submit" className="btn btn-primary">
                   Salvar
                 </button>
               ) : (
-                <button type="button" className="loading btn">
+                <button type="button" className="btn loading">
                   Salva...
                 </button>
               )}
