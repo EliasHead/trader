@@ -11,10 +11,10 @@ type TicketType = {
 
 // TODO: melhorar json
 const results = [
-  { label: 'p', value: 1 },
-  { label: 'g', value: 2 },
-  { label: 'r', value: 3 },
-  { label: 'd', value: 4 },
+  { label: 'progress', value: 1 },
+  { label: 'green', value: 2 },
+  { label: 'red', value: 3 },
+  { label: 'draw', value: 4 },
 ]
 
 export const UpdateTicket = ({ ticket }: { ticket: TicketType }) => {
@@ -73,7 +73,7 @@ export const UpdateTicket = ({ ticket }: { ticket: TicketType }) => {
                 className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
                 onChange={handleChange}
               >
-                <option>Escolha o time</option>
+                <option>Escolha o resultado</option>
                 {results.map((result) => {
                   return (
                     <option key={result.value} value={result.label}>

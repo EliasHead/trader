@@ -5,15 +5,15 @@ import { ChangeEvent, FormEvent, useState } from 'react'
 
 // TODO: melhorar json
 const results = [
-  { label: 'p', value: 1 },
-  { label: 'g', value: 2 },
-  { label: 'r', value: 3 },
-  { label: 'd', value: 4 },
+  { label: 'progress', value: 1 },
+  { label: 'green', value: 2 },
+  { label: 'red', value: 3 },
+  { label: 'draw', value: 4 },
 ]
 
 export const AddTicket = () => {
   const [formData, setFormData] = useState({
-    result: 'p',
+    result: 'progress',
   })
   const [isOpen, setIsOpen] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
@@ -37,7 +37,7 @@ export const AddTicket = () => {
     })
     setIsLoading(false)
     setFormData({
-      result: 'p',
+      result: 'progress',
     })
     router.refresh()
     setIsOpen(false)

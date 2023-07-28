@@ -23,7 +23,8 @@ const reviews = [
   { label: 'home', value: 2 },
   { label: 'way', value: 3 },
   { label: 'derby', value: 4 },
-  { label: 'must-win', value: 4 },
+  { label: 'must-win', value: 5 },
+  { label: 'bet', value: 6 },
 ]
 
 const AddMatches = ({ teams, competitions, rounds }: MatchesProps) => {
