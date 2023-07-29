@@ -74,13 +74,14 @@ model result {
 }
 
 model Tickets {
-  ticketId  Int       @id @default(autoincrement())
-  result    String?   @default("progress")
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  odd             Float?
-  stake           Float?
-  Matches   Matches[]
+  ticketId    Int       @id @default(autoincrement())
+  result      String?   @default("progress")
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  odd         Float?
+  stake       Float?
+  resultStake Float     @default(0)
+  Matches     Matches[]
 
   @@map("tickets")
 }

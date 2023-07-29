@@ -9,6 +9,7 @@ type TicketType = {
   result: string | null
   odd: number | null
   stake: number | null
+  resultStake: number
 }
 
 // TODO: melhorar json
@@ -24,6 +25,7 @@ export const UpdateTicket = ({ ticket }: { ticket: TicketType }) => {
     result: ticket.result,
     odd: ticket.odd,
     stake: ticket.stake,
+    resultStake: ticket.resultStake,
   })
 
   const [isOpen, setIsOpen] = useState(false)
@@ -47,6 +49,12 @@ export const UpdateTicket = ({ ticket }: { ticket: TicketType }) => {
       result: formData.result,
       odd: formData.odd,
       stake: formData.stake,
+      resultStake:
+        formData.result === 'green'
+          ? (formData.odd! - 1).toFixed(2)
+          : formData.result === 'red'
+          ? -1
+          : 0,
     })
     setIsLoading(false)
     router.refresh()

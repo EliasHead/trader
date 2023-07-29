@@ -16,6 +16,7 @@ export const PATCH = async (
       result: body.result,
       odd: Number(body.odd),
       stake: Number(body.stake),
+      resultStake: Number(body.resultStake),
     },
   })
   return NextResponse.json(ticket, { status: 200 })
