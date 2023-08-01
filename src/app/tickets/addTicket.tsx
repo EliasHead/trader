@@ -1,5 +1,4 @@
 'use client'
-import { Tickets } from '@prisma/client'
 import axios from 'axios'
 import { useRouter } from 'next/navigation'
 import { ChangeEvent, FormEvent, useState } from 'react'
@@ -12,7 +11,7 @@ const results = [
   { label: 'draw', value: 4 },
 ]
 
-export const AddTicket = ({ tickets }: { tickets: Tickets }) => {
+export const AddTicket = () => {
   const [formData, setFormData] = useState({
     result: 'progress',
     odd: 0,

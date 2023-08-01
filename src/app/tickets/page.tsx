@@ -11,6 +11,7 @@ const getTickets = async () => {
         },
       },
     },
+    orderBy: [{ ticketId: 'desc' }],
   })
 
   return res
@@ -19,10 +20,10 @@ const Tickets = async () => {
   const tickets = await getTickets()
 
   return (
-    <main className="mt-16 flex h-screen flex-col items-center gap-4 bg-white">
+    <div className="mt-16 flex h-screen flex-col items-center gap-4">
       <FilterTickets tickets={tickets} />
       <ListTickets tickets={tickets} />
-    </main>
+    </div>
   )
 }
 
