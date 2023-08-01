@@ -36,7 +36,7 @@ export const ListTickets = ({ tickets }: { tickets: Match[] }) => {
   }
 
   return (
-    <div className="grid w-full grid-cols-1 gap-1">
+    <div className="grid grid-cols-1 gap-1">
       <div>
         <AddTicket />
       </div>

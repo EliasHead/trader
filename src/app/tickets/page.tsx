@@ -20,7 +20,7 @@ const Tickets = async () => {
   const tickets = await getTickets()
 
   return (
-    <div className="mt-16 flex h-screen flex-col items-center gap-4">
+    <div className="mt-16 flex flex-col items-center gap-4">
       <FilterTickets tickets={tickets} />
       <ListTickets tickets={tickets} />
     </div>
