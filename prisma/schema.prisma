@@ -65,6 +65,7 @@ model Leverage {
   result      String?
   createdAt   DateTime  @default(now())
   Matches     Matches[]
+  Tickets     Tickets[]
 }
 
 model result {
@@ -81,6 +82,9 @@ model Tickets {
   odd         Float?
   stake       Float?
   resultStake Float     @default(0)
+  // TODO: remover coluna
+  leverage    Leverage? @relation(fields: [leverageId], references: [leverageId])
+  leverageId  Int?
   Matches     Matches[]
 
   @@map("tickets")
