@@ -55,7 +55,7 @@ model Matches {
   ticketId        Int?
   // @@id([round, home_team_id, visitor_team_id])
 
-  @@unique(fields: [round, home_team_id, visitor_team_id], name: "matchUnique")
+  @@unique(fields: [round, home_team_id, visitor_team_id, strategy], name: "matchUnique")
   @@map("matches")
 }
 

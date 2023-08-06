@@ -85,6 +85,7 @@ export const UpdateTicket = ({ ticket }: { ticket: TicketType }) => {
                 name="stake"
                 id="stake"
                 min="0"
+                step=".01"
                 value={formData.stake!}
                 className="input input-bordered"
                 placeholder="stake ex: 10"
