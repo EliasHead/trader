@@ -18,7 +18,7 @@ type Match = {
   stake: number | null
   round: number
   leverage: {
-    description: string | null
+    goal: string | null
   } | null
   leverageId?: number | null
   competition: {

@@ -20,7 +20,7 @@ const getMatches = async () => {
       round: true,
       leverage: {
         select: {
-          description: true,
+          goal: true,
         },
       },
       leverageId: true,
