@@ -4,12 +4,25 @@ import { useRouter } from 'next/navigation'
 import axios from 'axios'
 import { Pencil } from '@phosphor-icons/react'
 
+type LeverageType = {
+  leverageId: number
+  goal: string | null
+  result: string | null
+  createdAt: Date
+}
+
 type TicketType = {
   ticketId: number
   result: string | null
   odd: number | null
   stake: number | null
   resultStake: number
+  leverageId: number | null
+}
+
+type TicketsProps = {
+  ticket: TicketType
+  leverages: LeverageType[]
 }
 
 // TODO: melhorar json
@@ -20,12 +33,13 @@ const results = [
   { label: 'draw', value: 4 },
 ]
 
-export const UpdateTicket = ({ ticket }: { ticket: TicketType }) => {
+export const UpdateTicket = ({ ticket, leverages }: TicketsProps) => {
   const [formData, setFormData] = useState({
     result: ticket.result,
     odd: ticket.odd,
     stake: ticket.stake,
     resultStake: ticket.resultStake,
+    leverage: ticket.leverageId,
   })
 
   const [isOpen, setIsOpen] = useState(false)
@@ -55,6 +69,7 @@ export const UpdateTicket = ({ ticket }: { ticket: TicketType }) => {
           : formData.result === 'red'
           ? -1
           : 0,
+      leverageId: formData.leverage,
     })
     setIsLoading(false)
     router.refresh()
@@ -126,6 +141,31 @@ export const UpdateTicket = ({ ticket }: { ticket: TicketType }) => {
                   return (
                     <option key={result.value} value={result.label}>
                       {result.label}
+                    </option>
+                  )
+                })}
+              </select>
+            </div>
+
+            <div className="form-control w-full">
+              <label className="label font-bold" htmlFor="leverage">
+                Selecione a alavancagem
+              </label>
+              <select
+                name="leverage"
+                id="leverage"
+                value={formData.leverage!}
+                className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+                onChange={handleChange}
+              >
+                <option>Escolha a alavancagem</option>
+                {leverages.map((leverage) => {
+                  return (
+                    <option
+                      key={leverage.leverageId}
+                      value={leverage.leverageId}
+                    >
+                      {leverage.leverageId}
                     </option>
                   )
                 })}

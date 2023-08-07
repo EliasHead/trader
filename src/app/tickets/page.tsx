@@ -18,11 +18,14 @@ const getTickets = async () => {
 }
 const Tickets = async () => {
   const tickets = await getTickets()
+  const leverages = await prisma.leverage.findMany({
+    orderBy: [{ leverageId: 'desc' }],
+  })
 
   return (
     <div className="mt-16 flex flex-col items-center gap-4">
       <FilterTickets tickets={tickets} />
-      <ListTickets tickets={tickets} />
+      <ListTickets tickets={tickets} leverages={leverages} />
     </div>
   )
 }

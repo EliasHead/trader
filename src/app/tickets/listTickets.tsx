@@ -6,12 +6,23 @@ import { AddTicket } from './addTicket'
 import { useState } from 'react'
 import Pagination from '@/components/pagination/pagination'
 
+type LeverageType = {
+  leverageId: number
+  goal: string | null
+  result: string | null
+  createdAt: Date
+}
 interface Match extends Tickets {
   Matches?: object[]
   match_id?: number | null
 }
 
-export const ListTickets = ({ tickets }: { tickets: Match[] }) => {
+type TicketsProps = {
+  tickets: Match[]
+  leverages: LeverageType[]
+}
+
+export const ListTickets = ({ tickets, leverages }: TicketsProps) => {
   const [currentPage, setCurrentPage] = useState(1)
 
   const itemsPerPage = 10
@@ -62,7 +73,7 @@ export const ListTickets = ({ tickets }: { tickets: Match[] }) => {
               {ticket.result}
             </div>
             <div>
-              <UpdateTicket ticket={ticket} />
+              <UpdateTicket ticket={ticket} leverages={leverages} />
             </div>
             <div>
               <DeleteTicket ticket={ticket} />
