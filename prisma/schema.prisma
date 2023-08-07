@@ -60,12 +60,12 @@ model Matches {
 }
 
 model Leverage {
-  leverageId  Int       @id @default(autoincrement())
-  description String?
-  result      String?
-  createdAt   DateTime  @default(now())
-  Matches     Matches[]
-  Tickets     Tickets[]
+  leverageId Int       @id @default(autoincrement())
+  goal       String?   @default("")
+  result     String?   @default("")
+  createdAt  DateTime  @default(now())
+  Matches    Matches[]
+  Tickets    Tickets[]
 }
 
 model result {
