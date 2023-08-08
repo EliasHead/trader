@@ -96,191 +96,99 @@ export default function MatchesList({
   }
 
   return (
-    // TODO: concertar margem da tabela
-    <div className="flex w-[90%] flex-col items-center">
-      <div className="hidden overflow-auto rounded-lg bg-white shadow md:inline-block">
-        <table className="min-w-full text-gray-900 dark:text-gray-400 md:w-full">
-          <thead className="border-b dark:bg-gray-700 dark:text-gray-400">
-            <tr>
-              <th
-                scope="col"
-                className="px-6 py-3 text-left text-sm font-medium"
-              >
-                #
-              </th>
-              <th
-                scope="col"
-                className="px-6 py-3 text-left text-sm font-medium"
-              >
-                data
-              </th>
-              <th
-                scope="col"
-                className="px-6 py-3 text-left text-sm font-medium"
-              >
-                Home
-              </th>
-              <th
-                scope="col"
-                className="px-6 py-3 text-left text-sm font-medium"
-              >
-                -
-              </th>
-              <th
-                scope="col"
-                className="px-6 py-3 text-left text-sm font-medium"
-              >
-                Visitante
-              </th>
-              <th
-                scope="col"
-                className="px-6 py-2 text-left text-sm font-medium"
-              >
-                resultado
-              </th>
-              <th
-                scope="col"
-                className="px-6 py-3 text-left text-sm font-medium"
-              >
-                Estrategia
-              </th>
-              <th
-                scope="col"
-                className="px-6 py-3 text-left text-sm font-medium"
-              >
-                Revisão
-              </th>
-              <th
-                scope="col"
-                className="px-6 py-3 text-left text-sm font-medium text-gray-900"
-              >
-                Ações
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {paginatedItems?.map((match) => {
-              return (
-                <tr
-                  className="border-b dark:border-gray-700 dark:bg-gray-800"
-                  key={match.match_id}
-                >
-                  <td className="whitespace-nowrap px-6 py-3 text-sm font-medium">
-                    {match.match_id}
-                  </td>
-                  <td className="whitespace-nowrap px-6 py-3 text-sm font-medium">
-                    {formatDate(match.match_date)}
-                  </td>
-                  <td className="whitespace-nowrap px-6 py-3 text-sm font-light">
-                    {match.home_team.team_name}
-                  </td>
-                  <td className="whitespace-nowrap px-6 py-3 text-sm font-light">
-                    {match.home_goals}
-                    <span> x </span>
-                    {match.visitor_goals}
-                  </td>
-                  <td className="whitespace-nowrap px-6 py-3 text-sm font-light">
-                    {match.visitor_team.team_name}
-                  </td>
-                  <td
-                    className={`whitespace-nowrap px-6 py-3 text-center text-sm text-white `}
-                  >
-                    <span
-                      className={`rounded px-3 py-1 text-xs font-bold uppercase ${
-                        match.result === 'red'
-                          ? 'bg-red-600'
-                          : match.result === 'green'
-                          ? 'bg-green-600'
-                          : match.result === 'draw'
-                          ? 'bg-yellow-400'
-                          : 'bg-sky-600'
-                      }`}
-                    >
-                      {match.result}
-                    </span>
-                  </td>
-                  <td className="whitespace-nowrap px-6 py-3 text-sm font-light">
-                    {match.strategy?.split(',').map((i) => {
-                      return (
-                        <span
-                          className="mr-2 rounded bg-orange-500 px-3 py-1 text-xs font-bold uppercase text-cyan-50"
-                          key={i}
-                        >
-                          {i}
-                        </span>
-                      )
-                    })}
-                  </td>
-                  <td className="whitespace-nowrap px-6 py-3 text-sm font-light">
-                    {match.review?.split(',').map((i) => {
-                      return (
-                        <span
-                          className={`mr-2 rounded px-3 py-1 text-xs font-bold uppercase text-white ${
-                            i === 'race' || i === 'home' || i === 'must-win'
-                              ? 'bg-green-700'
-                              : 'bg-red-600'
-                          }`}
-                          key={i}
-                        >
-                          {i}
-                        </span>
-                      )
-                    })}
-                  </td>
-                  <td className="flex justify-center space-x-1 px-6 py-3">
-                    <UpdateMatch
-                      match={match}
-                      competitions={competitions}
-                      teams={teams}
-                      rounds={rounds}
-                      results={results}
-                      tickets={tickets}
-                    />
-                    <DeleteMatch match={match} />
-                  </td>
-                </tr>
-              )
-            })}
-          </tbody>
-        </table>
+    <div className="container">
+      <div className="flex items-center rounded-t-lg bg-zinc-100">
+        <div className="flex px-4 py-3">
+          <span className="text-left text-base font-semibold text-zinc-900">
+            Lista de Jogos
+          </span>
+        </div>
       </div>
-      <div className="grid grid-cols-1 gap-4 md:hidden">
-        {matches.map((match) => {
-          return (
-            <div
-              key={match.match_id}
-              className="space-y-3 rounded-lg bg-zinc-200 p-4 font-semibold  shadow-lg"
-            >
-              <div className="flex items-center space-x-2 text-sm">
-                <span>Data:</span>
-                <div>{formatDate(match.match_date)}</div>
+      {paginatedItems?.map((match) => {
+        return (
+          <div
+            className="grid items-center justify-center rounded-b-lg border border-zinc-200 bg-zinc-100 sm:grid-cols-3"
+            key={match.match_id}
+          >
+            <div className="grid grid-cols-3 items-center justify-center self-center">
+              <div className="flex items-center justify-start px-3 py-2">
+                <span className="text-xs">{formatDate(match.match_date)}</span>
               </div>
-              <div className="flex items-center space-x-2 text-sm">
-                <div>{match.home_team.team_name}</div>
-                <div>
-                  {match.home_goals}
-                  <span> x </span>
-                  {match.visitor_goals}
+              <div className="flex-1 justify-start px-3 py-2">
+                <div className="overflow-hidden text-ellipsis whitespace-nowrap text-left text-sm">
+                  {match.home_team.team_name}
                 </div>
-                <div>{match.visitor_team.team_name}</div>
+                <div className="overflow-hidden text-ellipsis whitespace-nowrap text-left text-sm">
+                  {match.visitor_team.team_name}
+                </div>
               </div>
-              <div className="flex items-center space-x-2 text-sm">
-                <span>Reasultado:</span>
-                <div
-                  style={{
-                    backgroundColor: match.result === 'red' ? 'red' : 'green',
-                    padding: '0 8px',
-                    borderRadius: '4px',
-                    color: 'white',
-                  }}
-                >
-                  {match.result}
-                </div>
+              <div className="flex flex-col items-center justify-center px-3 py-2">
+                <div className="text-xs">{match.home_goals}</div>
+                <div className="text-xs">{match.visitor_goals}</div>
               </div>
             </div>
-          )
-        })}
-      </div>
+
+            <div className="grid grid-cols-3 items-center justify-center">
+              <div className="flex items-center justify-start px-3 py-2">
+                <span
+                  className={`rounded px-1 text-xs font-bold uppercase text-white ${
+                    match.result === 'red'
+                      ? 'bg-red-600'
+                      : match.result === 'green'
+                      ? 'bg-green-600'
+                      : match.result === 'green'
+                      ? 'bg-yellow-400'
+                      : 'bg-sky-600'
+                  }`}
+                >
+                  {match.result}
+                </span>
+              </div>
+              <div className="flex items-center justify-start px-3 py-2">
+                {match.strategy?.split(',').map((i) => {
+                  return (
+                    <span
+                      className="mr-2 rounded bg-orange-500 px-1 text-xs font-bold uppercase text-cyan-50"
+                      key={i}
+                    >
+                      {i}
+                    </span>
+                  )
+                })}
+              </div>
+              <div className="flex flex-wrap items-center justify-start px-3 py-2">
+                {match.review?.split(',').map((i) => {
+                  return (
+                    <span
+                      className={` mr-2 mt-1 whitespace-nowrap rounded px-1 text-xs font-bold uppercase text-white ${
+                        i === 'race' || i === 'home' || i === 'must-win'
+                          ? 'bg-green-700'
+                          : 'bg-red-600'
+                      }`}
+                      key={i}
+                    >
+                      {i}
+                    </span>
+                  )
+                })}
+                {/* <span className="text-xs">{match.review}</span> */}
+              </div>
+            </div>
+
+            <div className="flex items-center justify-center gap-1 px-3 py-2">
+              <UpdateMatch
+                match={match}
+                competitions={competitions}
+                teams={teams}
+                rounds={rounds}
+                results={results}
+                tickets={tickets}
+              />
+              <DeleteMatch match={match} />
+            </div>
+          </div>
+        )
+      })}
       {totalPages > 1 && (
         <Pagination
           totalPages={totalPages}
