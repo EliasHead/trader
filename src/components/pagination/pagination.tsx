@@ -6,8 +6,8 @@ const Pagination = ({
   goToNextPage,
   goToPreviousPage,
 }: any) => {
-  const start = 1
-  const end = totalPages
+  // const start = 1
+  // const end = totalPages
 
   return (
     <nav aria-label="Page navigation">
@@ -15,14 +15,14 @@ const Pagination = ({
         <li onClick={goToPreviousPage} className={``}>
           <a
             className={` ${
-              currentPage <= 1 ? 'pointer-events-none invisible' : ''
+              currentPage <= 1 ? 'disabled cursor-not-allowed' : ''
             } ml-0 flex h-8 items-center justify-center rounded-l-lg border border-gray-300 bg-white px-3 leading-tight text-gray-500 hover:bg-gray-100 hover:text-gray-700 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white`}
             href="#"
           >
             Prev
           </a>
         </li>
-        {Array.from({ length: end - start + 1 })
+        {/* {Array.from({ length: end - start + 1 })
           .map((_, index) => start + index)
           .map((page) => (
             <li className="hidden sm:list-item" key={page}>
@@ -37,11 +37,11 @@ const Pagination = ({
                 {page}
               </a>
             </li>
-          ))}
+          ))} */}
         <li onClick={goToNextPage}>
           <a
             className={`${
-              currentPage >= totalPages ? 'pointer-events-none invisible' : ''
+              currentPage >= totalPages ? 'disabled cursor-not-allowed' : ''
             } dark:hover:text-white} flex h-8 items-center justify-center rounded-r-lg border border-gray-300 bg-white px-3 leading-tight text-gray-500 hover:bg-gray-100 hover:text-gray-700 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700`}
             href="#"
           >
