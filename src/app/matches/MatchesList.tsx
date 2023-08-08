@@ -96,10 +96,10 @@ export default function MatchesList({
   }
 
   return (
-    <div className="container">
+    <div className="container text-zinc-900">
       <div className="flex items-center rounded-t-lg bg-zinc-100">
         <div className="flex px-4 py-3">
-          <span className="text-left text-base font-semibold text-zinc-900">
+          <span className="text-left text-base font-semibold">
             Lista de Jogos
           </span>
         </div>
@@ -107,7 +107,7 @@ export default function MatchesList({
       {paginatedItems?.map((match) => {
         return (
           <div
-            className="grid items-center justify-center rounded-b-lg border border-zinc-200 bg-zinc-100 sm:grid-cols-3"
+            className="grid items-center justify-center border border-zinc-200 bg-zinc-100 sm:grid-cols-3"
             key={match.match_id}
           >
             <div className="grid grid-cols-3 items-center justify-center self-center">
