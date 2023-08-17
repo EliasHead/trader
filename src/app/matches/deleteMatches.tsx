@@ -40,7 +40,7 @@ const DeleteMatch = ({ match }: { match: Match }) => {
   }
 
   return (
-    <div>
+    <div className="px-3 py-2">
       <button className="btn btn-error btn-sm" onClick={handleModal}>
         <Trash size={24} />
       </button>

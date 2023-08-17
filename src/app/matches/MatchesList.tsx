@@ -107,10 +107,10 @@ export default function MatchesList({
       {paginatedItems?.map((match) => {
         return (
           <div
-            className="grid items-center justify-center border border-zinc-200 bg-zinc-100 sm:grid-cols-3"
+            className="grid w-full items-center justify-center border border-zinc-200 bg-zinc-100 sm:grid-cols-3"
             key={match.match_id}
           >
-            <div className="grid grid-cols-3 items-center justify-center self-center">
+            <div className="grid grid-cols-app items-center justify-center self-center">
               <div className="flex items-center justify-start px-3 py-2">
                 <span className="text-xs">{formatDate(match.match_date)}</span>
               </div>
@@ -126,9 +126,17 @@ export default function MatchesList({
                 <div className="text-xs">{match.home_goals}</div>
                 <div className="text-xs">{match.visitor_goals}</div>
               </div>
+              <UpdateMatch
+                match={match}
+                competitions={competitions}
+                teams={teams}
+                rounds={rounds}
+                results={results}
+                tickets={tickets}
+              />
             </div>
 
-            <div className="grid grid-cols-3 items-center justify-center">
+            <div className="grid grid-cols-app items-center justify-center">
               <div className="flex items-center justify-start px-3 py-2">
                 <span
                   className={`rounded px-1 text-xs font-bold uppercase text-white ${
@@ -173,18 +181,19 @@ export default function MatchesList({
                 })}
                 {/* <span className="text-xs">{match.review}</span> */}
               </div>
+              <DeleteMatch match={match} />
             </div>
 
             <div className="flex items-center justify-center gap-1 px-3 py-2">
-              <UpdateMatch
+              {/* <UpdateMatch
                 match={match}
                 competitions={competitions}
                 teams={teams}
                 rounds={rounds}
                 results={results}
                 tickets={tickets}
-              />
-              <DeleteMatch match={match} />
+              /> */}
+              {/* <DeleteMatch match={match} /> */}
             </div>
           </div>
         )

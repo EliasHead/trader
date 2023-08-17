@@ -7,6 +7,11 @@ module.exports = {
   ],
   theme: {
     extend: {
+      gridTemplateColumns: {
+        app: '1fr 3fr 1fr 1fr',
+        match: '1fr 2fr 2fr 1fr',
+        form: 'minmax(7.5rem, 17.5rem) minmax(25rem, 1fr) minmax(0, 15rem)',
+      },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
         'gradient-conic':

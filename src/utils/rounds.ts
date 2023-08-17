@@ -37,8 +37,8 @@ export const dataRounds = [
   { round_id: 36, round_name: 36 },
   { round_id: 37, round_name: 37 },
   { round_id: 38, round_name: 38 },
-  { round_id: 39, round_name: 'oitavas' },
-  { round_id: 40, round_name: 'quartas' },
-  { round_id: 41, round_name: 'semi' },
-  { round_id: 42, round_name: 'final' },
+  { round_id: 39, round_name: '1/8-FINALS' },
+  { round_id: 40, round_name: 'QUARTER-FINALS' },
+  { round_id: 41, round_name: 'SEMI-FINALS' },
+  { round_id: 42, round_name: 'FINAL' },
 ]

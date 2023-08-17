@@ -110,7 +110,7 @@ const UpdateMatch = ({
   }
 
   return (
-    <div>
+    <div className="px-3 py-2">
       <button className="btn btn-info btn-sm" onClick={handleModal}>
         <Pencil size={24} />
       </button>
