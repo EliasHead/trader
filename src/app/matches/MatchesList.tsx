@@ -114,7 +114,7 @@ export default function MatchesList({
               <div className="flex items-center justify-start px-3 py-2">
                 <span className="text-xs">{formatDate(match.match_date)}</span>
               </div>
-              <div className="flex-1 justify-start px-3 py-2">
+              <div className="flex-1 justify-start truncate px-3 py-2">
                 <div className="overflow-hidden text-ellipsis whitespace-nowrap text-left text-sm">
                   {match.home_team.team_name}
                 </div>
