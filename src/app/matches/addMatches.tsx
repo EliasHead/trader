@@ -114,9 +114,9 @@ const AddMatches = ({ teams, competitions, rounds }: MatchesProps) => {
         Adicionar novo jogo
       </button>
       <div className={isOpen ? 'modal modal-open' : 'modal'}>
-        <div className="modal-box">
+        <div className="modal-box sm:w-3/5 sm:max-w-none">
           <h3 className="text-lg font-bold">Adicionar novo jogo</h3>
-          <form onSubmit={handleSubmit}>
+          <form className="grid grid-cols-3 gap-2" onSubmit={handleSubmit}>
             <div className="form-control w-full">
               <label className="label font-bold" htmlFor="home_team">
                 Time da casa
@@ -210,7 +210,7 @@ const AddMatches = ({ teams, competitions, rounds }: MatchesProps) => {
               </label>
               <Select
                 name="strategy"
-                placeholder="Escola a estrategia estrategias"
+                placeholder="Escolha as estrategias"
                 isMulti
                 onChange={handleChangeStrategy}
                 options={strategies}
@@ -222,7 +222,7 @@ const AddMatches = ({ teams, competitions, rounds }: MatchesProps) => {
               </label>
               <Select
                 name="strategy"
-                placeholder="Escola a estrategia estrategias"
+                placeholder="Escolha as revisões"
                 isMulti
                 onChange={handleChangeReview}
                 options={reviews}
@@ -261,7 +261,7 @@ const AddMatches = ({ teams, competitions, rounds }: MatchesProps) => {
                 onChange={handleChange}
               />
             </div>
-            <div className="modal-action">
+            <div className="modal-action flex items-end">
               <button type="button" className="btn" onClick={handleModal}>
                 Close
               </button>
