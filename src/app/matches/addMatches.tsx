@@ -26,6 +26,7 @@ const reviews = [
   { label: 'must-win', value: 5 },
   { label: 'bet', value: 6 },
   { label: '-FL+', value: 7 },
+  { label: 'live', value: 8 },
 ]
 
 const AddMatches = ({ teams, competitions, rounds }: MatchesProps) => {
