@@ -171,7 +171,7 @@ export default function MatchesList({
                       className={` mr-2 mt-1 whitespace-nowrap rounded px-1 text-xs font-bold uppercase text-white ${
                         i === 'race' || i === 'home' || i === 'must-win'
                           ? 'bg-green-700'
-                          : i === 'live'
+                          : i === 'live' || i === 'ciclos'
                           ? 'bg-blue-600'
                           : 'bg-red-600'
                       }`}
