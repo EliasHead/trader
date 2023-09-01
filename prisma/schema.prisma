@@ -64,6 +64,7 @@ model Leverage {
   goal       String?   @default("")
   result     String?   @default("")
   createdAt  DateTime  @default(now())
+  review_leverage          String?
   Matches    Matches[]
   Tickets    Tickets[]
 }
@@ -84,7 +85,7 @@ model Tickets {
   resultStake Float     @default(0)
   // TODO: remover coluna
   leverage    Leverage? @relation(fields: [leverageId], references: [leverageId])
-  leverageId  Int?
+  leverageId  Int? @default(1)
   Matches     Matches[]
 
   @@map("tickets")
