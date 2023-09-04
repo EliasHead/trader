@@ -22,8 +22,24 @@ export default async function Leverage() {
               key={leverage.leverageId}
             >
               <div className="px-4 py-2">{leverage.leverageId}</div>
-              <div className="px-4 py-2">{leverage.goal}</div>
-              <div className="px-4 py-2">{leverage.result}</div>
+              <div className="px-4 py-2 font-bold uppercase">
+                {leverage.goal}
+              </div>
+              <div>
+                <span
+                  className={`rounded px-2 py-1 text-xs font-bold uppercase text-white ${
+                    leverage.result === 'red'
+                      ? 'bg-red-600'
+                      : leverage.result === 'green'
+                      ? 'bg-green-600'
+                      : leverage.result === 'green'
+                      ? 'bg-yellow-400'
+                      : 'bg-sky-600'
+                  }`}
+                >
+                  {leverage.result}
+                </span>
+              </div>
             </div>
           )
         })}
