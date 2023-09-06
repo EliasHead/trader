@@ -13,6 +13,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover'
+import { ptBR } from 'date-fns/locale'
 
 // interface Dateprops {
 //   from: Date | undefined
@@ -51,11 +52,18 @@ export function DatePickerWithRange({
             {date?.from ? (
               date.to ? (
                 <>
-                  {format(date.from, 'LLL dd, y')} -{' '}
-                  {format(date.to, 'LLL dd, y')}
+                  {format(date.from, 'dd LLL, y', {
+                    locale: ptBR,
+                  })}{' '}
+                  -{' '}
+                  {format(date.to, 'dd LLL, y', {
+                    locale: ptBR,
+                  })}
                 </>
               ) : (
-                format(date.from, 'LLL dd, y')
+                format(date.from, 'LLL dd, y', {
+                  locale: ptBR,
+                })
               )
             ) : (
               <span>Pick a date</span>
