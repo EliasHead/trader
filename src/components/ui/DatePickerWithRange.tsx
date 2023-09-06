@@ -1,5 +1,4 @@
 'use client'
-
 import * as React from 'react'
 import { format } from 'date-fns'
 import { Calendar as CalendarIcon } from 'lucide-react'
@@ -15,11 +14,6 @@ import {
 } from '@/components/ui/popover'
 import { ptBR } from 'date-fns/locale'
 
-// interface Dateprops {
-//   from: Date | undefined
-//   to: Date | undefined
-// }
-
 interface DateTimePickerProps {
   className?: React.HTMLAttributes<HTMLDivElement>
   date: DateRange | undefined
@@ -31,11 +25,6 @@ export function DatePickerWithRange({
   date,
   setDate,
 }: DateTimePickerProps) {
-  // const [date, setDate] = React.useState<DateRange | undefined>({
-  //   from: new Date(2022, 0, 20),
-  //   to: addDays(new Date(2022, 0, 20), 20),
-  // })
-
   return (
     <div className={cn('grid gap-2', className)}>
       <Popover>

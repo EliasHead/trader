@@ -1,6 +1,5 @@
 import { prisma } from '@/utils/prisma'
-import { ListTickets } from './listTickets'
-import { FilterTickets } from '@/components/filters/filterTickets'
+import { DatePicker } from '@/components/ui/DatePicker'
 
 const getTickets = async () => {
   const res = prisma.tickets.findMany({
@@ -24,8 +23,7 @@ const Tickets = async () => {
 
   return (
     <div className="mt-16 flex flex-col items-center gap-4">
-      <FilterTickets tickets={tickets} />
-      <ListTickets tickets={tickets} leverages={leverages} />
+      <DatePicker tickets={tickets} leverages={leverages} />
     </div>
   )
 }

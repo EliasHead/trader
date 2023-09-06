@@ -5,9 +5,6 @@ import { UpdateTicket } from './updateTicket'
 import { AddTicket } from './addTicket'
 import React, { useState } from 'react'
 import Pagination from '@/components/pagination/pagination'
-import { DatePickerWithRange } from '@/components/ui/DatePickerWithRange'
-import { subDays } from 'date-fns'
-import { DateRange } from 'react-day-picker'
 
 type LeverageType = {
   leverageId: number
@@ -23,17 +20,11 @@ interface Match extends Tickets {
 type TicketsProps = {
   tickets: Match[]
   leverages: LeverageType[]
+  from: Date | undefined
+  to: Date | undefined
 }
 
-export const ListTickets = ({ tickets, leverages }: TicketsProps) => {
-  const [date, setDate] = React.useState<DateRange | undefined>({
-    from: subDays(new Date(Date.now()), 7) /* undefined */,
-    to: new Date(Date.now()) /* undefined */,
-  })
-
-  const from = date?.from
-  const to = date?.to
-
+export const ListTickets = ({ tickets, leverages, from, to }: TicketsProps) => {
   const dataArray = tickets.filter((a) => {
     return a.createdAt >= from! && a.createdAt <= to!
   })
@@ -48,7 +39,7 @@ export const ListTickets = ({ tickets, leverages }: TicketsProps) => {
   const endIndex = startIndex + itemsPerPage
 
   const paginatedItems =
-    date?.from === undefined
+    from === undefined
       ? tickets.slice(startIndex, endIndex)
       : dataArray.slice(startIndex, endIndex)
 
@@ -68,7 +59,6 @@ export const ListTickets = ({ tickets, leverages }: TicketsProps) => {
     <div className="grid grid-cols-1 gap-1">
       <div className="flex">
         <AddTicket />
-        <DatePickerWithRange date={date} setDate={setDate} />
       </div>
       {paginatedItems.map((ticket) => {
         return (

@@ -1,9 +1,22 @@
 import { Tickets } from '@prisma/client'
 import { ProgressBar } from '../ui/progressBar'
 
-export const FilterTickets = ({ tickets }: { tickets: Tickets[] }) => {
-  const greens = tickets.filter((ticket) => ticket.result === 'green').length
-  const reds = tickets.filter((ticket) => ticket.result === 'red').length
+interface FilterTicketsProps {
+  tickets: Tickets[]
+  from: Date | undefined
+  to: Date | undefined
+}
+
+export const FilterTickets = ({ tickets, from, to }: FilterTicketsProps) => {
+  const dataArray = tickets.filter((a) => {
+    return a.createdAt >= from! && a.createdAt <= to!
+  })
+
+  const ticketsFormat = from === undefined ? tickets : dataArray
+  const greens = ticketsFormat.filter(
+    (ticket) => ticket.result === 'green',
+  ).length
+  const reds = ticketsFormat.filter((ticket) => ticket.result === 'red').length
   const totalTickets = greens + reds
 
   const rateGreens = ((greens / totalTickets) * 100).toFixed(0)
