@@ -3,8 +3,11 @@ import { Tickets } from '@prisma/client'
 import { DeleteTicket } from './deleteTicket'
 import { UpdateTicket } from './updateTicket'
 import { AddTicket } from './addTicket'
-import { useState } from 'react'
+import React, { useState } from 'react'
 import Pagination from '@/components/pagination/pagination'
+import { DatePickerWithRange } from '@/components/ui/DatePickerWithRange'
+import { addDays } from 'date-fns'
+import { DateRange } from 'react-day-picker'
 
 type LeverageType = {
   leverageId: number
@@ -23,6 +26,21 @@ type TicketsProps = {
 }
 
 export const ListTickets = ({ tickets, leverages }: TicketsProps) => {
+  const [date, setDate] = React.useState<DateRange | undefined>({
+    from: new Date(2022, 0, 20),
+    to: addDays(new Date(2022, 0, 20), 20),
+  })
+
+  const from = date?.from
+  const to = date?.to
+
+  const dataArray = tickets.filter((a) => {
+    return a.createdAt >= from! && a.createdAt <= to!
+  })
+
+  console.log('from: ', from, 'to: ', to)
+  console.log(dataArray)
+
   const [currentPage, setCurrentPage] = useState(1)
 
   const itemsPerPage = 10
@@ -32,7 +50,7 @@ export const ListTickets = ({ tickets, leverages }: TicketsProps) => {
   const startIndex = (currentPage - 1) * itemsPerPage
   const endIndex = startIndex + itemsPerPage
 
-  const paginatedItems = tickets.slice(startIndex, endIndex)
+  const paginatedItems = date ? dataArray : tickets.slice(startIndex, endIndex)
 
   const goToNextPage = () => {
     if (currentPage < totalPages) {
@@ -48,8 +66,9 @@ export const ListTickets = ({ tickets, leverages }: TicketsProps) => {
 
   return (
     <div className="grid grid-cols-1 gap-1">
-      <div>
+      <div className="flex">
         <AddTicket />
+        <DatePickerWithRange date={date} setDate={setDate} />
       </div>
       {paginatedItems.map((ticket) => {
         return (
