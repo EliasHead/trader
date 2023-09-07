@@ -22,7 +22,7 @@ const Tickets = async () => {
   })
 
   return (
-    <div className="mt-16 flex flex-col items-center gap-4">
+    <div className="mt-16 min-h-screen">
       <DatePicker tickets={tickets} leverages={leverages} />
     </div>
   )
