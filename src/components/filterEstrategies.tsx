@@ -3,6 +3,8 @@ import { Matches } from '@prisma/client'
 import { ChangeEvent, useState } from 'react'
 import { ProgressBar } from './ui/progressBar'
 import { strategies } from '@/utils/estrategies'
+import { ArrowUp, ArrowDown } from 'lucide-react'
+import { Card, CardHeader, CardTitle, CardContent } from './ui/card'
 export const FilterEstrategies = ({ matches }: { matches: Matches[] }) => {
   const [param, setParam] = useState('F')
   // F - Favorito
@@ -45,97 +47,142 @@ export const FilterEstrategies = ({ matches }: { matches: Matches[] }) => {
   }
 
   return (
-    <div>
-      <div className="relative m-auto mb-16 mt-16 w-[95%] items-center overflow-x-auto sm:flex sm:flex-col sm:rounded-md">
-        <form className="mb-4 w-4/12">
-          <div className="form-control w-full items-center sm:flex sm:flex-col">
-            <label className="label font-bold" htmlFor="home_team">
-              Filtrar por Estrategia
-            </label>
-            <select
-              name="home_team"
-              id="home_team"
-              value={param}
-              className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
-              onChange={handleChang}
-            >
-              {strategies?.map((strategy) => {
-                return (
-                  <option key={strategy.value} value={strategy.label}>
-                    {strategy.label}
-                  </option>
-                )
-              })}
-            </select>
-          </div>
-        </form>
-        <table className="w-full bg-white text-left text-sm text-gray-500 dark:text-gray-400">
-          <thead className="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
-            <tr>
-              <th scope="col" className="px-6 py-3">
-                Jogos
-              </th>
-              <th scope="col" className="px-6 py-3">
-                Vitorias
-              </th>
-              <th scope="col" className="px-6 py-3">
-                Empates
-              </th>
-              <th scope="col" className="px-6 py-3">
-                Derotas
-              </th>
-              <th scope="col" className="px-6 py-3">
-                Em andamento
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr className="border-b bg-white dark:border-gray-700 dark:bg-gray-800">
-              <td className="px-6 py-4">{totalMatches}</td>
-              <td className="px-6 py-4">{greens}</td>
-              <td className="px-6 py-4">{draws}</td>
-              <td className="px-6 py-4">{reds}</td>
-              <td className="px-6 py-4">{progress}</td>
-            </tr>
-          </tbody>
-        </table>
-        <div className="w-full">
-          <ProgressBar
-            rate={rateGreens}
-            bgColor="bg-green-600"
-            title="Porcentagem de vitorias"
-          />
-
-          <ProgressBar
-            rate={rateReds}
-            bgColor="bg-red-600"
-            title="Porcentagem de derotas"
-          />
-
-          <ProgressBar
-            rate={rateDraws}
-            bgColor="bg-orange-600"
-            title="Porcentagem de derotas"
-          />
+    <div className="mt-16 flex flex-col items-center">
+      <form className="mb-4 w-4/12">
+        <div className="form-control w-full items-center sm:flex sm:flex-col">
+          <label className="label font-bold" htmlFor="home_team">
+            Filtrar por Estrategia
+          </label>
+          <select
+            name="home_team"
+            id="home_team"
+            value={param}
+            className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+            onChange={handleChang}
+          >
+            {strategies?.map((strategy) => {
+              return (
+                <option key={strategy.value} value={strategy.label}>
+                  {strategy.label}
+                </option>
+              )
+            })}
+          </select>
         </div>
+      </form>
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-5">
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Jogos</CardTitle>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              className="h-4 w-4 text-muted-foreground"
+            >
+              <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+            </svg>
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">{totalMatches}</div>
+            <p className="text-xs text-muted-foreground">
+              total de jogos realizados
+            </p>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Vitorias</CardTitle>
+            <ArrowUp size={24} color="#16a34a" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold text-green-600">{greens}</div>
+            <p className="text-xs text-muted-foreground">
+              total de jogos ganhos
+            </p>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Empates</CardTitle>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              className="h-4 w-4 text-muted-foreground"
+            >
+              <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+            </svg>
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">{draws}</div>
+            <p className="text-xs text-muted-foreground">
+              total de jogos empatados
+            </p>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Derrotas</CardTitle>
+            <ArrowDown size={24} color="#dc2626" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold text-red-600">{reds}</div>
+            <p className="text-xs text-muted-foreground">
+              total de jogos perdidos
+            </p>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Andamento</CardTitle>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              className="h-4 w-4 text-muted-foreground"
+            >
+              <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+            </svg>
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">{progress}</div>
+            <p className="whitespace-nowrap text-xs text-muted-foreground">
+              total de jogos em andamento
+            </p>
+          </CardContent>
+        </Card>
+      </div>
+      <div className="w-full">
+        <ProgressBar
+          rate={rateGreens}
+          bgColor="bg-green-600"
+          title="Porcentagem de vitorias"
+        />
 
-        {/* <ProgressBar
-        // rate={rateGreensSerieB}
-        color="success"
-        title="Porcentagem de vitorias"
-      /> */}
+        <ProgressBar
+          rate={rateReds}
+          bgColor="bg-red-600"
+          title="Porcentagem de derotas"
+        />
 
-        {/* <ProgressBar
-        // rate={rateRedsSerieB}
-        color="red-600"
-        title="Porcentagem de derotas"
-      /> */}
-
-        {/* <ProgressBar
-        // rate={rateDrawsSerieB}
-        color="yellow-500"
-        title="Porcentagem de empates"
-      /> */}
+        <ProgressBar
+          rate={rateDraws}
+          bgColor="bg-orange-600"
+          title="Porcentagem de derotas"
+        />
       </div>
     </div>
   )

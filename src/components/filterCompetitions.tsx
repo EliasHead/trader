@@ -55,7 +55,33 @@ export const FilterCompetitions = ({
   }
 
   return (
-    <div className="mt-16">
+    <div className="mt-16 flex flex-col items-center">
+      <form className="mb-4 w-4/12">
+        <div className="form-control w-full items-center sm:flex sm:flex-col">
+          <label className="label font-bold" htmlFor="home_team">
+            Filtrar por competição
+          </label>
+          <select
+            name="home_team"
+            id="home_team"
+            value={competiton}
+            className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+            onChange={handleChang}
+          >
+            <option>Geral</option>
+            {competitions?.map((competition) => {
+              return (
+                <option
+                  key={competition.competition_id}
+                  value={competition.competition_id}
+                >
+                  {competition.competition_name}
+                </option>
+              )
+            })}
+          </select>
+        </div>
+      </form>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-5">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
@@ -151,52 +177,24 @@ export const FilterCompetitions = ({
           </CardContent>
         </Card>
       </div>
-      <div className="relative m-auto mb-16 w-[95%] items-center overflow-x-auto sm:flex sm:flex-col sm:rounded-md">
-        <form className="mb-4 w-4/12">
-          <div className="form-control w-full items-center sm:flex sm:flex-col">
-            <label className="label font-bold" htmlFor="home_team">
-              Filtrar por competição
-            </label>
-            <select
-              name="home_team"
-              id="home_team"
-              value={competiton}
-              className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
-              onChange={handleChang}
-            >
-              <option>Geral</option>
-              {competitions?.map((competition) => {
-                return (
-                  <option
-                    key={competition.competition_id}
-                    value={competition.competition_id}
-                  >
-                    {competition.competition_name}
-                  </option>
-                )
-              })}
-            </select>
-          </div>
-        </form>
-        <div className="w-full">
-          <ProgressBar
-            rate={rateGreens}
-            bgColor="bg-green-600"
-            title="Porcentagem de vitorias"
-          />
+      <div className="w-full">
+        <ProgressBar
+          rate={rateGreens}
+          bgColor="bg-green-600"
+          title="Porcentagem de vitorias"
+        />
 
-          <ProgressBar
-            rate={rateReds}
-            bgColor="bg-red-600"
-            title="Porcentagem de derotas"
-          />
+        <ProgressBar
+          rate={rateReds}
+          bgColor="bg-red-600"
+          title="Porcentagem de derotas"
+        />
 
-          <ProgressBar
-            rate={rateDraws}
-            bgColor="bg-orange-600"
-            title="Porcentagem de derotas"
-          />
-        </div>
+        <ProgressBar
+          rate={rateDraws}
+          bgColor="bg-orange-600"
+          title="Porcentagem de derotas"
+        />
       </div>
     </div>
   )
