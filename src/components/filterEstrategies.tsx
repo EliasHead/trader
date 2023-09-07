@@ -47,7 +47,7 @@ export const FilterEstrategies = ({ matches }: { matches: Matches[] }) => {
   }
 
   return (
-    <div className="mt-16 flex flex-col items-center">
+    <div className="mt-16 whitespace-nowrap">
       <form className="mb-4 w-4/12">
         <div className="form-control w-full items-center sm:flex sm:flex-col">
           <label className="label font-bold" htmlFor="home_team">
