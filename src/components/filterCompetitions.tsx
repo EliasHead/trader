@@ -3,6 +3,7 @@ import { Matches, Competition } from '@prisma/client'
 import React, { ChangeEvent, useState } from 'react'
 import { ProgressBar } from './ui/progressBar'
 import { Card, CardHeader, CardTitle, CardContent } from './ui/card'
+import { ArrowDown, ArrowUp } from 'lucide-react'
 
 type CountPerCompetitionType = {
   matches: Matches[]
@@ -82,18 +83,7 @@ export const FilterCompetitions = ({
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Vitorias</CardTitle>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              className="h-4 w-4 text-muted-foreground"
-            >
-              <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
-            </svg>
+            <ArrowUp size={24} color="#16a34a" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold text-green-600">{greens}</div>
@@ -128,18 +118,7 @@ export const FilterCompetitions = ({
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Derrotas</CardTitle>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              className="h-4 w-4 text-muted-foreground"
-            >
-              <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
-            </svg>
+            <ArrowDown size={24} color="#dc2626" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold text-red-600">{reds}</div>
