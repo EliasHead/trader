@@ -56,7 +56,7 @@ export const FilterCompetitions = ({
 
   return (
     <div className="mt-16 whitespace-nowrap">
-      <form className="mb-4 w-4/12">
+      <form className="mb-4 w-full sm:w-1/2">
         <div className="form-control w-full items-center sm:flex sm:flex-col">
           <label className="label font-bold" htmlFor="home_team">
             Filtrar por competição
