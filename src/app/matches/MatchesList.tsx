@@ -96,7 +96,7 @@ export default function MatchesList({
   }
 
   return (
-    <div className="container text-zinc-900">
+    <div className="w-full0 text-zinc-900">
       <div className="flex items-center rounded-t-lg bg-zinc-100">
         <div className="flex px-4 py-3">
           <span className="text-left text-base font-semibold">
