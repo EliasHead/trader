@@ -56,8 +56,8 @@ export const ListTickets = ({ tickets, leverages, from, to }: TicketsProps) => {
   }
 
   return (
-    <div className="grid grid-cols-1 gap-1">
-      <div className="flex">
+    <div className="grid grid-cols-1 items-center">
+      <div className="m-auto">
         <AddTicket />
       </div>
       {paginatedItems.map((ticket) => {

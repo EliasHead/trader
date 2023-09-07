@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import axios from 'axios'
 import Select, { MultiValue } from 'react-select'
 import { strategies } from '@/utils/estrategies'
+import { Button } from '@/components/ui/button'
 
 type roundsType = {
   round_id: number
@@ -112,9 +113,9 @@ const AddMatches = ({ teams, competitions, rounds }: MatchesProps) => {
   return (
     // TODO: alterar lagura da modal
     <div>
-      <button className="btn bg-blue-500 text-white" onClick={handleModal}>
-        Adicionar novo jogo
-      </button>
+      <Button className="font-bold uppercase" size={'lg'} onClick={handleModal}>
+        novo jogo
+      </Button>
       <div className={isOpen ? 'modal modal-open' : 'modal'}>
         <div className="modal-box sm:w-3/5 sm:max-w-none">
           <h3 className="text-lg font-bold">Adicionar novo jogo</h3>

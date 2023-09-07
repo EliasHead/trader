@@ -3,6 +3,7 @@ import { ChangeEvent, FormEvent, useState } from 'react'
 import type { Competition } from '@prisma/client'
 import { useRouter } from 'next/navigation'
 import axios from 'axios'
+import { Button } from '@/components/ui/button'
 
 const AddCompetitions = ({ competitions }: { competitions: Competition[] }) => {
   const [formData, setFormData] = useState({
@@ -44,12 +45,9 @@ const AddCompetitions = ({ competitions }: { competitions: Competition[] }) => {
 
   return (
     <div className="w[45%] flex items-center">
-      <button
-        className="btn whitespace-nowrap rounded-lg border-none bg-blue-700 px-4 py-2.5 text-sm font-medium text-white hover:bg-blue-800 focus:outline-none dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-        onClick={handleModal}
-      >
-        Novo campeonato
-      </button>
+      <Button className="font-bold uppercase" size={'lg'} onClick={handleModal}>
+        novo campeonato
+      </Button>
       <div className={isOpen ? 'modal modal-open' : 'modal'}>
         <div className="modal-box">
           <h3 className="text-lg font-bold">Adicionar novo Campeonato</h3>

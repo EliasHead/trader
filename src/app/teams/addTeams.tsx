@@ -3,6 +3,7 @@ import { ChangeEvent, FormEvent, useState } from 'react'
 import type { Teams } from '@prisma/client'
 import { useRouter } from 'next/navigation'
 import axios from 'axios'
+import { Button } from '@/components/ui/button'
 
 const AddTeams = ({ teams }: { teams: Teams[] }) => {
   const [formData, setFormData] = useState({
@@ -43,12 +44,13 @@ const AddTeams = ({ teams }: { teams: Teams[] }) => {
 
   return (
     <div>
-      <button
-        className="btn whitespace-nowrap bg-blue-500 text-white"
+      <Button
+        className="whitespace-nowrap font-bold uppercase"
+        size={'lg'}
         onClick={handleModal}
       >
-        Adicionar time
-      </button>
+        novo time
+      </Button>
       <div className={isOpen ? 'modal modal-open' : 'modal'}>
         <div className="modal-box">
           <h3 className="text-lg font-bold">Adicionar novo time</h3>
