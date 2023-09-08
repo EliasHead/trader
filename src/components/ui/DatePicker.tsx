@@ -34,7 +34,7 @@ export function DatePicker({ className, tickets, leverages }: DatePickerProps) {
 
   return (
     <div>
-      <div className={cn('grid gap-2', className)}>
+      <div className={cn('ml-4 grid gap-2', className)}>
         <Popover>
           <PopoverTrigger asChild>
             <Button
