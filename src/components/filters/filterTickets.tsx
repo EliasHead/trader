@@ -43,7 +43,7 @@ export const FilterTickets = ({ tickets, from, to }: FilterTicketsProps) => {
             <ArrowUp size={24} color="#16a34a" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{greens}</div>
+            <div className="text-2xl font-bold text-green-600">{greens}</div>
             <p className="text-xs text-muted-foreground">total de greens</p>
           </CardContent>
         </Card>
@@ -53,7 +53,7 @@ export const FilterTickets = ({ tickets, from, to }: FilterTicketsProps) => {
             <ArrowDown size={24} color="#dc2626" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{reds}</div>
+            <div className="text-2xl font-bold text-red-600">{reds}</div>
             <p className="text-xs text-muted-foreground">total de reds</p>
           </CardContent>
         </Card>
