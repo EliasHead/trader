@@ -17,7 +17,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       <body className={cn(inter.className, 'min-h-screen')}>
         <div className="min-h-screen">
           <Navbar />
-          <main className="px-4 pb-12 pt-8">{children}</main>
+          <main className="pb-12 pt-8">{children}</main>
         </div>
       </body>
     </html>

@@ -20,4 +20,8 @@ export const NavbarArray: Array<NavbarItemType> = [
     label: 'Bilhetes',
     href: '/tickets',
   },
+  {
+    label: 'Alavancagens',
+    href: '/leverage',
+  },
 ]
