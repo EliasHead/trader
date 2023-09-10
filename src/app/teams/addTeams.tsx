@@ -4,6 +4,7 @@ import type { Teams } from '@prisma/client'
 import { useRouter } from 'next/navigation'
 import axios from 'axios'
 import { Button } from '@/components/ui/button'
+import { PlusCircle } from 'lucide-react'
 
 const AddTeams = ({ teams }: { teams: Teams[] }) => {
   const [formData, setFormData] = useState({
@@ -44,12 +45,8 @@ const AddTeams = ({ teams }: { teams: Teams[] }) => {
 
   return (
     <div>
-      <Button
-        className="whitespace-nowrap font-bold uppercase"
-        size={'lg'}
-        onClick={handleModal}
-      >
-        novo time
+      <Button className="font-bold" size="sm" onClick={handleModal}>
+        <PlusCircle />
       </Button>
       <div className={isOpen ? 'modal modal-open' : 'modal'}>
         <div className="modal-box">

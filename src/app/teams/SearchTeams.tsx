@@ -5,6 +5,8 @@ import UpdateTeams from './updateTeams'
 import DeleteTeam from './deleteTeam'
 import Pagination from '@/components/pagination/pagination'
 import AddTeams from './addTeams'
+import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
+import { Separator } from '@radix-ui/react-separator'
 
 export default function SearchTeams({ teams }: { teams: Teams[] }) {
   const [searchQuery, setSearchQuery] = useState('')
@@ -46,43 +48,54 @@ export default function SearchTeams({ teams }: { teams: Teams[] }) {
   }
 
   return (
-    <div className="text-sm">
-      <div className="mb-2 flex justify-around">
-        <AddTeams teams={teams} />
-        <input
-          value={searchQuery}
-          onChange={handleFiltersChange}
-          className="flex:1 bg-zinc800 w-2/3 px-4 py-1 text-zinc-900 sm:py-3"
-          placeholder="Pesquisar time"
-        />
-      </div>
-
-      <div>
-        {paginatedItems.map((team) => {
-          return (
-            <div
-              className="flex items-center gap-1 rounded p-2 shadow-lg sm:m-auto sm:px-8"
-              key={team.team_id}
-            >
-              <div className="px-2 py-1">{team.team_id}</div>
-              <div className="flex-1">{team.team_name}</div>
-              <div className="flex items-center gap-1">
-                <UpdateTeams team={team} />
-                <DeleteTeam team={team} />
-              </div>
-            </div>
-          )
-        })}
-
-        {totalPages > 1 && (
-          <Pagination
-            totalPages={totalPages}
-            currentPage={currentPage}
-            setCurrentPage={setCurrentPage}
-            goToNextPage={goToNextPage}
-            goToPreviousPage={goToPreviousPage}
-          />
-        )}
+    <div className="w-full text-sm">
+      <div className="grid w-full grid-cols-1 gap-4 px-2">
+        <Card className="mb-2 w-full space-y-2 sm:m-auto sm:w-1/2">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle>Times</CardTitle>
+            <input
+              value={searchQuery}
+              onChange={handleFiltersChange}
+              className="flex:1 bg-zinc800 w-2/3 px-4 py-1 text-zinc-900 sm:py-3"
+              placeholder="Pesquisar time"
+            />
+            <AddTeams teams={teams} />
+          </CardHeader>
+          <CardContent className="grid gap-6">
+            {paginatedItems.map((team) => {
+              return (
+                <div className="" key={team.team_id}>
+                  <div className="grid grid-cols-6 items-center justify-between gap-1 sm:grid-cols-5">
+                    <div className="col-span-1 items-center space-x-4">
+                      <div>{team.team_id}</div>
+                    </div>
+                    <div className="col-span-3 items-center space-x-4">
+                      <div>{team.team_name}</div>
+                    </div>
+                    <div className="col-span-1 items-center space-x-4">
+                      <div>
+                        <div className="flex items-center gap-1">
+                          <UpdateTeams team={team} />
+                          <DeleteTeam team={team} />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <Separator />
+                </div>
+              )
+            })}
+            {totalPages > 1 && (
+              <Pagination
+                totalPages={totalPages}
+                currentPage={currentPage}
+                setCurrentPage={setCurrentPage}
+                goToNextPage={goToNextPage}
+                goToPreviousPage={goToPreviousPage}
+              />
+            )}
+          </CardContent>
+        </Card>
       </div>
     </div>
   )

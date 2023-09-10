@@ -55,9 +55,9 @@ export const FilterCompetitions = ({
   }
 
   return (
-    <div className="mt-16 whitespace-nowrap">
-      <form className="mb-4 w-full sm:w-1/2">
-        <div className="form-control w-full items-center sm:flex sm:flex-col">
+    <div className="mt-12 whitespace-nowrap p-2">
+      <form className="mb-4 sm:w-1/2">
+        <div className="form-control items-center sm:flex sm:flex-col">
           <label className="label font-bold" htmlFor="home_team">
             Filtrar por competição
           </label>
@@ -65,7 +65,7 @@ export const FilterCompetitions = ({
             name="home_team"
             id="home_team"
             value={competiton}
-            className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+            className="block w-4/5 rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
             onChange={handleChang}
           >
             <option>Geral</option>
@@ -177,7 +177,7 @@ export const FilterCompetitions = ({
           </CardContent>
         </Card>
       </div>
-      <div className="w-full">
+      <div>
         <ProgressBar
           rate={rateGreens}
           bgColor="bg-green-600"
