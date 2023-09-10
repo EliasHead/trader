@@ -24,12 +24,11 @@ export default async function Leverage() {
   })
 
   return (
-    <div className="container mx-auto mt-16 flex h-screen w-full flex-col items-center justify-start gap-4">
-      <h1>
-        <strong>Alavancagem</strong>
-      </h1>
-      <AddLeverage />
-      <div className="grid w-full grid-cols-1 gap-4">
+    <div className="mt-16 grid grid-cols-1 items-center space-y-4">
+      <div className="m-auto">
+        <AddLeverage />
+      </div>
+      <div className="grid w-full grid-cols-1 gap-4 px-2">
         <Card className="w-full sm:m-auto sm:w-1/2">
           <CardHeader>
             <CardTitle>Alavancagens</CardTitle>

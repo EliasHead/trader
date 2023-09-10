@@ -96,7 +96,7 @@ export default function MatchesList({
   }
 
   return (
-    <div className="w-full0 text-zinc-900">
+    <div className="m-auto w-full text-zinc-900 sm:w-1/2">
       <div className="flex items-center rounded-t-lg bg-zinc-100">
         <div className="flex px-4 py-3">
           <span className="text-left text-base font-semibold">
@@ -107,7 +107,7 @@ export default function MatchesList({
       {paginatedItems?.map((match) => {
         return (
           <div
-            className="grid w-full items-center justify-center border border-zinc-200 bg-zinc-100 sm:grid-cols-3"
+            className="grid w-full items-center justify-center border border-zinc-200 bg-zinc-100 sm:grid-cols-2"
             key={match.match_id}
           >
             <div className="grid grid-cols-app items-center justify-center self-center">
@@ -135,7 +135,6 @@ export default function MatchesList({
                 tickets={tickets}
               />
             </div>
-
             <div className="grid grid-cols-app items-center justify-center">
               <div className="flex items-center justify-start px-3 py-2">
                 <span
@@ -184,18 +183,6 @@ export default function MatchesList({
                 {/* <span className="text-xs">{match.review}</span> */}
               </div>
               <DeleteMatch match={match} />
-            </div>
-
-            <div className="flex items-center justify-center gap-1 px-3 py-2">
-              {/* <UpdateMatch
-                match={match}
-                competitions={competitions}
-                teams={teams}
-                rounds={rounds}
-                results={results}
-                tickets={tickets}
-              /> */}
-              {/* <DeleteMatch match={match} /> */}
             </div>
           </div>
         )

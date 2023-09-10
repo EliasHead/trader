@@ -112,7 +112,7 @@ const AddMatches = ({ teams, competitions, rounds }: MatchesProps) => {
 
   return (
     // TODO: alterar lagura da modal
-    <div>
+    <div className="m-auto">
       <Button className="font-bold uppercase" size={'lg'} onClick={handleModal}>
         novo jogo
       </Button>

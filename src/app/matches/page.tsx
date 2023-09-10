@@ -65,10 +65,7 @@ export default async function Matches() {
   const results = resultsData
 
   return (
-    <div className="container mx-auto mt-16 flex h-screen w-full flex-col items-center justify-start gap-4">
-      <h1>
-        <strong>Jogos</strong>
-      </h1>
+    <div className="mt-12 grid grid-cols-1 items-center space-y-4">
       <AddMatches teams={teams} competitions={competitions} rounds={rounds} />
       <MatchesList
         competitions={competitions}
