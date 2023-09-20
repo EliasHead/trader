@@ -14,4 +14,7 @@ export const strategies = [
   { label: 'HA+2G', value: 9 },
   { label: '+0.5', value: 10 },
   { label: 'lay', value: 11 },
+  { label: 'vovô', value: 12 },
+  { label: '2GA', value: 13 },
+  { label: 'layFHT', value: 14 },
 ]
