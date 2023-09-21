@@ -168,7 +168,10 @@ export default function MatchesList({
                   return (
                     <span
                       className={` mr-2 mt-1 whitespace-nowrap rounded px-1 text-xs font-bold uppercase text-white ${
-                        i === 'race' || i === 'home' || i === 'must-win'
+                        i === 'race' ||
+                        i === 'home' ||
+                        i === 'must-win' ||
+                        i === '+goal'
                           ? 'bg-green-700'
                           : i === 'live'
                           ? 'bg-black'

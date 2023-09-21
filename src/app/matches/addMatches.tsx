@@ -29,6 +29,9 @@ const reviews = [
   { label: '-FL+', value: 7 },
   { label: 'live', value: 8 },
   { label: 'cycles', value: 9 },
+  { label: 'oscillation', value: 10 },
+  { label: '+goal', value: 10 },
+  { label: '-goal', value: 10 },
 ]
 
 const AddMatches = ({ teams, competitions, rounds }: MatchesProps) => {
