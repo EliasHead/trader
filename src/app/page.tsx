@@ -1,6 +1,6 @@
 import { FilterCompetitions } from '@/components/filterCompetitions'
 import { FilterEstrategies } from '@/components/filterEstrategies'
-import { prisma } from '@/utils/prisma'
+import { db as prisma } from '@/lib/db'
 
 export default async function Home() {
   const matches = await prisma.matches.findMany()
