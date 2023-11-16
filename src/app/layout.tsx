@@ -3,6 +3,8 @@ import './globals.css'
 import { Inter } from 'next/font/google'
 import { Navbar } from '../components/navbar/navbar'
 import { cn } from '@/lib/utils'
+import { Toaster } from '@/components/ui/toaster'
+import AuthProvider from '@/components/auth-provider'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -16,8 +18,11 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     <html lang="en">
       <body className={cn(inter.className, 'min-h-screen')}>
         <div className="min-h-screen">
-          <Navbar />
-          <main className="pb-12 pt-8">{children}</main>
+          <Toaster />
+          <AuthProvider>
+            <Navbar />
+            <main className="pb-12 pt-8">{children}</main>
+          </AuthProvider>
         </div>
       </body>
     </html>
