@@ -1,5 +1,5 @@
 import SearchCompetition from './SearchCompetition'
-import { prisma } from '@/utils/prisma'
+import { db as prisma } from '@/lib/db'
 
 const getCompetitions = async () => {
   const res = await prisma.competition.findMany({

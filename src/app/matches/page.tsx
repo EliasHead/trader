@@ -1,7 +1,7 @@
 import { resultsData } from '@/utils/results'
 import MatchesList from './MatchesList'
 import AddMatches from './addMatches'
-import { prisma } from '@/utils/prisma'
+import { db as prisma } from '@/lib/db'
 import { dataRounds } from '@/utils/rounds'
 
 // TODO: melhorar chamada api

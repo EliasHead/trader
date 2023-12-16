@@ -1,4 +1,4 @@
-import { prisma } from '@/utils/prisma'
+import { db as prisma } from '@/lib/db'
 import { DatePicker } from '@/components/ui/DatePicker'
 import { Label } from '@/components/ui/label'
 

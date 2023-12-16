@@ -1,7 +1,6 @@
 import SearchTeams from './SearchTeams'
 // import AddTeams from './addTeams'
-
-import { prisma } from '@/utils/prisma'
+import { db as prisma } from '@/lib/db'
 
 const getTeams = async () => {
   const res = await prisma.teams.findMany({
