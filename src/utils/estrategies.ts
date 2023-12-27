@@ -19,4 +19,6 @@ export const strategies = [
   { label: 'layFHT', value: 14 },
   { label: 'backFHT', value: 15 },
   { label: 'WEH', value: 16 },
+  { label: 'HA+1', value: 17 },
+  { label: 'HE+2', value: 18 },
 ]
