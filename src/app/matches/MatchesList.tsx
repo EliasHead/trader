@@ -159,6 +159,7 @@ export default function MatchesList({
                     <TechBadge
                       key={`id-${str}`}
                       name={str}
+                      color='text-white'
                       {...techBadgeAnimation}
                       transition={{ duration: 0.2, delay: i * 0.1 }}
                     />
