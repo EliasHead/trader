@@ -5,6 +5,8 @@ import { Competition, Teams } from '@prisma/client'
 import UpdateMatch from './updateMtaches'
 import { useState } from 'react'
 import Pagination from '@/components/pagination/pagination'
+import { techBadgeAnimation } from '@/lib/animations'
+import { TechBadge } from '@/components/tech-badge'
 
 type Match = {
   match_id: number
@@ -152,14 +154,20 @@ export default function MatchesList({
                 </span>
               </div>
               <div className="flex items-center justify-start px-3 py-2">
-                {match.strategy?.split(',').map((i) => {
+                {match.strategy?.split(',').map((str, i) => {
                   return (
-                    <span
-                      className="mr-2 rounded bg-orange-500 px-1 text-xs font-bold uppercase text-cyan-50"
-                      key={i}
-                    >
-                      {i}
-                    </span>
+                    <TechBadge
+                      key={`id-${str}`}
+                      name={str}
+                      {...techBadgeAnimation}
+                      transition={{ duration: 0.2, delay: i * 0.1 }}
+                    />
+                    // <span
+                    //   className="mr-2 rounded bg-orange-500 px-1 text-xs font-bold uppercase text-cyan-50"
+                    //   key={i}
+                    // >
+                    //   {i}
+                    // </span>
                   )
                 })}
               </div>
