@@ -6,7 +6,7 @@ import UpdateMatch from './updateMtaches'
 import { useState } from 'react'
 import Pagination from '@/components/pagination/pagination'
 import { techBadgeAnimation } from '@/lib/animations'
-import { TechBadge } from '@/components/tech-badge'
+import { Badge } from '@/components/badge'
 
 type Match = {
   match_id: number
@@ -156,10 +156,10 @@ export default function MatchesList({
               <div className="flex items-center justify-start px-3 py-2">
                 {match.strategy?.split(',').map((str, i) => {
                   return (
-                    <TechBadge
+                    <Badge
                       key={`id-${str}`}
                       name={str}
-                      color='text-white'
+                      textColor='text-white'
                       {...techBadgeAnimation}
                       transition={{ duration: 0.2, delay: i * 0.1 }}
                     />
