@@ -106,7 +106,7 @@ export default function MatchesList({
           </span>
         </div>
       </div>
-      {paginatedItems?.map((match) => {
+      {paginatedItems?.map((match, i) => {
         return (
           <div
             className="grid w-full items-center justify-center border border-zinc-200 bg-zinc-100 sm:grid-cols-2"
@@ -139,19 +139,18 @@ export default function MatchesList({
             </div>
             <div className="grid grid-cols-app items-center justify-center">
               <div className="flex items-center justify-start px-3 py-2">
-                <span
-                  className={`rounded px-1 text-xs font-bold uppercase text-white ${
-                    match.result === 'red'
-                      ? 'bg-red-600'
-                      : match.result === 'green'
-                      ? 'bg-green-600'
-                      : match.result === 'green'
-                      ? 'bg-yellow-400'
-                      : 'bg-sky-600'
-                  }`}
-                >
-                  {match.result}
-                </span>
+                <Badge
+                  name={match.result!}
+                  textColor='text-white'
+                  bg={`${match.result === 'red' ? 'bg-red-600'
+                  : match.result === 'green'
+                  ? 'bg-green-600'
+                  : match.result === 'green'
+                  ? 'bg-yellow-400'
+                  : 'bg-sky-600'}`}
+                  {...techBadgeAnimation}
+                  transition={{ duration: 0.2, delay: i * 0.1 }}
+                />
               </div>
               <div className="flex items-center justify-start px-3 py-2">
                 {match.strategy?.split(',').map((str, i) => {
@@ -163,35 +162,25 @@ export default function MatchesList({
                       {...techBadgeAnimation}
                       transition={{ duration: 0.2, delay: i * 0.1 }}
                     />
-                    // <span
-                    //   className="mr-2 rounded bg-orange-500 px-1 text-xs font-bold uppercase text-cyan-50"
-                    //   key={i}
-                    // >
-                    //   {i}
-                    // </span>
                   )
                 })}
               </div>
-              <div className="flex flex-wrap items-center justify-start px-3 py-2">
-                {match.review?.split(',').map((i) => {
+              <div className="flex flex-wrap items-center justify-start px-3 py-2 bg-">
+                {match.review?.split(',').map((str, i) => {
                   return (
-                    <span
-                      className={` mr-2 mt-1 whitespace-nowrap rounded px-1 text-xs font-bold uppercase text-white ${
-                        i === 'race' ||
-                        i === 'home' ||
-                        i === 'must-win' ||
-                        i === '+goal'
-                          ? 'bg-green-700'
-                          : i === 'live'
-                          ? 'bg-black'
-                          : i === 'cycles'
-                          ? 'bg-blue-600'
-                          : 'bg-red-600'
-                      }`}
-                      key={i}
-                    >
-                      {i}
-                    </span>
+                    <Badge
+                      key={`id-${str}`}
+                      name={str}
+                      textColor='text-white'
+                      bg={`${str === 'race' || str === 'home' || str === 'must-win' || str === '+goal' ? 'bg-zinc-800'
+                            : str === 'live'
+                            ? 'bg-black'
+                            : str === 'cycles'
+                            ? 'bg-blue-600'
+                            : 'bg-red-600'}`}
+                      {...techBadgeAnimation}
+                      transition={{ duration: 0.2, delay: i * 0.1 }}
+                    />
                   )
                 })}
                 {/* <span className="text-xs">{match.review}</span> */}

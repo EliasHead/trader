@@ -9,10 +9,10 @@ type BadgeProps = ComponentProps<typeof motion.span> & {
   bg?: string 
 }
 
-export const Badge = ({ name, textColor, bg, ...props }: BadgeProps) => {
+export const Badge = ({ name, textColor, bg='bg-emerald-900/80', ...props }: BadgeProps) => {
   return (
     <motion.span
-      className={`${textColor} bg-emerald-900/80 text-sm py-1 px-3 rounded-lg mr-1`}
+      className={`${textColor} ${bg} uppercase text-sm py-1 px-3 rounded-lg mr-1`}
       {...props}
     >
       {name}
