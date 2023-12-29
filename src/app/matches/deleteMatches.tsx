@@ -10,9 +10,18 @@ type Match = {
   home_goals: number
   visitor_goals: number
   odd?: number | null
-  strategy?: string | null
-  result?: string | null
-  review?: string | null
+  strategy: {
+    strategy_id: number;
+    strategy_name: string;
+  };
+  result: {
+    result_id: number;
+    result_name: string;
+  } | null;
+  review: {
+    review_id: number;
+    review_name: string;
+  } | null;
   stake?: number | null
   round: number
   leverage_id?: number | null

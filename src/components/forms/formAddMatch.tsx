@@ -8,9 +8,9 @@ import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "../ui/input";
-import type { Competition, Teams } from '@prisma/client'
+import type { Competition, Strategies, Teams } from '@prisma/client'
 import { toast } from "../ui/use-toast";
-import { strategies } from '@/utils/estrategies'
+// import { strategies } from '@/utils/estrategies'
 
 
 type roundsType = {
@@ -22,22 +22,8 @@ type MatchesProps = {
   competitions: Competition[];
   teams: Teams[];
   rounds: roundsType[];
+  strategies: Strategies[];
 };
-
-const reviews = [
-  { label: "race", value: 1 },
-  { label: "home", value: 2 },
-  { label: "way", value: 3 },
-  { label: "derby", value: 4 },
-  { label: "must-win", value: 5 },
-  { label: "bet", value: 6 },
-  { label: "-FL+", value: 7 },
-  { label: "live", value: 8 },
-  { label: "cycles", value: 9 },
-  { label: "oscillation", value: 10 },
-  { label: "+goal", value: 11 },
-  { label: "-goal", value: 12 },
-] as const;
 
 const FormSchema = z.object({
   home_team: z.number({
@@ -75,7 +61,7 @@ function onSubmit(data: z.infer<typeof FormSchema>) {
 }
 
 
-export const FormAddMatch = ({ teams, competitions, rounds }: MatchesProps) => {
+export const FormAddMatch = ({ teams, competitions, rounds, strategies }: MatchesProps) => {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
   });
@@ -331,8 +317,8 @@ export const FormAddMatch = ({ teams, competitions, rounds }: MatchesProps) => {
                     >
                       {field.value
                         ? strategies.find(
-                            (strategy) => strategy.value === field.value
-                          )?.label
+                            (strategy) => strategy.strategy_id === field.value
+                          )?.strategy_name
                         : "Select a strategy"}
                       <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                     </Button>
@@ -345,21 +331,21 @@ export const FormAddMatch = ({ teams, competitions, rounds }: MatchesProps) => {
                     <CommandGroup>
                       {strategies.map((strategy) => (
                         <CommandItem
-                          value={strategy.label}
-                          key={strategy.value}
+                          value={strategy.strategy_name}
+                          key={strategy.strategy_id}
                           onSelect={() => {
-                            form.setValue("strategy", strategy.value);
+                            form.setValue("strategy", strategy.strategy_id);
                           }}
                         >
                           <Check
                             className={cn(
                               "mr-2 h-4 w-4",
-                              strategy.value === field.value
+                              strategy.strategy_id === field.value
                                 ? "opacity-100"
                                 : "opacity-0"
                             )}
                           />
-                          {strategy.label}
+                          {strategy.strategy_name}
                         </CommandItem>
                       ))}
                     </CommandGroup>
@@ -386,10 +372,10 @@ export const FormAddMatch = ({ teams, competitions, rounds }: MatchesProps) => {
                         !field.value && "text-muted-foreground"
                       )}
                     >
-                      {field.value
+                      {/* {field.value
                         ? reviews.find((review) => review.value === field.value)
                             ?.label
-                        : "Select a review"}
+                        : "Select a review"} */}
                       <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                     </Button>
                   </FormControl>
@@ -399,7 +385,7 @@ export const FormAddMatch = ({ teams, competitions, rounds }: MatchesProps) => {
                     <CommandInput placeholder="Search language..." />
                     <CommandEmpty>No review found.</CommandEmpty>
                     <CommandGroup>
-                      {reviews.map((review) => (
+                      {/* {reviews.map((review) => (
                         <CommandItem
                           value={review.label}
                           key={review.value}
@@ -417,7 +403,7 @@ export const FormAddMatch = ({ teams, competitions, rounds }: MatchesProps) => {
                           />
                           {review.label}
                         </CommandItem>
-                      ))}
+                      ))} */}
                     </CommandGroup>
                   </Command>
                 </PopoverContent>

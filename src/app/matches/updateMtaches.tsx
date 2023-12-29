@@ -2,7 +2,7 @@
 import { ChangeEvent, FormEvent, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import axios from 'axios'
-import { Competition, Teams } from '@prisma/client'
+import { Competition, Results, Teams } from '@prisma/client'
 import { Pencil } from '@phosphor-icons/react'
 
 type roundsType = {
@@ -16,7 +16,10 @@ type Match = {
   visitor_goals: number
   home_team_id: number
   visitor_team_id: number
-  result: string | null
+  result: {
+    result_id: number;
+    result_name: string;
+  } | null;
   competition_id?: number
   competition: {
     competition_name: string
@@ -34,10 +37,10 @@ type Match = {
   } | null
 }
 
-type Results = {
-  result_id: number
-  label: string
-}
+// type Results = {
+//   result_id: number
+//   label: string
+// }
 
 type Tickets = {
   ticketId: number
@@ -68,7 +71,7 @@ const UpdateMatch = ({
     visitor_goals: match.visitor_goals,
     competition: match.competition_id,
     round: match.round,
-    result: match.result,
+    result: match.result?.result_id,
     ticket: match.ticketId,
   })
 
@@ -251,8 +254,8 @@ const UpdateMatch = ({
                 <option>Escolha Resultado</option>
                 {results.map((result) => {
                   return (
-                    <option key={result.result_id} value={result.label}>
-                      {result.label}
+                    <option key={result.result_id} value={result.result_name}>
+                      {result.result_name}
                     </option>
                   )
                 })}

@@ -1,7 +1,7 @@
 'use client'
 import { formatDate } from '@/utils/dateUtils'
 import DeleteMatch from './deleteMatches'
-import { Competition, Teams } from '@prisma/client'
+import { Competition, Matches, Results, Teams } from '@prisma/client'
 import UpdateMatch from './updateMtaches'
 import { useState } from 'react'
 import Pagination from '@/components/pagination/pagination'
@@ -14,9 +14,18 @@ type Match = {
   home_goals: number
   visitor_goals: number
   odd: number | null
-  strategy: string | null
-  result: string | null
-  review: string | null
+  strategy: {
+    strategy_id: number;
+    strategy_name: string;
+  };
+  result: {
+    result_id: number;
+    result_name: string;
+  } | null;
+  review: {
+    review_id: number;
+    review_name: string;
+  } | null;
   stake: number | null
   round: number
   leverage: {
@@ -44,11 +53,6 @@ type Match = {
 type roundsType = {
   round_id: number
   round_name: number | string
-}
-
-type Results = {
-  result_id: number
-  label: string
 }
 
 type Tickets = {
@@ -140,12 +144,12 @@ export default function MatchesList({
             <div className="grid grid-cols-app items-center justify-center">
               <div className="flex items-center justify-start px-3 py-2">
                 <Badge
-                  name={match.result!}
+                  name={match.result?.result_name!}
                   textColor='text-white'
-                  bg={`${match.result === 'red' ? 'bg-red-600'
-                  : match.result === 'green'
+                  bg={`${match.result?.result_id === 3 ? 'bg-red-600'
+                  : match.result?.result_id === 2
                   ? 'bg-green-600'
-                  : match.result === 'green'
+                  : match.result?.result_id === 4
                   ? 'bg-yellow-400'
                   : 'bg-sky-600'}`}
                   {...techBadgeAnimation}
@@ -153,36 +157,26 @@ export default function MatchesList({
                 />
               </div>
               <div className="flex items-center justify-start px-3 py-2">
-                {match.strategy?.split(',').map((str, i) => {
-                  return (
-                    <Badge
-                      key={`id-${str}`}
-                      name={str}
-                      textColor='text-white'
-                      {...techBadgeAnimation}
-                      transition={{ duration: 0.2, delay: i * 0.1 }}
-                    />
-                  )
-                })}
+                <Badge
+                  name={match.strategy.strategy_name}
+                  textColor='text-white'
+                  {...techBadgeAnimation}
+                  transition={{ duration: 0.2, delay: i * 0.1 }}
+                />
               </div>
               <div className="flex flex-wrap items-center justify-start px-3 py-2 bg-">
-                {match.review?.split(',').map((str, i) => {
-                  return (
-                    <Badge
-                      key={`id-${str}`}
-                      name={str}
-                      textColor='text-white'
-                      bg={`${str === 'race' || str === 'home' || str === 'must-win' || str === '+goal' ? 'bg-zinc-800'
-                            : str === 'live'
-                            ? 'bg-black'
-                            : str === 'cycles'
-                            ? 'bg-blue-600'
-                            : 'bg-red-600'}`}
-                      {...techBadgeAnimation}
-                      transition={{ duration: 0.2, delay: i * 0.1 }}
-                    />
-                  )
-                })}
+                <Badge
+                  name={match.review?.review_name!}
+                  textColor='text-white'
+                  bg={`${match.review?.review_name === 'race' || match.review?.review_name === 'home' || match.review?.review_name === 'must-win' || match.review?.review_name === '+goal' ? 'bg-zinc-800'
+                        : match.review?.review_name === 'live'
+                        ? 'bg-black'
+                        : match.review?.review_name === 'cycles'
+                        ? 'bg-blue-600'
+                        : 'bg-red-600'}`}
+                  {...techBadgeAnimation}
+                  transition={{ duration: 0.2, delay: i * 0.1 }}
+                />
                 {/* <span className="text-xs">{match.review}</span> */}
               </div>
               <DeleteMatch match={match} />
