@@ -62,11 +62,18 @@ export default async function Matches() {
   })
   const rounds = dataRounds
   const matches = await getMatches()
+  const strategies = await prisma.strategies.findMany()
   const results = await prisma.results.findMany()
+  const reviews = await prisma.reviews.findMany()
 
   return (
     <div className="mt-12 grid grid-cols-1 items-center space-y-4">
-      <AddMatches teams={teams} competitions={competitions} rounds={rounds} />
+      <AddMatches 
+        teams={teams} 
+        competitions={competitions} 
+        rounds={rounds}
+        strategies={strategies} 
+        reviews={reviews} />
       <MatchesList
         competitions={competitions}
         matches={matches}

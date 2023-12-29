@@ -1,10 +1,10 @@
 'use client'
 import { ChangeEvent, FormEvent, useState } from 'react'
-import type { Competition, Teams } from '@prisma/client'
+import type { Competition, Reviews, Strategies, Teams } from '@prisma/client'
 import { useRouter } from 'next/navigation'
 import axios from 'axios'
 import Select, { MultiValue } from 'react-select'
-import { strategies } from '@/utils/estrategies'
+// import { strategies } from '@/utils/estrategies'
 import { Button } from '@/components/ui/button'
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
@@ -27,36 +27,38 @@ type MatchesProps = {
   competitions: Competition[]
   teams: Teams[]
   rounds: roundsType[]
+  strategies: Strategies[]
+  reviews: Reviews[]
 }
 
 // TODO: migra array de reviews
-const reviews = [
-  { label: 'race', value: 1 },
-  { label: 'home', value: 2 },
-  { label: 'way', value: 3 },
-  { label: 'derby', value: 4 },
-  { label: 'must-win', value: 5 },
-  { label: 'bet', value: 6 },
-  { label: '-FL+', value: 7 },
-  { label: 'live', value: 8 },
-  { label: 'cycles', value: 9 },
-  { label: 'oscillation', value: 10 },
-  { label: '+goal', value: 11 },
-  { label: '-goal', value: 12 },
-  { label: 'unknown', value: 13 },
-] as const
+// const reviews = [
+//   { label: 'race', value: 1 },
+//   { label: 'home', value: 2 },
+//   { label: 'way', value: 3 },
+//   { label: 'derby', value: 4 },
+//   { label: 'must-win', value: 5 },
+//   { label: 'bet', value: 6 },
+//   { label: '-FL+', value: 7 },
+//   { label: 'live', value: 8 },
+//   { label: 'cycles', value: 9 },
+//   { label: 'oscillation', value: 10 },
+//   { label: '+goal', value: 11 },
+//   { label: '-goal', value: 12 },
+//   { label: 'unknown', value: 13 },
+// ] as const
 
-const languages = [
-  { label: "English", value: "en" },
-  { label: "French", value: "fr" },
-  { label: "German", value: "de" },
-  { label: "Spanish", value: "es" },
-  { label: "Portuguese", value: "pt" },
-  { label: "Russian", value: "ru" },
-  { label: "Japanese", value: "ja" },
-  { label: "Korean", value: "ko" },
-  { label: "Chinese", value: "zh" },
-] as const
+// const languages = [
+//   { label: "English", value: "en" },
+//   { label: "French", value: "fr" },
+//   { label: "German", value: "de" },
+//   { label: "Spanish", value: "es" },
+//   { label: "Portuguese", value: "pt" },
+//   { label: "Russian", value: "ru" },
+//   { label: "Japanese", value: "ja" },
+//   { label: "Korean", value: "ko" },
+//   { label: "Chinese", value: "zh" },
+// ] as const
 
 const FormSchema = z.object({
   home_team: z.number({
@@ -74,15 +76,12 @@ const FormSchema = z.object({
   strategy: z.number({
     required_error: "Please select a round.",
   }),
-  reviews: z.number({
-    required_error: "Please select a reviews.",
-  }),
   odd: z.string().refine((val) => !Number.isNaN(parseInt(val, 10)), {
     message: "Expected number, received a string"
   })
 })
 
-const AddMatches = ({ teams, competitions, rounds }: MatchesProps) => {
+const AddMatches = ({ teams, competitions, rounds, strategies, reviews }: MatchesProps) => {
   const [formData, setFormData] = useState({
     home_team: '',
     visitor_team: '',
@@ -105,18 +104,18 @@ const AddMatches = ({ teams, competitions, rounds }: MatchesProps) => {
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
     // event.preventDefault()
-    console.log(data)
+    console.log('b: ', data)
     setIsLoading(true)
 
-    // await axios.post('/api/matches', {
-    //   home_team_id: data.home_team,
-    //   visitor_team_id: data.away_team,
-    //   competition_id: data.competition,
-    //   round: data.round,
-    //   strategy: data.strategy,
-    //   review: data.reviews,
-    //   odd: data.odd,
-    // })
+    await axios.post('/api/matches', {
+      home_team_id: data.home_team,
+      visitor_team_id: data.away_team,
+      competition_id: data.competition,
+      round: data.round,
+      strategy_id: data.strategy,
+      // review_id: data.reviews,
+      odd: data.odd,
+    })
 
     setIsLoading(false)
 
@@ -377,7 +376,7 @@ const AddMatches = ({ teams, competitions, rounds }: MatchesProps) => {
             </div>
           </form> */}
           <Form {...form}>
-            <form className="space-y-6" onSubmit={form.handleSubmit(onSubmit)}>
+            <form className="space-x-4 space-y-4 flex items-center justify-center flex-wrap" onSubmit={form.handleSubmit(onSubmit)}>
               <FormField
                 control={form.control}
                 name="home_team"
@@ -629,8 +628,8 @@ const AddMatches = ({ teams, competitions, rounds }: MatchesProps) => {
                           >
                             {field.value
                               ? strategies.find(
-                                  (strategy) => strategy.value === field.value
-                                )?.label
+                                  (strategy) => strategy.strategy_id === field.value
+                                )?.strategy_name
                               : "Select a strategy"}
                             <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                           </Button>
@@ -643,78 +642,21 @@ const AddMatches = ({ teams, competitions, rounds }: MatchesProps) => {
                           <CommandGroup>
                             {strategies.map((strategy) => (
                               <CommandItem
-                                value={strategy.label}
-                                key={strategy.value}
+                                value={strategy.strategy_name}
+                                key={strategy.strategy_id}
                                 onSelect={() => {
-                                  form.setValue("strategy", strategy.value);
+                                  form.setValue("strategy", strategy.strategy_id);
                                 }}
                               >
                                 <Check
                                   className={cn(
                                     "mr-2 h-4 w-4",
-                                    strategy.value === field.value
+                                    strategy.strategy_id === field.value
                                       ? "opacity-100"
                                       : "opacity-0"
                                   )}
                                 />
-                                {strategy.label}
-                              </CommandItem>
-                            ))}
-                          </CommandGroup>
-                        </Command>
-                      </PopoverContent>
-                    </Popover>
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="reviews"
-                render={({ field }) => (
-                  <FormItem className="flex flex-col">
-                    <FormLabel>Revisão</FormLabel>
-                    <Popover>
-                      <PopoverTrigger asChild>
-                        <FormControl>
-                          <Button
-                            variant="outline"
-                            role="combobox"
-                            className={cn(
-                              "w-[200px] justify-between",
-                              !field.value && "text-muted-foreground"
-                            )}
-                          >
-                            {field.value
-                              ? reviews.find(
-                                  (review) => review.value === field.value
-                                )?.label
-                              : "Select a review"}
-                            <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                          </Button>
-                        </FormControl>
-                      </PopoverTrigger>
-                      <PopoverContent className="w-[200px] p-0">
-                        <Command>
-                          <CommandInput placeholder="Search language..." />
-                          <CommandEmpty>No review found.</CommandEmpty>
-                          <CommandGroup>
-                            {reviews.map((review) => (
-                              <CommandItem
-                                value={review.label}
-                                key={review.value}
-                                onSelect={() => {
-                                  form.setValue("reviews", review.value);
-                                }}
-                              >
-                                <Check
-                                  className={cn(
-                                    "mr-2 h-4 w-4",
-                                    review.value === field.value
-                                      ? "opacity-100"
-                                      : "opacity-0"
-                                  )}
-                                />
-                                {review.label}
+                                {strategy.strategy_name}
                               </CommandItem>
                             ))}
                           </CommandGroup>

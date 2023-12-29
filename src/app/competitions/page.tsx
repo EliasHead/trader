@@ -6,7 +6,7 @@ const getCompetitions = async () => {
   const result: Competition[] = await prisma.$queryRaw`
     SELECT c.*, COUNT(m.match_id) as green_matches_count
     FROM competitions c
-    LEFT JOIN matches m ON c.competition_id = m.competition_id AND m.result = 'green'
+    LEFT JOIN matches m ON c.competition_id = m.competition_id AND m.result_id = 2
     GROUP BY c.competition_id
     ORDER BY green_matches_count DESC`;
   
