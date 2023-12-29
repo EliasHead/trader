@@ -1,9 +1,9 @@
 'use client'
-import { ChangeEvent, FormEvent, useState } from 'react'
+import { useState } from 'react'
 import type { Competition, Reviews, Strategies, Teams } from '@prisma/client'
 import { useRouter } from 'next/navigation'
 import axios from 'axios'
-import Select, { MultiValue } from 'react-select'
+// import Select, { MultiValue } from 'react-select'
 // import { strategies } from '@/utils/estrategies'
 import { Button } from '@/components/ui/button'
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
@@ -16,7 +16,7 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { toast } from '@/components/ui/use-toast'
 import { Input } from '@/components/ui/input'
-import { FormAddMatch } from '@/components/forms/formAddMatch'
+// import { FormAddMatch } from '@/components/forms/formAddMatch'
 
 type roundsType = {
   round_id: number
@@ -30,35 +30,6 @@ type MatchesProps = {
   strategies: Strategies[]
   reviews: Reviews[]
 }
-
-// TODO: migra array de reviews
-// const reviews = [
-//   { label: 'race', value: 1 },
-//   { label: 'home', value: 2 },
-//   { label: 'way', value: 3 },
-//   { label: 'derby', value: 4 },
-//   { label: 'must-win', value: 5 },
-//   { label: 'bet', value: 6 },
-//   { label: '-FL+', value: 7 },
-//   { label: 'live', value: 8 },
-//   { label: 'cycles', value: 9 },
-//   { label: 'oscillation', value: 10 },
-//   { label: '+goal', value: 11 },
-//   { label: '-goal', value: 12 },
-//   { label: 'unknown', value: 13 },
-// ] as const
-
-// const languages = [
-//   { label: "English", value: "en" },
-//   { label: "French", value: "fr" },
-//   { label: "German", value: "de" },
-//   { label: "Spanish", value: "es" },
-//   { label: "Portuguese", value: "pt" },
-//   { label: "Russian", value: "ru" },
-//   { label: "Japanese", value: "ja" },
-//   { label: "Korean", value: "ko" },
-//   { label: "Chinese", value: "zh" },
-// ] as const
 
 const FormSchema = z.object({
   home_team: z.number({
@@ -82,17 +53,6 @@ const FormSchema = z.object({
 })
 
 const AddMatches = ({ teams, competitions, rounds, strategies, reviews }: MatchesProps) => {
-  const [formData, setFormData] = useState({
-    home_team: '',
-    visitor_team: '',
-    competition: '',
-    round: '',
-    strategy: '',
-    review: '',
-    odd: '',
-    stake: '',
-  })
-
   const [isOpen, setIsOpen] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
 
@@ -103,8 +63,7 @@ const AddMatches = ({ teams, competitions, rounds, strategies, reviews }: Matche
   })
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
-    // event.preventDefault()
-    console.log('b: ', data)
+    
     setIsLoading(true)
 
     await axios.post('/api/matches', {
@@ -119,17 +78,6 @@ const AddMatches = ({ teams, competitions, rounds, strategies, reviews }: Matche
 
     setIsLoading(false)
 
-    setFormData({
-      home_team: '',
-      visitor_team: '',
-      competition: '',
-      round: '',
-      strategy: '',
-      review: '',
-      odd: '',
-      stake: '',
-    })
-
     router.refresh()
 
     setIsOpen(false)
@@ -142,68 +90,32 @@ const AddMatches = ({ teams, competitions, rounds, strategies, reviews }: Matche
         </pre>
       ),
     })
+
+    form.reset()
   }
 
-  const handleChange = async (
-    event: ChangeEvent<
-      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-    >,
-  ) => {
-    const { name, value } = event.target
-    setFormData((prevState) => ({ ...prevState, [name]: value }))
-  }
+  // const handleChange = async (
+  //   event: ChangeEvent<
+  //     HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+  //   >,
+  // ) => {
+  //   const { name, value } = event.target
+  //   setFormData((prevState) => ({ ...prevState, [name]: value }))
+  // }
 
-  // TODO: melhorar handleChange multiselect
-  const handleChangeStrategy = async (
-    event: MultiValue<{ label: string; value: number }>,
-  ) => {
-    const label = event.map((e) => e.label).toString()
-    setFormData((prevState) => ({ ...prevState, strategy: label }))
-  }
 
-  const handleChangeReview = async (
-    event: MultiValue<{ label: string; value: number }>,
-  ) => {
-    const label = event.map((e) => e.label).toString()
-    setFormData((prevState) => ({ ...prevState, review: label }))
-  }
+  // const handleChangeReview = async (
+  //   event: MultiValue<{ label: string; value: number }>,
+  // ) => {
+  //   const label = event.map((e) => e.label).toString()
+  //   setFormData((prevState) => ({ ...prevState, review: label }))
+  // }
 
-  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault()
-
-    setIsLoading(true)
-
-    await axios.post('/api/matches', {
-      home_team_id: formData.home_team,
-      visitor_team_id: formData.visitor_team,
-      competition_id: formData.competition,
-      round: formData.round,
-      strategy: formData.strategy,
-      review: formData.review,
-      odd: formData.odd,
-      stake: formData.stake,
-    })
-
-    setIsLoading(false)
-
-    setFormData({
-      home_team: '',
-      visitor_team: '',
-      competition: '',
-      round: '',
-      strategy: '',
-      review: '',
-      odd: '',
-      stake: '',
-    })
-
-    router.refresh()
-
-    setIsOpen(false)
-  }
+  
 
   const handleModal = () => {
     setIsOpen(!isOpen)
+    form.reset()
   }
 
   return (
@@ -214,7 +126,7 @@ const AddMatches = ({ teams, competitions, rounds, strategies, reviews }: Matche
       </Button>
       <div className={isOpen ? "modal modal-open z-0" : "modal"}>
         <div className="modal-box sm:w-3/5 sm:max-w-none">
-          <h3 className="text-lg font-bold">Adicionar novo jogo</h3>
+          <h3 className="text-lg font-bold text-center">Adicionar novo jogo</h3>
           {/* <form className="grid grid-cols-3 gap-2" onSubmit={handleSubmit}>
             <div className="form-control w-full">
               <label className="label font-bold" htmlFor="home_team">
@@ -376,12 +288,12 @@ const AddMatches = ({ teams, competitions, rounds, strategies, reviews }: Matche
             </div>
           </form> */}
           <Form {...form}>
-            <form className="space-x-4 space-y-4 flex items-center justify-center flex-wrap" onSubmit={form.handleSubmit(onSubmit)}>
+            <form className="space-x-4 space-y-4 grid grid-cols-1 sm:grid-cols-3 gap-2 sm:items-center" onSubmit={form.handleSubmit(onSubmit)}>
               <FormField
                 control={form.control}
                 name="home_team"
                 render={({ field }) => (
-                  <FormItem className="flex flex-col">
+                  <FormItem className="flex flex-col mt-4 ml-4">
                     <FormLabel>Casa</FormLabel>
                     <Popover>
                       <PopoverTrigger asChild>
@@ -673,13 +585,16 @@ const AddMatches = ({ teams, competitions, rounds, strategies, reviews }: Matche
                   <FormItem className="flex flex-col">
                     <FormLabel>Odd</FormLabel>
                     <FormControl>
-                      <Input placeholder="ex 1.50" {...field} />
+                      <Input className='w-[200px]' placeholder="ex 1.50" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
-              <Button type="submit">Submit</Button>
+              <div className='flex items-center justify-around'>
+                <Button type="submit">Cadastrar</Button>
+                <Button variant={'outline'} onClick={handleModal}>Cancelar</Button>
+              </div>
             </form>
           </Form>
         </div>

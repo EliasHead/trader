@@ -100,7 +100,7 @@ const UpdateMatch = ({
       visitor_goals: formData.visitor_goals,
       competition_id: formData.competition,
       round: formData.round,
-      result: formData.result,
+      result_id: formData.result,
       ticketId: formData.ticket,
     })
     setIsLoading(false)
@@ -254,7 +254,7 @@ const UpdateMatch = ({
                 <option>Escolha Resultado</option>
                 {results.map((result) => {
                   return (
-                    <option key={result.result_id} value={result.result_name}>
+                    <option key={result.result_id} value={result.result_id}>
                       {result.result_name}
                     </option>
                   )

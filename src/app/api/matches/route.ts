@@ -5,7 +5,6 @@ const prisma = new PrismaClient()
 
 export const POST = async (request: Request) => {
   const body: Matches = await request.json()
-  console.log(body)
   const matches = await prisma.matches.create({
     data: {
       home_team_id: Number(body.home_team_id),
