@@ -20,6 +20,24 @@ model Competition {
   @@map("competitions")
 }
 
+model Strategies {
+  strategy_id Int @id @default(autoincrement())
+  strategy_name String @unique
+  matches Matches[]
+}
+
+model Reviews {
+  review_id Int @id @default(autoincrement())
+  review_name String @unique
+  matches Matches[]
+}
+
+model Results {
+  result_id Int @id @default(autoincrement())
+  result_name String @unique
+  matches Matches[]
+}
+
 model Teams {
   team_id       Int       @id @default(autoincrement())
   team_name     String    @unique
@@ -38,9 +56,9 @@ model Matches {
   home_goals      Int          @default(0)
   visitor_goals   Int          @default(0)
   odd             Float?
-  strategy        String?
-  result          String?      @default("progress")
-  review          String?
+  // strategy        String?
+  // result          String?      @default("progress")
+  // review          String?
   stake           Float?
   round           Int          @default(0)
   leverage        Leverage?    @relation(fields: [leverageId], references: [leverageId])
@@ -53,9 +71,15 @@ model Matches {
   visitor_team    Teams        @relation("visitorTeam", fields: [visitor_team_id], references: [team_id])
   ticket          Tickets?     @relation(fields: [ticketId], references: [ticketId])
   ticketId        Int?
+  strategy        Strategies @relation(fields: [strategy_id], references: [strategy_id])
+  strategy_id     Int
+  review          Reviews? @relation(fields: [review_id], references: [review_id])
+  review_id       Int? @default(1)
+  result          Results? @relation(fields: [result_id], references: [result_id])
+  result_id       Int? @default(1)
   // @@id([round, home_team_id, visitor_team_id])
 
-  @@unique(fields: [round, home_team_id, visitor_team_id, strategy], name: "matchUnique")
+  @@unique(fields: [round, home_team_id, visitor_team_id, strategy_id], name: "matchUnique")
   @@map("matches")
 }
 

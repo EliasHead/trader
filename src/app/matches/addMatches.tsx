@@ -43,6 +43,7 @@ const reviews = [
   { label: 'oscillation', value: 10 },
   { label: '+goal', value: 11 },
   { label: '-goal', value: 12 },
+  { label: 'unknown', value: 13 },
 ] as const
 
 const languages = [
@@ -215,7 +216,7 @@ const AddMatches = ({ teams, competitions, rounds }: MatchesProps) => {
       <div className={isOpen ? "modal modal-open z-0" : "modal"}>
         <div className="modal-box sm:w-3/5 sm:max-w-none">
           <h3 className="text-lg font-bold">Adicionar novo jogo</h3>
-          <form className="grid grid-cols-3 gap-2" onSubmit={handleSubmit}>
+          {/* <form className="grid grid-cols-3 gap-2" onSubmit={handleSubmit}>
             <div className="form-control w-full">
               <label className="label font-bold" htmlFor="home_team">
                 Time da casa
@@ -374,8 +375,8 @@ const AddMatches = ({ teams, competitions, rounds }: MatchesProps) => {
                 </button>
               )}
             </div>
-          </form>
-          {/* <Form {...form}>
+          </form> */}
+          <Form {...form}>
             <form className="space-y-6" onSubmit={form.handleSubmit(onSubmit)}>
               <FormField
                 control={form.control}
@@ -738,7 +739,7 @@ const AddMatches = ({ teams, competitions, rounds }: MatchesProps) => {
               />
               <Button type="submit">Submit</Button>
             </form>
-          </Form> */}
+          </Form>
         </div>
       </div>
     </div>
