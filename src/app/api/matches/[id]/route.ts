@@ -8,7 +8,6 @@ export const PATCH = async (
   { params }: { params: { id: string } },
 ) => {
   const body: Matches = await request.json()
-  console.log(body)
   const matches = await prisma.matches.update({
     where: {
       match_id: Number(params.id),
