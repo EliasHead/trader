@@ -18,26 +18,26 @@ export const FilterCompetitions = ({
 
   const reds = matches.filter((match) =>
     competiton
-      ? match.result === 'red' && match.competition_id === competiton
-      : match.result === 'red',
+      ? match.result_id === 3 && match.competition_id === competiton
+      : match.result_id === 3,
   ).length
 
   const greens = matches.filter((match) =>
     competiton
-      ? match.result === 'green' && match.competition_id === competiton
-      : match.result === 'green',
+      ? match.result_id === 2 && match.competition_id === competiton
+      : match.result_id === 2,
   ).length
 
   const draws = matches.filter((match) =>
     competiton
-      ? match.result === 'draw' && match.competition_id === competiton
-      : match.result === 'draw',
+      ? match.result_id === 4 && match.competition_id === competiton
+      : match.result_id === 4,
   ).length
 
   const progress = matches.filter((match) =>
     competiton
-      ? match.result === 'progress' && match.competition_id === competiton
-      : match.result === 'progress',
+      ? match.result_id === 1 && match.competition_id === competiton
+      : match.result_id === 1,
   ).length
 
   const totalMatches = greens + reds + draws + progress

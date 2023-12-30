@@ -1,35 +1,41 @@
 'use client'
-import { Matches } from '@prisma/client'
+import { Matches, Strategies } from '@prisma/client'
 import { ChangeEvent, useState } from 'react'
 import { ProgressBar } from './ui/progressBar'
-import { strategies } from '@/utils/estrategies'
+// import { strategies } from '@/utils/estrategies'
 import { ArrowUp, ArrowDown } from 'lucide-react'
 import { Card, CardHeader, CardTitle, CardContent } from './ui/card'
-export const FilterEstrategies = ({ matches }: { matches: Matches[] }) => {
-  const [param, setParam] = useState('F')
+
+type FilterEstrategiesProps = {
+  matches: Matches[]
+  strategies: Strategies[]
+}
+
+export const FilterEstrategies = ({ matches, strategies }: FilterEstrategiesProps) => {
+  const [param, setParam] = useState(1)
   // F - Favorito
   const greens = matches.filter((item) => {
-    const strategySplit = item.strategy?.split(',')
+    // const strategySplit = item.strategy?.split(',')
 
-    return strategySplit?.includes(param) && item.result === 'green'
+    return item.strategy_id === param && item.result_id === 2
   }).length
 
   const reds = matches.filter((item) => {
-    const strategySplit = item.strategy?.split(',')
+    // const strategySplit = item.strategy?.split(',')
 
-    return strategySplit?.includes(param) && item.result === 'red'
+    return item.strategy_id === param && item.result_id === 3
   }).length
 
   const draws = matches.filter((item) => {
-    const strategySplit = item.strategy?.split(',')
+    // const strategySplit = item.strategy_id?.split(',')
 
-    return strategySplit?.includes(param) && item.result === 'draw'
+    return item.strategy_id === param && item.result_id === 4
   }).length
 
   const progress = matches.filter((item) => {
-    const strategySplit = item.strategy?.split(',')
+    // const strategySplit = item.strategy?.split(',')
 
-    return strategySplit?.includes(param) && item.result === 'progress'
+    return item.strategy_id === param && item.result_id === 1
   }).length
 
   const totalMatches = greens + reds + draws + progress
@@ -43,7 +49,7 @@ export const FilterEstrategies = ({ matches }: { matches: Matches[] }) => {
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
     >,
   ) => {
-    setParam(event.target.value)
+    setParam(Number(event.target.value))
   }
 
   return (
@@ -62,8 +68,8 @@ export const FilterEstrategies = ({ matches }: { matches: Matches[] }) => {
           >
             {strategies?.map((strategy) => {
               return (
-                <option key={strategy.value} value={strategy.label}>
-                  {strategy.label}
+                <option key={strategy.strategy_id} value={strategy.strategy_id}>
+                  {strategy.strategy_name}
                 </option>
               )
             })}
