@@ -14,7 +14,7 @@ type LeverageType = {
 type TicketType = {
   ticketId: number
   result: string | null
-  odd: number
+  odd: number | null
   stake: number | null
   resultStake: number
   leverageId: number | null
