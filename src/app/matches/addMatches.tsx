@@ -111,8 +111,6 @@ const AddMatches = ({ teams, competitions, rounds, strategies, reviews }: Matche
   //   setFormData((prevState) => ({ ...prevState, review: label }))
   // }
 
-  
-
   const handleModal = () => {
     setIsOpen(!isOpen)
     form.reset()

@@ -81,6 +81,8 @@ export default async function Matches() {
         teams={teams}
         results={results}
         tickets={tickets}
+        strategies={strategies}
+        reviews={reviews}
       />
     </div>
   )

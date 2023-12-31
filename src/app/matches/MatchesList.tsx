@@ -1,7 +1,7 @@
 'use client'
 import { formatDate } from '@/utils/dateUtils'
 import DeleteMatch from './deleteMatches'
-import { Competition, Matches, Results, Teams } from '@prisma/client'
+import { Competition, Matches, Results, Reviews, Strategies, Teams } from '@prisma/client'
 import UpdateMatch from './updateMtaches'
 import { useState } from 'react'
 import Pagination from '@/components/pagination/pagination'
@@ -48,11 +48,12 @@ type Match = {
     result: string | null
   } | null
   ticketId?: number | null
+  // odd: number | null
 }
 
 type roundsType = {
   round_id: number
-  round_name: number | string
+  round_name: string
 }
 
 type Tickets = {
@@ -67,6 +68,8 @@ type MatchesProps = {
   matches: Match[]
   results: Results[]
   tickets: Tickets[]
+  strategies: Strategies[]
+  reviews: Reviews[]
 }
 
 export default function MatchesList({
@@ -76,6 +79,8 @@ export default function MatchesList({
   rounds,
   results,
   tickets,
+  strategies,
+  reviews
 }: MatchesProps) {
   // TODO: melhorar paginação
   const [currentPage, setCurrentPage] = useState(1)
@@ -139,6 +144,8 @@ export default function MatchesList({
                 rounds={rounds}
                 results={results}
                 tickets={tickets}
+                strategies={strategies}
+                reviews={reviews}
               />
             </div>
             <div className="grid grid-cols-app items-center justify-center">
