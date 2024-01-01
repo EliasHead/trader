@@ -17,6 +17,11 @@ export default async function Leverage() {
           ticketId: true,
         },
       },
+      Matches: {
+        select: {
+          match_id: true
+        }
+      }
     },
     orderBy: {
       leverageId: 'desc',
@@ -45,7 +50,7 @@ export default async function Leverage() {
                       <div>{leverage.leverageId}</div>
                     </div>
                     <div className="col-span-1 items-center space-x-4">
-                      <div>{leverage.Tickets?.length}</div>
+                      <div>{leverage.Matches?.length}</div>
                     </div>
                     <div className="col-span-2 items-center space-x-4 uppercase">
                       <div>{leverage.goal}</div>
