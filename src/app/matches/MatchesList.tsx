@@ -1,7 +1,7 @@
 'use client'
 import { formatDate } from '@/utils/dateUtils'
 import DeleteMatch from './deleteMatches'
-import { Competition, Matches, Results, Reviews, Strategies, Teams } from '@prisma/client'
+import { Competition, Matches, Results, Reviews, Strategies, Teams, Tickets } from '@prisma/client'
 import UpdateMatch from './updateMtaches'
 import { useState } from 'react'
 import Pagination from '@/components/pagination/pagination'
@@ -56,10 +56,10 @@ type roundsType = {
   round_name: string
 }
 
-type Tickets = {
-  ticketId: number
-  result: string | null
-}
+// type Tickets = {
+//   ticketId: number
+//   result: string | null
+// }
 
 type MatchesProps = {
   competitions: Competition[]

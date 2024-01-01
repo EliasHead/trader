@@ -17,7 +17,7 @@ export const NavItem = ({ label, href }: NavItemProps) => {
       href={href}
       className={cn(
         'flex items-center gap-2 font-medium font-mono',
-        isActive && 'text-muted-foreground font-semibold',
+        isActive && 'text-foreground font-semibold',
       )}
     >
       <span>#</span>

@@ -207,7 +207,7 @@ const UpdateMatch = ({
 
   return (
     <div className="px-3 py-2">
-      <Button className="btn btn-info btn-sm" onClick={handleModal}>
+      <Button size={'icon'} onClick={handleModal}>
         <Pencil size={24} />
       </Button>
       <div className={isOpen ? `modal modal-open z-0` : 'modal'}>

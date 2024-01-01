@@ -5,6 +5,7 @@ import { NavbarArray } from '@/utils/NavbarArrayAndTypes'
 import Link from 'next/link'
 import { List, X } from '@phosphor-icons/react'
 import { NavItem } from './nav-item'
+import { Separator } from '../ui/separator'
 
 export const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false)
@@ -14,10 +15,10 @@ export const Navbar = () => {
   }
 
   return (
-    <div className="fixed left-0 top-0 z-10 w-full bg-primary duration-300 ease-in">
-      <div className="m-auto flex max-w-[1240px] items-center justify-between p-4 text-white">
+    <div className="fixed left-0 top-0 z-10 w-full bg-background duration-300 ease-in">
+      <div className="m-auto flex max-w-[1240px] items-center justify-between p-4">
         <Link href="/">
-          <div className="mr-6 flex flex-shrink-0 items-center text-white">
+          <div className="mr-6 flex flex-shrink-0 items-center">
             <svg
               className="mr-2 h-8 w-8 fill-current"
               width="54"
@@ -44,9 +45,9 @@ export const Navbar = () => {
         {/* Mobile Button */}
         <div onClick={handleNav} className="z-10 block sm:hidden">
           {isOpen ? (
-            <X size={24} color="#fafafa" weight="bold" />
+            <X size={24} weight="bold" />
           ) : (
-            <List size={24} color="#ffffff" weight="bold" />
+            <List size={24} weight="bold" />
           )}
         </div>
         {/* Mobile Menu */}
@@ -72,6 +73,7 @@ export const Navbar = () => {
           </ul>
         </div>
       </div>
+      <Separator />
     </div>
   )
 }
