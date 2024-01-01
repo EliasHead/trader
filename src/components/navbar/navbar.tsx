@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { NavbarArray } from '@/utils/NavbarArrayAndTypes'
 import Link from 'next/link'
 import { List, X } from '@phosphor-icons/react'
+import { NavItem } from './nav-item'
 
 export const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false)
@@ -13,7 +14,7 @@ export const Navbar = () => {
   }
 
   return (
-    <div className="fixed left-0 top-0 z-10 w-full bg-teal-500 duration-300 ease-in">
+    <div className="fixed left-0 top-0 z-10 w-full bg-primary duration-300 ease-in">
       <div className="m-auto flex max-w-[1240px] items-center justify-between p-4 text-white">
         <Link href="/">
           <div className="mr-6 flex flex-shrink-0 items-center text-white">
@@ -34,7 +35,7 @@ export const Navbar = () => {
           {NavbarArray.map((item) => {
             return (
               <li className="px-4" key={item.label}>
-                <Link href={item.href}>{item.label}</Link>
+                <NavItem href={item.href} label={item.label}/>
               </li>
             )
           })}
