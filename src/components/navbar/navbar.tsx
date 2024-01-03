@@ -35,7 +35,7 @@ export const Navbar = () => {
         <ul className="hidden sm:flex">
           {NavbarArray.map((item) => {
             return (
-              <li className="px-4" key={item.label}>
+              <li className="px-4 cursor-pointer" key={item.label}>
                 <NavItem href={item.href} label={item.label}/>
               </li>
             )
