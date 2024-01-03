@@ -5,6 +5,7 @@ import { UpdateTicket } from './updateTicket'
 import { AddTicket } from './addTicket'
 import React, { useState } from 'react'
 import Pagination from '@/components/pagination/pagination'
+import { Badge } from '@/components/ui/badge'
 
 type LeverageType = {
   leverageId: number
@@ -70,17 +71,15 @@ export const ListTickets = ({ tickets, leverages, from, to }: TicketsProps) => {
             <div>
               <strong>{ticket.Matches?.length}x</strong>
             </div>
-            <div
-              className={`rounded text-center font-bold text-white ${
+            <Badge className={`uppercase ${
                 ticket.result === 'green'
                   ? 'bg-green-600'
                   : ticket.result === 'draw'
                   ? 'bg-yellow-400'
-                  : 'bg-red-600'
-              }`}
-            >
-              {ticket.result}
-            </div>
+                  : ticket.result === 'red' 
+                  ? 'bg-red-600'
+                  : 'bg-blue-600'
+            }`}>{ticket.result}</Badge>
             <div>
               <UpdateTicket ticket={ticket} leverages={leverages} />
             </div>
