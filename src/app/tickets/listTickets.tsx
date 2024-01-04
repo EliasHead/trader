@@ -6,6 +6,7 @@ import { AddTicket } from './addTicket'
 import React, { useState } from 'react'
 import Pagination from '@/components/pagination/pagination'
 import { Badge } from '@/components/ui/badge'
+import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 
 type LeverageType = {
   leverageId: number
@@ -57,7 +58,9 @@ export const ListTickets = ({ tickets, leverages, from, to }: TicketsProps) => {
   }
 
   return (
-    <div className="grid grid-cols-1 items-center">
+    <div>
+
+    <div className="grid grid-cols-1 items-center sm:hidden">
       <div className="m-auto">
         <AddTicket />
       </div>
@@ -99,6 +102,35 @@ export const ListTickets = ({ tickets, leverages, from, to }: TicketsProps) => {
           goToPreviousPage={goToPreviousPage}
         />
       )}
+    </div>
+      <div className="m-auto">
+        <AddTicket />
+      </div>
+      <Table>
+      <TableCaption>A list of your recent invoices.</TableCaption>
+      {paginatedItems.map((ticket) => {
+        return (
+          <div>
+            <TableHeader key={ticket.ticketId}>
+            <TableRow>
+              <TableHead className="w-[100px]">ID</TableHead>
+              <TableHead>Quantidade</TableHead>
+              <TableHead>Resultado</TableHead>
+              <TableHead className="text-right"></TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            <TableRow>
+              <TableCell className="font-medium">INV001</TableCell>
+              <TableCell>Paid</TableCell>
+              <TableCell>Credit Card</TableCell>
+              <TableCell className="text-right">$250.00</TableCell>
+            </TableRow>
+          </TableBody>
+          </div>
+        )
+      })}
+      </Table>
     </div>
   )
 }
