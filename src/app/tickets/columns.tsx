@@ -6,6 +6,28 @@ import { Checkbox } from "@/components/ui/checkbox"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 import { Button } from '@/components/ui/button'
 import { MoreHorizontal } from 'lucide-react'
+import { Badge } from '@/components/ui/badge'
+import { UpdateTicket } from './updateTicket'
+import { DeleteTicket } from './deleteTicket'
+
+
+type LeverageType = {
+  leverageId: number
+  goal: string | null
+  result: string | null
+  createdAt: Date
+}
+interface Match extends Tickets {
+  Matches?: object[]
+  match_id?: number | null
+}
+
+type TicketsProps = {
+  tickets: Match[]
+  leverages: LeverageType[]
+  from: Date | undefined
+  to: Date | undefined
+}
 
 export const columns: ColumnDef<Tickets>[] = [
   {
@@ -38,7 +60,21 @@ export const columns: ColumnDef<Tickets>[] = [
   },
   {
     accessorKey: 'result',
-    header: 'Resultado',
+    header: () => <div className="text-right">Result</div>,
+    cell: ({ row }) => {
+      const result: string = row.getValue("result")
+ 
+      return <Badge className={`uppercase ${
+        result === 'green'
+          ? 'bg-green-600'
+          : result === 'draw'
+          ? 'bg-yellow-400'
+          : result === 'red' 
+          ? 'bg-red-600'
+          : 'bg-blue-600'
+    }`}>{result}</Badge>
+      // <div className="text-right font-medium">{formatted}</div>
+    },
   },
   {
     accessorKey: 'odd',
@@ -49,6 +85,7 @@ export const columns: ColumnDef<Tickets>[] = [
     enableHiding: false,
     cell: ({ row }) => {
       const ticket = row.original
+      const ticketId = ticket.ticketId
  
       return (
         <DropdownMenu>
@@ -66,7 +103,9 @@ export const columns: ColumnDef<Tickets>[] = [
               Copy payment ID
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>View customer</DropdownMenuItem>
+            <DropdownMenuItem asChild>
+              <DeleteTicket ticket={ticket} />
+            </DropdownMenuItem>
             <DropdownMenuItem>View payment details</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
