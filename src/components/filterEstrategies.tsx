@@ -187,7 +187,7 @@ export const FilterEstrategies = ({ matches, strategies }: FilterEstrategiesProp
         <ProgressBar
           rate={rateDraws}
           bgColor="bg-orange-600"
-          title="Porcentagem de derotas"
+          title="Porcentagem de empates"
         />
       </div>
     </div>
