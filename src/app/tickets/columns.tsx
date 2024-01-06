@@ -1,5 +1,4 @@
 'use client'
-
 import { Tickets } from '@prisma/client'
 import { ColumnDef } from '@tanstack/react-table'
 import { Checkbox } from "@/components/ui/checkbox"
@@ -7,9 +6,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel,
 import { Button } from '@/components/ui/button'
 import { MoreHorizontal } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
-import { UpdateTicket } from './updateTicket'
-import { DeleteTicket } from './deleteTicket'
-
+import { EditTicket } from '@/components/edit-ticket'
 
 type LeverageType = {
   leverageId: number
@@ -85,7 +82,6 @@ export const columns: ColumnDef<Tickets>[] = [
     enableHiding: false,
     cell: ({ row }) => {
       const ticket = row.original
-      const ticketId = ticket.ticketId
  
       return (
         <DropdownMenu>
@@ -97,16 +93,10 @@ export const columns: ColumnDef<Tickets>[] = [
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem
-              onClick={() => console.log(ticket?.ticketId)}
-            >
-              Copy payment ID
-            </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem asChild>
-              <DeleteTicket ticket={ticket} />
+              <EditTicket ticket={ticket} />
             </DropdownMenuItem>
-            <DropdownMenuItem>View payment details</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       )

@@ -91,10 +91,6 @@ export const ListTickets = ({ tickets, leverages, from, to }: TicketsProps) => {
         )
       })}
 
-      <Table>
-        
-      </Table>
-
       {totalPages > 1 && (
         <Pagination
           totalPages={totalPages}

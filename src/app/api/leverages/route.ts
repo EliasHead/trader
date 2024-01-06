@@ -12,3 +12,9 @@ export const POST = async (request: Request) => {
   })
   return NextResponse.json(leverage, { status: 201 })
 }
+
+export const GET = async () => {
+  const leverages: Leverage[] = await prisma.leverage.findMany()
+
+  return NextResponse.json(leverages, { status: 201 })
+}
