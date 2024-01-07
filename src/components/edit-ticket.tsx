@@ -17,7 +17,6 @@ import { useRouter } from "next/navigation"
 import { Leverage, Results } from "@prisma/client"
 
 export function EditTicket({ticket}:any) {
-  // console.log('tick: ',ticket)
   const [formData, setFormData] = useState({
     result: ticket.result?.result_id,
     odd: ticket.odd,
@@ -29,6 +28,7 @@ export function EditTicket({ticket}:any) {
   const [isLoading, setIsLoading] = useState(false)
   const [results, setResults] = useState<Results[]>([])
   const [leverages, setLeverages] = useState<Leverage[]>([])
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     fetch('/api/results')
@@ -45,8 +45,6 @@ export function EditTicket({ticket}:any) {
       })  
   }, [])
 
-  // console.log(results)
-
   const router = useRouter()
 
   const handleChange = async (
@@ -62,7 +60,7 @@ export function EditTicket({ticket}:any) {
     event.preventDefault()
     setIsLoading(true)
     await axios.patch(`/api/tickets/${ticket.ticketId}`, {
-      result: formData.result,
+      result_id: formData.result,
       odd: formData.odd,
       stake: formData.stake,
       resultStake:
@@ -74,11 +72,12 @@ export function EditTicket({ticket}:any) {
       leverageId: formData.leverage,
     })
     setIsLoading(false)
+    setOpen(!open)
     router.refresh()
   }
-  // console.log('T: ',results)
+
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button className="justify-start text-popover-foreground self-start px-2 w-full hover:no-underline hover:bg-background/50" variant="link">Editar</Button>
       </DialogTrigger>
@@ -174,24 +173,29 @@ export function EditTicket({ticket}:any) {
                 Close
               </button> */}
               {!isLoading ? (
-                <button type="submit" className="btn btn-primary">
-                  Save
-                </button>
+                <div className="flex items-center gap-2">
+                  <Button type="submit">
+                    Save
+                  </Button>
+                  <DialogClose asChild>
+                    <Button type="button" variant="secondary">
+                      Close
+                    </Button>
+                  </DialogClose>
+                </div>
               ) : (
                 <button type="button" className="btn loading">
                   Saving...
                 </button>
               )}
             </div>
+            
+            <DialogFooter className="sm:justify-start">
+            
+          </DialogFooter>
           </form>
         </div>
-        <DialogFooter className="sm:justify-start">
-          <DialogClose asChild>
-            <Button type="button" variant="secondary">
-              Close
-            </Button>
-          </DialogClose>
-        </DialogFooter>
+        
       </DialogContent>
     </Dialog>
   )

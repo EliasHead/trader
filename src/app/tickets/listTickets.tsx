@@ -47,7 +47,6 @@ type ListTicketsProps = {
 }
 
 export const ListTickets = ({ tickets, leverages, results, from, to }: ListTicketsProps) => {
-  console.log('tick:',tickets)
   const dataArray = tickets.filter((a) => {
     return a.createdAt >= from! && a.createdAt <= to!
   })
@@ -59,9 +58,7 @@ export const ListTickets = ({ tickets, leverages, results, from, to }: ListTicke
   const totalPages = Math.ceil(tickets.length / itemsPerPage)
 
   const startIndex = (currentPage - 1) * itemsPerPage
-  console.log(startIndex)
   const endIndex = startIndex + itemsPerPage
-  console.log(endIndex)
   const paginatedItems =
     from === undefined
       ? tickets.slice(startIndex, endIndex)
@@ -78,8 +75,6 @@ export const ListTickets = ({ tickets, leverages, results, from, to }: ListTicke
       setCurrentPage(currentPage - 1)
     }
   }
-
-  console.log('pginate',paginatedItems)
 
   return (
     <div className="grid grid-cols-1 items-center">

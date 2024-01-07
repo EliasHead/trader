@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button'
 import { MoreHorizontal } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import { EditTicket } from '@/components/edit-ticket'
+import { DeleteTicket } from './deleteTicket'
 
 type LeverageType = {
   leverageId: number
@@ -105,6 +106,9 @@ export const columns: ColumnDef<Tickets>[] = [
             <DropdownMenuSeparator />
             <DropdownMenuItem asChild>
               <EditTicket ticket={ticket} />
+            </DropdownMenuItem>
+            <DropdownMenuItem asChild>
+              <DeleteTicket ticket={ticket} />
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

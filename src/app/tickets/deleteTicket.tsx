@@ -1,3 +1,5 @@
+import { Button } from '@/components/ui/button'
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
 import { Trash } from '@phosphor-icons/react'
 import axios from 'axios'
 import { useRouter } from 'next/navigation'
@@ -30,10 +32,16 @@ export const DeleteTicket = ({ ticket }: { ticket: TicketType }) => {
   }
 
   return (
-    <div>
-      <button className="btn btn-error btn-sm" onClick={handleModal}>
-        <Trash size={24} />
-      </button>
+    <Dialog>
+       <DialogTrigger asChild>
+        <Button className="justify-start text-popover-foreground self-start px-2 w-full hover:no-underline hover:bg-background/50" variant="link">Deletar</Button>
+      </DialogTrigger>
+
+      <DialogContent className="sm:max-w-md">
+        <DialogHeader>
+          <DialogTitle>Editar bilhete {ticket.ticketId}</DialogTitle>
+        </DialogHeader>
+      </DialogContent>
 
       <div className={isOpen ? 'modal modal-open' : 'modal'}>
         <div className="modal-box">
@@ -61,6 +69,6 @@ export const DeleteTicket = ({ ticket }: { ticket: TicketType }) => {
           </div>
         </div>
       </div>
-    </div>
+    </Dialog>
   )
 }

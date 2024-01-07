@@ -88,13 +88,13 @@ export function DatePicker({ className, tickets, results, leverages }: DatePicke
         </Popover>
       </div>
       <FilterTickets tickets={tickets} from={from} to={to} />
-      <ListTickets
+      {/* <ListTickets
         tickets={tickets}
         leverages={leverages}
         results={results}
         from={from}
         to={to}
-      />
+      /> */}
     </div>
   )
 }
