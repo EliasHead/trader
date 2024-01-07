@@ -1,7 +1,7 @@
 import { Button } from '@/components/ui/button'
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
-import { Trash } from '@phosphor-icons/react'
+import { Dialog, DialogClose, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
 import axios from 'axios'
+import { Loader2 } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
@@ -14,61 +14,51 @@ type TicketType = {
 }
 
 export const DeleteTicket = ({ ticket }: { ticket: TicketType }) => {
-  const [isOpen, setIsOpen] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
+  const [open, setOpen] = useState(false);
 
   const router = useRouter()
 
   const handleDelete = async (ticketId: number) => {
+    
     setIsLoading(true)
     await axios.delete(`/api/tickets/${ticketId}`)
     setIsLoading(false)
     router.refresh()
-    setIsOpen(false)
-  }
-
-  const handleModal = () => {
-    setIsOpen(!isOpen)
+    setOpen(!open)
   }
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
        <DialogTrigger asChild>
         <Button className="justify-start text-popover-foreground self-start px-2 w-full hover:no-underline hover:bg-background/50" variant="link">Deletar</Button>
       </DialogTrigger>
 
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle>Editar bilhete {ticket.ticketId}</DialogTitle>
+          <DialogTitle>Editar bilhete {ticket.ticketId}?</DialogTitle>
         </DialogHeader>
-      </DialogContent>
-
-      <div className={isOpen ? 'modal modal-open' : 'modal'}>
-        <div className="modal-box">
-          <h3 className="text-lg font-bold">
-            deletar o bilhete {ticket.ticketId}?
-          </h3>
-
-          <div className="modal-action">
-            <button type="button" className="btn" onClick={handleModal}>
+        <div className="modal-action">
+          <DialogClose asChild>
+            <Button variant='outline' type="button">
               Não
-            </button>
+            </Button>
+          </DialogClose>  
             {!isLoading ? (
-              <button
-                type="button"
+              <Button
+                type="submit"
                 onClick={() => handleDelete(ticket.ticketId)}
-                className="btn btn-primary"
               >
                 Sim
-              </button>
+              </Button>
             ) : (
-              <button type="button" className="btn loading">
+              <Button type="button" disabled>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                 Deletando...
-              </button>
+              </Button>
             )}
           </div>
-        </div>
-      </div>
+      </DialogContent>
     </Dialog>
   )
 }

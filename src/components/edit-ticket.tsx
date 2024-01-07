@@ -86,7 +86,7 @@ export function EditTicket({ticket}:any) {
           <DialogTitle>Editar bilhete {ticket.ticketId}</DialogTitle>
         </DialogHeader>
         <div className="flex items-center space-x-2">
-        <form onSubmit={handleUpdate}>
+          <form onSubmit={handleUpdate}>
             <div className="form-control w-full">
               <label className="label font-bold" htmlFor="stake">
                 Stake
