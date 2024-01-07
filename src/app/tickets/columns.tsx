@@ -46,7 +46,7 @@ export const columns: ColumnDef<TicketsProps>[] = [
   },
   {
     accessorKey: 'ticketId',
-    header: 'TicketId',
+    header: 'Id',
   },
   {
     accessorKey: 'Matches.length',
@@ -61,7 +61,7 @@ export const columns: ColumnDef<TicketsProps>[] = [
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Resultado
+        result
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       )
