@@ -1,5 +1,5 @@
 'use client'
-import { Tickets } from '@prisma/client'
+import { Leverage, Matches, Results, Tickets } from '@prisma/client'
 import { ColumnDef } from '@tanstack/react-table'
 import { Checkbox } from "@/components/ui/checkbox"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
@@ -14,17 +14,26 @@ type LeverageType = {
   result: string | null
   createdAt: Date
 }
-interface Match extends Tickets {
-  Matches?: object[]
-  match_id?: number | null
-}
+type TicketsType = {
+  ticketId: number;
+  createdAt: Date;
+  updatedAt: Date;
+  odd?: number | null;
+  stake?: number | null;
+  resultStake: number;
+  leverage?: Leverage | null;
+  leverageId?: number | null;
+  Matches: Matches[];
+  result?: Results[];
+  result_id?: number | null;
+};
 
-type TicketsProps = {
-  tickets: Match[]
-  leverages: LeverageType[]
-  from: Date | undefined
-  to: Date | undefined
-}
+// type TicketsProps = {
+//   tickets: TicketsType[]
+//   leverages: LeverageType[]
+//   from: Date | undefined
+//   to: Date | undefined
+// }
 
 export const columns: ColumnDef<Tickets>[] = [
   {
@@ -59,17 +68,17 @@ export const columns: ColumnDef<Tickets>[] = [
     accessorKey: 'result',
     header: () => <div className="text-right">Result</div>,
     cell: ({ row }) => {
-      const result: string = row.getValue("result")
+      const result: Results = row.getValue("result")
  
       return <Badge className={`uppercase ${
-        result === 'green'
+        result?.result_id === 2
           ? 'bg-green-600'
-          : result === 'draw'
+          : result?.result_id === 4
           ? 'bg-yellow-400'
-          : result === 'red' 
+          : result?.result_id === 3 
           ? 'bg-red-600'
           : 'bg-blue-600'
-    }`}>{result}</Badge>
+    }`}>{result?.result_name}</Badge>
       // <div className="text-right font-medium">{formatted}</div>
     },
   },

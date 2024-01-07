@@ -73,7 +73,7 @@ const TicketsList = async () => {
       <div className="m-auto">
         <AddTicket />
       </div>
-      {/* <DataTable columns={columns} data={tickets}/> */}
+      <DataTable columns={columns} data={tickets}/>
       <Label htmlFor="date" className="ml-4 shrink-0">
         Selecione uma data
       </Label>
