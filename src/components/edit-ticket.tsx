@@ -17,8 +17,9 @@ import { useRouter } from "next/navigation"
 import { Leverage, Results } from "@prisma/client"
 
 export function EditTicket({ticket}:any) {
+  // console.log('tick: ',ticket)
   const [formData, setFormData] = useState({
-    result: ticket.result,
+    result: ticket.result?.result_id,
     odd: ticket.odd,
     stake: ticket.stake,
     resultStake: ticket.resultStake,
@@ -26,14 +27,14 @@ export function EditTicket({ticket}:any) {
   })
 
   const [isLoading, setIsLoading] = useState(false)
-  const [results, setResult] = useState<Results[]>([])
+  const [results, setResults] = useState<Results[]>([])
   const [leverages, setLeverages] = useState<Leverage[]>([])
 
   useEffect(() => {
     fetch('/api/results')
       .then((res) => res.json())
       .then((data) => {
-        setResult(data)
+        setResults(data)
         // setLoading(false)
       }),
       fetch('/api/leverages')
@@ -44,7 +45,7 @@ export function EditTicket({ticket}:any) {
       })  
   }, [])
 
-  console.log(results)
+  // console.log(results)
 
   const router = useRouter()
 
@@ -75,7 +76,7 @@ export function EditTicket({ticket}:any) {
     setIsLoading(false)
     router.refresh()
   }
-  console.log('T: ',results)
+  // console.log('T: ',results)
   return (
     <Dialog>
       <DialogTrigger asChild>

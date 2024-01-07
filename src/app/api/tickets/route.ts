@@ -7,7 +7,7 @@ export const POST = async (request: Request) => {
   const body: Tickets = await request.json()
   const team = await prisma.tickets.create({
     data: {
-      result: body.result,
+      result_id: Number(body.result_id),
       odd: Number(body.odd),
       stake: Number(body.stake),
     },

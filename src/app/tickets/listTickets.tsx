@@ -1,5 +1,5 @@
 'use client'
-import { Tickets } from '@prisma/client'
+import { Leverage, Matches, Results, Tickets } from '@prisma/client'
 import { DeleteTicket } from './deleteTicket'
 import { UpdateTicket } from './updateTicket'
 import { AddTicket } from './addTicket'
@@ -8,25 +8,46 @@ import Pagination from '@/components/pagination/pagination'
 import { Badge } from '@/components/ui/badge'
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 
-type LeverageType = {
-  leverageId: number
-  goal: string | null
-  result: string | null
-  createdAt: Date
-}
-interface Match extends Tickets {
-  Matches?: object[]
-  match_id?: number | null
-}
-
+// type LeverageType = {
+//   leverageId: number
+//   goal: string | null
+//   result: string | null
+//   createdAt: Date
+// }
 type TicketsProps = {
-  tickets: Match[]
-  leverages: LeverageType[]
+  ticketId: number;
+  createdAt: Date;
+  updatedAt: Date;
+  odd?: number | null;
+  stake?: number | null;
+  resultStake: number;
+  leverage?: Leverage | null;
+  leverageId?: number | null;
+  Matches: Matches[];
+  result?: Results | null;
+  result_id?: number | null;
+};
+// type TicketsProps = {
+//   tickets: Tickets[]
+//   Matches?: {
+//     match_id: number
+//   }
+//   result?: {
+//     result_id: number
+//     result_name: String
+//   }
+// }
+
+type ListTicketsProps = {
+  tickets: TicketsProps[]
+  leverages: Leverage[]
+  results: Results[]
   from: Date | undefined
   to: Date | undefined
 }
 
-export const ListTickets = ({ tickets, leverages, from, to }: TicketsProps) => {
+export const ListTickets = ({ tickets, leverages, results, from, to }: ListTicketsProps) => {
+  console.log('tick:',tickets)
   const dataArray = tickets.filter((a) => {
     return a.createdAt >= from! && a.createdAt <= to!
   })
@@ -38,8 +59,9 @@ export const ListTickets = ({ tickets, leverages, from, to }: TicketsProps) => {
   const totalPages = Math.ceil(tickets.length / itemsPerPage)
 
   const startIndex = (currentPage - 1) * itemsPerPage
+  console.log(startIndex)
   const endIndex = startIndex + itemsPerPage
-
+  console.log(endIndex)
   const paginatedItems =
     from === undefined
       ? tickets.slice(startIndex, endIndex)
@@ -57,6 +79,8 @@ export const ListTickets = ({ tickets, leverages, from, to }: TicketsProps) => {
     }
   }
 
+  console.log('pginate',paginatedItems)
+
   return (
     <div className="grid grid-cols-1 items-center">
       <div className="m-auto">
@@ -73,16 +97,16 @@ export const ListTickets = ({ tickets, leverages, from, to }: TicketsProps) => {
               <strong>{ticket.Matches?.length}x</strong>
             </div>
             <Badge className={`uppercase ${
-                ticket.result === 'green'
+                ticket.result?.result_id === 2
                   ? 'bg-green-600'
-                  : ticket.result === 'draw'
+                  : ticket.result?.result_id === 4
                   ? 'bg-yellow-400'
-                  : ticket.result === 'red' 
+                  : ticket.result?.result_id === 3 
                   ? 'bg-red-600'
                   : 'bg-blue-600'
-            }`}>{ticket.result}</Badge>
+            }`}>{ticket.result?.result_name}</Badge>
             <div>
-              <UpdateTicket ticket={ticket} leverages={leverages} />
+              <UpdateTicket ticket={ticket} leverages={leverages} results={results} />
             </div>
             <div>
               <DeleteTicket ticket={ticket} />

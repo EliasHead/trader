@@ -1,10 +1,24 @@
-import { Tickets } from '@prisma/client'
+import { Leverage, Matches, Results, Tickets } from '@prisma/client'
 import { ProgressBar } from '../ui/progressBar'
 import { Card, CardHeader, CardTitle, CardContent } from '../ui/card'
 import { ArrowDown, ArrowUp, File } from 'lucide-react'
 
+type TicketsType = {
+  ticketId: number;
+  createdAt: Date;
+  updatedAt: Date;
+  odd?: number | null;
+  stake?: number | null;
+  resultStake: number;
+  leverage?: Leverage | null;
+  leverageId?: number | null;
+  Matches: Matches[];
+  result?: Results | null;
+  // result_id?: number | null;
+};
+
 interface FilterTicketsProps {
-  tickets: Tickets[]
+  tickets: TicketsType[]
   from: Date | undefined
   to: Date | undefined
 }
@@ -16,9 +30,9 @@ export const FilterTickets = ({ tickets, from, to }: FilterTicketsProps) => {
 
   const ticketsFormat = from === undefined ? tickets : dataArray
   const greens = ticketsFormat.filter(
-    (ticket) => ticket.result === 'green',
+    (ticket) => ticket.result?.result_id === 2,
   ).length
-  const reds = ticketsFormat.filter((ticket) => ticket.result === 'red').length
+  const reds = ticketsFormat.filter((ticket) => ticket.result?.result_id === 3).length
   const totalTickets = greens + reds
 
   const rateGreens = ((greens / totalTickets) * 100).toFixed(0)

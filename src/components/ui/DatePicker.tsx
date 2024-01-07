@@ -15,15 +15,30 @@ import {
 } from '@/components/ui/popover'
 import { ListTickets } from '@/app/tickets/listTickets'
 import { FilterTickets } from '../filters/filterTickets'
-import { Leverage, Tickets } from '@prisma/client'
+import { Leverage, Matches, Results, Tickets } from '@prisma/client'
+
+type TicketsType = {
+  ticketId: number;
+  createdAt: Date;
+  updatedAt: Date;
+  odd?: number | null;
+  stake?: number | null;
+  resultStake: number;
+  leverage?: Leverage | null;
+  leverageId?: number | null;
+  Matches: Matches[];
+  result?: Results | null;
+  // result_id?: number | null;
+};
 
 interface DatePickerProps {
   className?: React.HTMLAttributes<HTMLDivElement>
-  tickets: Tickets[]
+  tickets: TicketsType[]
   leverages: Leverage[]
+  results: Results[]
 }
 
-export function DatePicker({ className, tickets, leverages }: DatePickerProps) {
+export function DatePicker({ className, tickets, results, leverages }: DatePickerProps) {
   const [date, setDate] = React.useState<DateRange | undefined>({
     from: subDays(new Date(Date.now()), 7) /* undefined */,
     to: new Date(Date.now()) /* undefined */,
@@ -76,6 +91,7 @@ export function DatePicker({ className, tickets, leverages }: DatePickerProps) {
       <ListTickets
         tickets={tickets}
         leverages={leverages}
+        results={results}
         from={from}
         to={to}
       />

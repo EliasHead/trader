@@ -36,6 +36,7 @@ model Results {
   result_id   Int       @id @default(autoincrement())
   result_name String    @unique
   matches     Matches[]
+  tickets     Tickets[]
 }
 
 model Teams {
@@ -101,7 +102,6 @@ model result {
 
 model Tickets {
   ticketId    Int       @id @default(autoincrement())
-  result      String?   @default("progress")
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
   odd         Float?
@@ -111,6 +111,8 @@ model Tickets {
   leverage    Leverage? @relation(fields: [leverageId], references: [leverageId])
   leverageId  Int?      @default(1)
   Matches     Matches[]
+  result      Results?  @relation(fields: [result_id], references: [result_id])
+  result_id   Int?      @default(1)
 
   @@map("tickets")
 }

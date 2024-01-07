@@ -5,7 +5,10 @@ import { useState } from 'react'
 
 type TicketType = {
   ticketId: number
-  result?: string | null
+  result?: {
+    result_id: number
+    result_name: String
+  } | null
 }
 
 export const DeleteTicket = ({ ticket }: { ticket: TicketType }) => {

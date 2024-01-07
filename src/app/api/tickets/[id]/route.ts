@@ -13,7 +13,7 @@ export const PATCH = async (
       ticketId: Number(params.id),
     },
     data: {
-      result: body.result,
+      result_id: Number(body.result_id),
       odd: Number(body.odd),
       stake: Number(body.stake),
       resultStake: Number(body.resultStake),

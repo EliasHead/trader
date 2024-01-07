@@ -3,6 +3,21 @@ import { ChangeEvent, FormEvent, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import axios from 'axios'
 import { Pencil } from '@phosphor-icons/react'
+import { Leverage, Matches, Results } from '@prisma/client'
+
+type TicketType = {
+  ticketId: number;
+  createdAt: Date;
+  updatedAt: Date;
+  odd?: number | null;
+  stake?: number | null;
+  resultStake: number;
+  leverage?: Leverage | null;
+  leverageId?: number | null;
+  Matches: Matches[];
+  result?: Results | null;
+  // result_id?: number | null;
+};
 
 type LeverageType = {
   leverageId: number
@@ -11,31 +26,32 @@ type LeverageType = {
   createdAt: Date
 }
 
-type TicketType = {
-  ticketId: number
-  result: string | null
-  odd: number | null
-  stake: number | null
-  resultStake: number
-  leverageId: number | null
-}
+// type TicketType = {
+//   ticketId: number
+//   result_id: number | null
+//   odd: number | null
+//   stake: number | null
+//   resultStake: number
+//   leverageId: number | null
+// }
 
 type TicketsProps = {
   ticket: TicketType
   leverages: LeverageType[]
+  results: Results[]
 }
 
 // TODO: melhorar json
-const results = [
-  { label: 'progress', value: 1 },
-  { label: 'green', value: 2 },
-  { label: 'red', value: 3 },
-  { label: 'draw', value: 4 },
-]
+// const results = [
+//   { label: 'progress', value: 1 },
+//   { label: 'green', value: 2 },
+//   { label: 'red', value: 3 },
+//   { label: 'draw', value: 4 },
+// ]
 
-export const UpdateTicket = ({ ticket, leverages }: TicketsProps) => {
+export const UpdateTicket = ({ ticket, leverages, results }: TicketsProps) => {
   const [formData, setFormData] = useState({
-    result: ticket.result,
+    result: ticket.result?.result_id,
     odd: ticket.odd,
     stake: ticket.stake,
     resultStake: ticket.resultStake,
@@ -60,13 +76,13 @@ export const UpdateTicket = ({ ticket, leverages }: TicketsProps) => {
     event.preventDefault()
     setIsLoading(true)
     await axios.patch(`/api/tickets/${ticket.ticketId}`, {
-      result: formData.result,
+      result_id: formData.result,
       odd: formData.odd,
       stake: formData.stake,
       resultStake:
-        formData.result === 'green'
+        formData.result === 2
           ? (formData.odd! - 1).toFixed(2)
-          : formData.result === 'red'
+          : formData.result === 3
           ? -1
           : 0,
       leverageId: formData.leverage,
@@ -139,8 +155,8 @@ export const UpdateTicket = ({ ticket, leverages }: TicketsProps) => {
                 <option>Escolha o resultado</option>
                 {results.map((result) => {
                   return (
-                    <option key={result.value} value={result.label}>
-                      {result.label}
+                    <option key={result.result_id} value={result.result_id}>
+                      {result.result_name}
                     </option>
                   )
                 })}
