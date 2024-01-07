@@ -4,18 +4,12 @@ import { ColumnDef } from '@tanstack/react-table'
 import { Checkbox } from "@/components/ui/checkbox"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 import { Button } from '@/components/ui/button'
-import { MoreHorizontal } from 'lucide-react'
+import { ArrowUpDown, MoreHorizontal } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import { EditTicket } from '@/components/edit-ticket'
 import { DeleteTicket } from './deleteTicket'
 
-type LeverageType = {
-  leverageId: number
-  goal: string | null
-  result: string | null
-  createdAt: Date
-}
-type TicketsType = {
+type TicketsProps = {
   ticketId: number;
   createdAt: Date;
   updatedAt: Date;
@@ -25,18 +19,11 @@ type TicketsType = {
   leverage?: Leverage | null;
   leverageId?: number | null;
   Matches: Matches[];
-  result?: Results[];
+  result?: Results | null;
   result_id?: number | null;
 };
 
-// type TicketsProps = {
-//   tickets: TicketsType[]
-//   leverages: LeverageType[]
-//   from: Date | undefined
-//   to: Date | undefined
-// }
-
-export const columns: ColumnDef<Tickets>[] = [
+export const columns: ColumnDef<TicketsProps>[] = [
   {
     id: "select",
     header: ({ table }) => (
@@ -59,7 +46,7 @@ export const columns: ColumnDef<Tickets>[] = [
   },
   {
     accessorKey: 'ticketId',
-    header: 'Ticket Id',
+    header: 'TicketId',
   },
   {
     accessorKey: 'Matches.length',
@@ -67,7 +54,18 @@ export const columns: ColumnDef<Tickets>[] = [
   },
   {
     accessorKey: 'result',
-    header: () => <div className="text-right">Result</div>,
+    // accessorFn: (row) => row.result?.result_name,
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Resultado
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      )
+    },
     cell: ({ row }) => {
       const result: Results = row.getValue("result")
  

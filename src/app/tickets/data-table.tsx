@@ -2,11 +2,13 @@
 
 import {
   ColumnDef,
+  SortingState,
   ColumnFiltersState,
   VisibilityState,
   flexRender,
   getCoreRowModel,
   getFilteredRowModel,
+  getSortedRowModel,
   getPaginationRowModel,
   useReactTable,
 } from "@tanstack/react-table"
@@ -46,6 +48,8 @@ export function DataTable<TData, TValue>({
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({})
 
+  const [sorting, setSorting] = React.useState<SortingState>([])
+
   const table = useReactTable({
     data,
     columns,
@@ -55,24 +59,27 @@ export function DataTable<TData, TValue>({
     getFilteredRowModel: getFilteredRowModel(),
     onRowSelectionChange: setRowSelection,
     onColumnVisibilityChange: setColumnVisibility,
+    onSortingChange: setSorting,
+    getSortedRowModel: getSortedRowModel(),
     state: {
       columnFilters,
       rowSelection,
       columnVisibility,
+      sorting,
     }
   })
 
   return (
     <div>
       <div className="flex items-center p-4 py-4">
-        <Input
-          placeholder="Filter emails..."
+        {/* <Input
+          placeholder="Filtre por resultados..."
           value={(table.getColumn("result")?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
             table.getColumn("result")?.setFilterValue(event.target.value)
           }
           className="max-w-sm"
-        />
+        /> */}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="ml-auto">
