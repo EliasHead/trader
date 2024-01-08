@@ -13,11 +13,26 @@ const getPoweRanks = async () => {
   return powerRankings
 } 
 
+const getTeams = async () => {
+  const teamsData = await prisma.teams.findMany()
+
+  return teamsData
+} 
+
+const getCompetitions = async () => {
+  const competitionsData = await prisma.competition.findMany()
+
+  return competitionsData
+} 
+
 const FairLines = async () => {
   const powerRankings = await getPoweRanks()
+  const teams = await getTeams()
+  const competitions = await getCompetitions()
+
   return (
   <>
-    <HeroSection powerRankings={powerRankings}  />
+    <HeroSection powerRankings={powerRankings} teams={teams} competitions={competitions} />
   </>
   )
 }
