@@ -10,6 +10,7 @@ import { EditTicket } from '@/components/edit-ticket'
 import { DeleteTicket } from '@/app/tickets/deleteTicket'
 import { PowerRankingType } from '@/app/fairlines/types'
 import { DeletePowerRanking } from './delete-power-ranking'
+import { EditPowerRanking } from './edit-power-ranking'
 // import { DeleteTicket } from './deleteTicket'
 
 export const columns: ColumnDef<PowerRankingType>[] = [
@@ -59,7 +60,7 @@ export const columns: ColumnDef<PowerRankingType>[] = [
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuItem asChild>
-              {/* <EditTicket ticket={ticket} /> */}
+              <EditPowerRanking powerRinking={powerRanking} />
             </DropdownMenuItem>
             <DropdownMenuItem asChild>
               <DeletePowerRanking powerRanking={powerRanking} />

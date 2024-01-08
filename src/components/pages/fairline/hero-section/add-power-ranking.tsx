@@ -13,7 +13,7 @@ import { ChangeEvent, FormEvent, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
-const DATA_POSITION = [
+export const DATA_POSITION = [
   { positionId: 1, positionName: '1º' },
   { positionId: 2, positionName: '2º' },
   { positionId: 3, positionName: '3º' },
