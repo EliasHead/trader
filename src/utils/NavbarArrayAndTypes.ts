@@ -24,4 +24,8 @@ export const NavbarArray: Array<NavbarItemType> = [
     label: 'Alavancagens',
     href: '/leverage',
   },
+  {
+    label: 'Fairlines',
+    href: '/fairlines',
+  },
 ]
