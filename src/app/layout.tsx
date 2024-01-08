@@ -21,7 +21,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           <Toaster />
           <AuthProvider>
             <Navbar />
-            <main className="pb-12 pt-8">{children}</main>
+            {children}
           </AuthProvider>
         </div>
       </body>

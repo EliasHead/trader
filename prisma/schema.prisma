@@ -11,11 +11,12 @@ datasource db {
 }
 
 model Competition {
-  competition_id   Int       @id @default(autoincrement())
-  competition_name String    @unique
+  competition_id   Int             @id @default(autoincrement())
+  competition_name String          @unique
   season_name      String
-  createdAt        DateTime  @default(now())
+  createdAt        DateTime        @default(now())
   Matches          Matches[]
+  powerRanking     PowerRankings[]
 
   @@map("competitions")
 }
@@ -40,15 +41,25 @@ model Results {
 }
 
 model Teams {
-  team_id       Int       @id @default(autoincrement())
-  team_name     String    @unique
+  team_id       Int             @id @default(autoincrement())
+  team_name     String          @unique
   team_country  String
   team_initials String?
-  createdAt     DateTime  @default(now())
-  homeTeam      Matches[] @relation("homeTeam")
-  visitorTeam   Matches[] @relation("visitorTeam")
+  createdAt     DateTime        @default(now())
+  homeTeam      Matches[]       @relation("homeTeam")
+  visitorTeam   Matches[]       @relation("visitorTeam")
+  powerRanking  PowerRankings[]
 
   @@map("teams")
+}
+
+model PowerRankings {
+  powerRankingId Int          @id @default(autoincrement())
+  position       Int
+  teamId         Int
+  team           Teams        @relation(fields: [teamId], references: [team_id])
+  competitionId  Int?
+  competition    Competition? @relation(fields: [competitionId], references: [competition_id])
 }
 
 model Matches {
