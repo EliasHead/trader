@@ -80,7 +80,7 @@ export function EditPowerRanking({powerRinking}: EditPowerRankingProps) {
       </DialogTrigger>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle>Editar bilhete {powerRinking.powerRankingId}</DialogTitle>
+          <DialogTitle>Editar a posição {powerRinking.position}</DialogTitle>
         </DialogHeader>
         <div className="flex items-center space-x-2">
           <form onSubmit={handleUpdate}>

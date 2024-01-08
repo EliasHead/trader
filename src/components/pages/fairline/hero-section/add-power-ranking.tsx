@@ -20,7 +20,7 @@ export const DATA_POSITION = [
   { positionId: 4, positionName: '4º' },
   { positionId: 5, positionName: '5º' },
   { positionId: 6, positionName: '6º' },
-  { positionId: 4, positionName: '7º' },
+  { positionId: 7, positionName: '7º' },
   { positionId: 8, positionName: '8º' },
   { positionId: 9, positionName: '9º' },
   { positionId: 10, positionName: '10º' },
