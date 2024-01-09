@@ -7,7 +7,7 @@ import { List, X } from '@phosphor-icons/react'
 import { NavItem } from './nav-item'
 import { Separator } from '../ui/separator'
 
-export const Navbar = () => {
+export const Header = () => {
   const [isOpen, setIsOpen] = useState(false)
 
   const handleNav = () => {
@@ -15,8 +15,8 @@ export const Navbar = () => {
   }
 
   return (
-    <div className="fixed left-0 top-0 z-10 w-full bg-background duration-300 ease-in">
-      <div className="m-auto flex max-w-[1240px] items-center justify-between p-4">
+    <header className="absolute top-0 left-0 z-10 w-full bg-background duration-300 ease-in">
+      <div className="container relative flex max-w-[1240px] items-center justify-between p-4">
         <Link href="/">
           <div className="mr-6 flex flex-shrink-0 items-center">
             <svg
@@ -74,6 +74,6 @@ export const Navbar = () => {
         </div>
       </div>
       <Separator />
-    </div>
+    </header>
   )
 }

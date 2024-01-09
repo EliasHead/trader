@@ -7,7 +7,7 @@ import { cn } from '@/lib/utils'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Competition, Teams } from '@prisma/client'
 import axios from 'axios'
-import { Check, ChevronsUpDown } from 'lucide-react'
+import { Check, ChevronsUpDown, Loader2 } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { ChangeEvent, FormEvent, useState } from 'react'
 import { useForm } from 'react-hook-form'
@@ -121,11 +121,11 @@ export const AddPowerRanking = ({ teams, competitions }: PowerRankingAdd) => {
 
   return (
     <div className="flex items-center">
-      <Button className="uppercase" onClick={handleModal} size={'lg'}>
-        Adicionar power ranking
+      <Button onClick={handleModal}>
+        Adicionar
       </Button>
       <div className={isOpen ? 'modal modal-open z-50' : 'modal'}>
-        <div className="modal-box sm:w-3/5 sm:max-w-none">
+        <div className="modal-box">
           <h3 className="text-lg font-bold">Adicionar novo time</h3>
           <Form {...form}>
             <form className="space-x-4 space-y-4 grid grid-cols-1 gap-2 sm:items-center" onSubmit={form.handleSubmit(onSubmit)}>
@@ -376,17 +376,18 @@ export const AddPowerRanking = ({ teams, competitions }: PowerRankingAdd) => {
             </div> */}
 
               <div className="modal-action">
-                <button type="button" className="btn" onClick={handleModal}>
+                <Button type="button" variant={"outline"} onClick={handleModal}>
                   Close
-                </button>
+                </Button>
                 {!isLoading ? (
-                  <button type="submit" className="btn btn-primary">
-                    Save
-                  </button>
+                  <Button type="submit">
+                    Salvar
+                  </Button>
                 ) : (
-                  <button type="button" className="btn loading">
-                    Saving...
-                  </button>
+                  <Button type="button" disabled>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    Salvando...
+                  </Button>
                 )}
               </div>
             </form>

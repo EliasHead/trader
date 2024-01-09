@@ -12,7 +12,7 @@ type PowerRankingsType = {
 
 export const HeroSection = ({powerRankings, teams, competitions}: PowerRankingsType) => {
   return (
-    <section className="w-full mt-40 lg:h-[755px] flex flex-col justify-center pb-10 sm:pb-32 py-32 lg:pb-[110px]">
+    <section className="w-full flex flex-col pb-10 sm:pb-32 py-32 lg:pb-[110px]">
       <div className="container flex items-start justify-between lg:justify-center flex-col-reverse lg:flex-row">
         <div className="w-full lg:max-w-[530px]">
           <AddPowerRanking teams={teams} competitions={competitions} />
