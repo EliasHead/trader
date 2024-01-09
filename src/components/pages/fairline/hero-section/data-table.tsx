@@ -30,6 +30,7 @@ import {
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
@@ -69,17 +70,28 @@ export function DataTable<TData, TValue>({
     }
   })
 
+  const competitions = [
+    {value: 'INGLATERRA Premier League', label: 'Premier League'},
+    {value: 'ITÁLIA Serie A', label: 'Serie A'},
+  ]
+
   return (
     <div>
       <div className="flex items-center p-4 py-4 gap-6">
-        <Input
-          placeholder="Filtre por Time..."
-          value={(table.getColumn("team_team_name")?.getFilterValue() as string) ?? ""}
-          onChange={(event) =>
-            table.getColumn("team_team_name")?.setFilterValue(event.target.value)
-          }
-          className="max-w-sm"
-        />
+        <Select
+          value={(table.getColumn("competition_competition_name")?.getFilterValue() as string) ?? ""} 
+          onValueChange={(event) =>
+              table.getColumn("competition_competition_name")?.setFilterValue(event)
+        }>
+          <SelectTrigger className="w-[180px]">
+            <SelectValue placeholder="Copetição" />
+          </SelectTrigger>
+          <SelectContent >
+            {competitions.map((competition) => (
+              <SelectItem key={competition.value} value={competition.value}>{competition.label}</SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="ml-auto">

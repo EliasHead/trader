@@ -43,6 +43,14 @@ export const columns: ColumnDef<PowerRankingType>[] = [
     header: 'Time',
   },
   {
+    accessorKey: 'competition.competition_name',
+    header: 'campeonato',
+    // cell: ({ row }) => {
+    //   const {competition} = row.original
+    //   return <div>{competition?.competition_name}</div>
+    // },
+  },
+  {
     id: "actions",
     enableHiding: false,
     cell: ({ row }) => {
