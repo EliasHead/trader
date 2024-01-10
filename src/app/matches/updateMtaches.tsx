@@ -54,7 +54,10 @@ type Match = {
   }
   ticketId?: number | null
   ticket: {
-    result: string | null
+    result: {
+      result_id: number, 
+      result_name: string 
+    } | null
   } | null
 }
 

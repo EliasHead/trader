@@ -21,4 +21,5 @@ export const strategies = [
   { label: 'WEH', value: 16 },
   { label: 'HA+1', value: 17 },
   { label: 'HE+2', value: 18 },
+  { label: 'HA-0.25', value: 19 },
 ]

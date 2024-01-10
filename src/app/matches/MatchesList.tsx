@@ -45,7 +45,10 @@ type Match = {
   }
   visitor_team_id: number
   ticket: {
-    result: string | null
+    result: {
+      result_id: number, 
+      result_name: string 
+    } | null
   } | null
   ticketId?: number | null
   // odd: number | null

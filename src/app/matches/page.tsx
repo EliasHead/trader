@@ -65,6 +65,7 @@ export default async function Matches() {
   const strategies = await prisma.strategies.findMany()
   const results = await prisma.results.findMany()
   const reviews = await prisma.reviews.findMany()
+  console.log(matches.map(match => match.ticket))
 
   return (
     <div className="mt-12 grid grid-cols-1 items-center space-y-4">
