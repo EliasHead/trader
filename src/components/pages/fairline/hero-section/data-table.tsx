@@ -73,6 +73,8 @@ export function DataTable<TData, TValue>({
   const competitions = [
     {value: 'INGLATERRA Premier League', label: 'Premier League'},
     {value: 'ITÁLIA Serie A', label: 'Serie A'},
+    {value: 'ESPANHA: LALIGA', label: 'LALIGA'},
+    {value: 'ISRAEL: LIGAT HA', label: 'LIGAT HA'},
   ]
 
   return (
