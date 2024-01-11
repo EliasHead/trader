@@ -151,7 +151,7 @@ export default function MatchesList({
                 reviews={reviews}
               />
             </div>
-            <div className="grid grid-cols-app items-center justify-center">
+            <div className="bg- grid grid-cols-app items-center justify-center">
               <div className="flex items-center justify-start px-3 py-2">
                 <Badge
                   name={match.result?.result_name!}
@@ -161,6 +161,8 @@ export default function MatchesList({
                   ? 'bg-green-600'
                   : match.result?.result_id === 4
                   ? 'bg-yellow-400'
+                  : match.result?.result_id === 5
+                  ? 'bg-gradient-to-r from-red-600  to-yellow-400'
                   : 'bg-sky-600'}`}
                   {...techBadgeAnimation}
                   transition={{ duration: 0.2, delay: i * 0.1 }}
