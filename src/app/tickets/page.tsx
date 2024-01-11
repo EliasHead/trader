@@ -34,17 +34,6 @@ const getTickets = async () => {
     },
     orderBy: [{ ticketId: 'desc'}]
   }); 
-//   const res: Tickets[] = await prisma.$queryRaw`
-//      SELECT
-//     t.*,
-//     m.match_id,
-//     r.result_id,
-//     r.result_name
-//   FROM
-//     tickets AS t
-//     LEFT JOIN Matches AS m ON t.ticketId = m.ticketId and t.ticketId = 1
-//     LEFT JOIN Results AS r ON t.result_id = r.result_id
-// `;
 
   return ticketsWithRelations
 }
@@ -66,7 +55,6 @@ const TicketsList = async () => {
   const tickets = await getTickets()
   const leverages = await getLeverage()
   const results = await getResults()
-  console.log(tickets)
 
   return (
     <div className="col-span-1 mt-16 grid min-h-screen w-full space-y-2">

@@ -45,7 +45,7 @@ const FormSchema = z.object({
     required_error: "Please select a round.",
   }),
   strategy: z.number({
-    required_error: "Please select a round.",
+    required_error: "Selecione a estrategia",
   }),
   odd: z.string().refine((val) => !Number.isNaN(parseInt(val, 10)), {
     message: "Expected number, received a string"
@@ -413,6 +413,7 @@ const AddMatches = ({ teams, competitions, rounds, strategies, reviews }: Matche
                         </Command>
                       </PopoverContent>
                     </Popover>
+                    <FormMessage />
                   </FormItem>
                 )}
               />
