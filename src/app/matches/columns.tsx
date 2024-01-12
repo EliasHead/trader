@@ -1,6 +1,6 @@
 'use client'
 import { Leverage, Matches, Results } from '@prisma/client'
-import { ColumnDef } from '@tanstack/react-table'
+import { ColumnDef, createColumnHelper } from '@tanstack/react-table'
 import { Checkbox } from '@/components/ui/checkbox'
 import {
   DropdownMenu,
@@ -13,24 +13,38 @@ import {
 import { Button } from '@/components/ui/button'
 import { ArrowUpDown, MoreHorizontal } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
-import { EditTicket } from '@/components/edit-ticket'
-import { DeleteTicket } from './deleteTicket'
+import { MatchesType } from './types'
+// import { match } from 'assert'
+// import { EditTicket } from '@/components/edit-ticket'
+// import { DeleteTicket } from './deleteTicket'
 
-type TicketsProps = {
-  ticketId: number
-  createdAt: Date
-  updatedAt: Date
-  odd?: number | null
-  stake?: number | null
-  resultStake: number
-  leverage?: Leverage | null
-  leverageId?: number | null
-  Matches: Matches[]
-  result?: Results | null
-  result_id?: number | null
-}
+// type TicketsProps = {
+//   ticketId: number
+//   createdAt: Date
+//   updatedAt: Date
+//   odd?: number | null
+//   stake?: number | null
+//   resultStake: number
+//   leverage?: Leverage | null
+//   leverageId?: number | null
+//   Matches: Matches[]
+//   result?: Results | null
+//   result_id?: number | null
+// }
 
-export const columns: ColumnDef<TicketsProps>[] = [
+const columnHelper = createColumnHelper<MatchesType>()
+
+export const columns: ColumnDef<MatchesType>[] = [
+  columnHelper.group({
+    header: 'Jogos',
+    footer: (match) => match.column.id,
+    columns: [
+      columnHelper.accessor('home_team', {
+        cell: (info) => info.getValue(),
+        footer: (props) => props.column.id,
+      }),
+    ],
+  }),
   {
     id: 'select',
     header: ({ table }) => (
@@ -116,10 +130,10 @@ export const columns: ColumnDef<TicketsProps>[] = [
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuItem asChild>
-              <EditTicket ticket={ticket} />
+              {/* <EditTicket ticket={ticket} /> */}
             </DropdownMenuItem>
             <DropdownMenuItem asChild>
-              <DeleteTicket ticket={ticket} />
+              {/* <DeleteTicket ticket={ticket} /> */}
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

@@ -67,7 +67,7 @@ export default function MatchesList({
   }
 
   return (
-    <div className="m-auto w-full text-zinc-900 sm:w-1/2">
+    <div className="m-auto w-full text-zinc-900">
       <div className="flex items-center rounded-t-lg bg-zinc-100">
         <div className="flex px-4 py-3">
           <span className="text-left text-base font-semibold">

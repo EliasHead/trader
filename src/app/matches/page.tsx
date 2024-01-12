@@ -65,7 +65,7 @@ export default async function Matches() {
   const strategies = await prisma.strategies.findMany()
   const results = await prisma.results.findMany()
   const reviews = await prisma.reviews.findMany()
-  console.log('T: ', matches)
+  // console.log('T: ', matches)
 
   return (
     <section className="flex w-full flex-col py-32 pb-10 sm:pb-32 lg:pb-[110px]">
