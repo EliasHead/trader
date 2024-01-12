@@ -42,13 +42,13 @@ export const columns: ColumnDef<LeverageType>[] = [
   //     />
   //   ),
   // },
-  {
-    accessorKey: 'leverageId',
-    header: 'Objetivo',
-  },
+  // {
+  //   accessorKey: 'leverageId',
+  //   header: 'id',
+  // },
   {
     accessorKey: 'goal',
-    header: 'Objetivo',
+    header: 'Meta',
   },
   {
     accessorKey: 'Matches.length',

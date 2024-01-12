@@ -23,7 +23,6 @@ import {
 } from '@/components/ui/table'
 import { Button } from '@/components/ui/button'
 import * as React from 'react'
-import { Input } from '@/components/ui/input'
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
