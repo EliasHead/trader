@@ -185,6 +185,8 @@ export default function MatchesList({
                         ? 'bg-black'
                         : match.review?.review_name === 'cycles'
                         ? 'bg-blue-600'
+                        : match.review?.review_name === 'BT'
+                        ? 'bg-orange-500'
                         : 'bg-red-600'}`}
                   {...techBadgeAnimation}
                   transition={{ duration: 0.2, delay: i * 0.1 }}

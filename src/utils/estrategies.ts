@@ -22,4 +22,5 @@ export const strategies = [
   { label: 'HA+1', value: 17 },
   { label: 'HE+2', value: 18 },
   { label: 'HA-0.25', value: 19 },
+  { label: 'BTT1C', value: 20 },
 ]
