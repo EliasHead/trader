@@ -1,42 +1,25 @@
 'use client'
-import { Leverage, Matches, Results, Tickets } from '@prisma/client'
+import { Leverage, Matches, Results } from '@prisma/client'
 import { DeleteTicket } from './deleteTicket'
 import { UpdateTicket } from './updateTicket'
 import { AddTicket } from './addTicket'
 import React, { useState } from 'react'
 import Pagination from '@/components/pagination/pagination'
 import { Badge } from '@/components/ui/badge'
-import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 
-// type LeverageType = {
-//   leverageId: number
-//   goal: string | null
-//   result: string | null
-//   createdAt: Date
-// }
 type TicketsProps = {
-  ticketId: number;
-  createdAt: Date;
-  updatedAt: Date;
-  odd?: number | null;
-  stake?: number | null;
-  resultStake: number;
-  leverage?: Leverage | null;
-  leverageId?: number | null;
-  Matches: Matches[];
-  result?: Results | null;
-  result_id?: number | null;
-};
-// type TicketsProps = {
-//   tickets: Tickets[]
-//   Matches?: {
-//     match_id: number
-//   }
-//   result?: {
-//     result_id: number
-//     result_name: String
-//   }
-// }
+  ticketId: number
+  createdAt: Date
+  updatedAt: Date
+  odd?: number | null
+  stake?: number | null
+  resultStake: number
+  leverage?: Leverage | null
+  leverageId?: number | null
+  Matches: Matches[]
+  result?: Results | null
+  result_id?: number | null
+}
 
 type ListTicketsProps = {
   tickets: TicketsProps[]
@@ -46,8 +29,15 @@ type ListTicketsProps = {
   to: Date | undefined
 }
 
-export const ListTickets = ({ tickets, leverages, results, from, to }: ListTicketsProps) => {
+export const ListTickets = ({
+  tickets,
+  leverages,
+  results,
+  from,
+  to,
+}: ListTicketsProps) => {
   const dataArray = tickets.filter((a) => {
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     return a.createdAt >= from! && a.createdAt <= to!
   })
 
@@ -91,17 +81,25 @@ export const ListTickets = ({ tickets, leverages, results, from, to }: ListTicke
             <div>
               <strong>{ticket.Matches?.length}x</strong>
             </div>
-            <Badge className={`uppercase ${
+            <Badge
+              className={`uppercase ${
                 ticket.result?.result_id === 2
                   ? 'bg-green-600'
                   : ticket.result?.result_id === 4
-                  ? 'bg-yellow-400'
-                  : ticket.result?.result_id === 3 
-                  ? 'bg-red-600'
-                  : 'bg-blue-600'
-            }`}>{ticket.result?.result_name}</Badge>
+                    ? 'bg-yellow-400'
+                    : ticket.result?.result_id === 3
+                      ? 'bg-red-600'
+                      : 'bg-blue-600'
+              }`}
+            >
+              {ticket.result?.result_name}
+            </Badge>
             <div>
-              <UpdateTicket ticket={ticket} leverages={leverages} results={results} />
+              <UpdateTicket
+                ticket={ticket}
+                leverages={leverages}
+                results={results}
+              />
             </div>
             <div>
               <DeleteTicket ticket={ticket} />
