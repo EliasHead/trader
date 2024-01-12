@@ -6,15 +6,31 @@ import axios from 'axios'
 // import Select, { MultiValue } from 'react-select'
 // import { strategies } from '@/utils/estrategies'
 import { Button } from '@/components/ui/button'
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form'
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/popover'
 import { Check, ChevronsUpDown } from 'lucide-react'
 import { cn } from '@/lib/utils'
-import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from '@/components/ui/command'
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+} from '@/components/ui/command'
 import { z } from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { toast } from '@/components/ui/use-toast'
 import { Input } from '@/components/ui/input'
 // import { FormAddMatch } from '@/components/forms/formAddMatch'
 
@@ -33,26 +49,31 @@ type MatchesProps = {
 
 const FormSchema = z.object({
   home_team: z.number({
-    required_error: "Please select a home team.",
+    required_error: 'Please select a home team.',
   }),
   away_team: z.number({
-    required_error: "Please select a away team.",
+    required_error: 'Please select a away team.',
   }),
   competition: z.number({
-    required_error: "Please select a competition.",
+    required_error: 'Please select a competition.',
   }),
   round: z.number({
-    required_error: "Please select a round.",
+    required_error: 'Please select a round.',
   }),
   strategy: z.number({
-    required_error: "Selecione a estrategia",
+    required_error: 'Selecione a estrategia',
   }),
   odd: z.string().refine((val) => !Number.isNaN(parseInt(val, 10)), {
-    message: "Expected number, received a string"
-  })
+    message: 'Expected number, received a string',
+  }),
 })
 
-const AddMatches = ({ teams, competitions, rounds, strategies, reviews }: MatchesProps) => {
+const AddMatches = ({
+  teams,
+  competitions,
+  rounds,
+  strategies,
+}: MatchesProps) => {
   const [isOpen, setIsOpen] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
 
@@ -63,7 +84,6 @@ const AddMatches = ({ teams, competitions, rounds, strategies, reviews }: Matche
   })
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
-    
     setIsLoading(true)
 
     await axios.post('/api/matches', {
@@ -103,7 +123,6 @@ const AddMatches = ({ teams, competitions, rounds, strategies, reviews }: Matche
   //   setFormData((prevState) => ({ ...prevState, [name]: value }))
   // }
 
-
   // const handleChangeReview = async (
   //   event: MultiValue<{ label: string; value: number }>,
   // ) => {
@@ -119,19 +138,22 @@ const AddMatches = ({ teams, competitions, rounds, strategies, reviews }: Matche
   return (
     // TODO: alterar lagura da modal
     <div className="m-auto">
-      <Button className="font-bold uppercase" size={"lg"} onClick={handleModal}>
+      <Button className="font-bold uppercase" size={'lg'} onClick={handleModal}>
         novo jogo
       </Button>
-      <div className={isOpen ? "modal modal-open z-0" : "modal"}>
+      <div className={isOpen ? 'modal modal-open z-0' : 'modal'}>
         <div className="modal-box sm:w-3/5 sm:max-w-none">
-          <h3 className="text-lg font-bold text-center">Adicionar novo jogo</h3>
+          <h3 className="text-center text-lg font-bold">Adicionar novo jogo</h3>
           <Form {...form}>
-            <form className="space-x-4 space-y-4 grid grid-cols-1 sm:grid-cols-3 gap-2 sm:items-center" onSubmit={form.handleSubmit(onSubmit)}>
+            <form
+              className="grid grid-cols-1 gap-2 space-x-4 space-y-4 sm:grid-cols-3 sm:items-center"
+              onSubmit={form.handleSubmit(onSubmit)}
+            >
               <FormField
                 control={form.control}
                 name="home_team"
                 render={({ field }) => (
-                  <FormItem className="flex flex-col mt-4 ml-4">
+                  <FormItem className="ml-4 mt-4 flex flex-col">
                     <FormLabel>Casa</FormLabel>
                     <Popover>
                       <PopoverTrigger asChild>
@@ -140,15 +162,15 @@ const AddMatches = ({ teams, competitions, rounds, strategies, reviews }: Matche
                             variant="outline"
                             role="combobox"
                             className={cn(
-                              "w-[200px] justify-between",
-                              !field.value && "text-muted-foreground"
+                              'w-[200px] justify-between',
+                              !field.value && 'text-muted-foreground',
                             )}
                           >
                             {field.value
                               ? teams.find(
-                                  (team) => team.team_id === field.value
+                                  (team) => team.team_id === field.value,
                                 )?.team_name
-                              : "Select the team"}
+                              : 'Select the team'}
                             <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                           </Button>
                         </FormControl>
@@ -163,15 +185,15 @@ const AddMatches = ({ teams, competitions, rounds, strategies, reviews }: Matche
                                 value={team.team_name}
                                 key={team.team_id}
                                 onSelect={() => {
-                                  form.setValue("home_team", team.team_id);
+                                  form.setValue('home_team', team.team_id)
                                 }}
                               >
                                 <Check
                                   className={cn(
-                                    "mr-2 h-4 w-4",
+                                    'mr-2 h-4 w-4',
                                     team.team_id === field.value
-                                      ? "opacity-100"
-                                      : "opacity-0"
+                                      ? 'opacity-100'
+                                      : 'opacity-0',
                                   )}
                                 />
                                 {team.team_name}
@@ -197,15 +219,15 @@ const AddMatches = ({ teams, competitions, rounds, strategies, reviews }: Matche
                             variant="outline"
                             role="combobox"
                             className={cn(
-                              "w-[200px] justify-between",
-                              !field.value && "text-muted-foreground"
+                              'w-[200px] justify-between',
+                              !field.value && 'text-muted-foreground',
                             )}
                           >
                             {field.value
                               ? teams.find(
-                                  (team) => team.team_id === field.value
+                                  (team) => team.team_id === field.value,
                                 )?.team_name
-                              : "Select the team"}
+                              : 'Select the team'}
                             <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                           </Button>
                         </FormControl>
@@ -220,15 +242,15 @@ const AddMatches = ({ teams, competitions, rounds, strategies, reviews }: Matche
                                 value={team.team_name}
                                 key={team.team_id}
                                 onSelect={() => {
-                                  form.setValue("away_team", team.team_id);
+                                  form.setValue('away_team', team.team_id)
                                 }}
                               >
                                 <Check
                                   className={cn(
-                                    "mr-2 h-4 w-4",
+                                    'mr-2 h-4 w-4',
                                     team.team_id === field.value
-                                      ? "opacity-100"
-                                      : "opacity-0"
+                                      ? 'opacity-100'
+                                      : 'opacity-0',
                                   )}
                                 />
                                 {team.team_name}
@@ -254,16 +276,16 @@ const AddMatches = ({ teams, competitions, rounds, strategies, reviews }: Matche
                             variant="outline"
                             role="combobox"
                             className={cn(
-                              "w-[200px] justify-between",
-                              !field.value && "text-muted-foreground"
+                              'w-[200px] justify-between',
+                              !field.value && 'text-muted-foreground',
                             )}
                           >
                             {field.value
                               ? competitions.find(
                                   (competition) =>
-                                    competition.competition_id === field.value
+                                    competition.competition_id === field.value,
                                 )?.competition_name
-                              : "Select the team"}
+                              : 'Select the team'}
                             <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                           </Button>
                         </FormControl>
@@ -279,17 +301,17 @@ const AddMatches = ({ teams, competitions, rounds, strategies, reviews }: Matche
                                 key={competition.competition_id}
                                 onSelect={() => {
                                   form.setValue(
-                                    "competition",
-                                    competition.competition_id
-                                  );
+                                    'competition',
+                                    competition.competition_id,
+                                  )
                                 }}
                               >
                                 <Check
                                   className={cn(
-                                    "mr-2 h-4 w-4",
+                                    'mr-2 h-4 w-4',
                                     competition.competition_id === field.value
-                                      ? "opacity-100"
-                                      : "opacity-0"
+                                      ? 'opacity-100'
+                                      : 'opacity-0',
                                   )}
                                 />
                                 {competition.competition_name}
@@ -315,15 +337,15 @@ const AddMatches = ({ teams, competitions, rounds, strategies, reviews }: Matche
                             variant="outline"
                             role="combobox"
                             className={cn(
-                              "w-[200px] justify-between",
-                              !field.value && "text-muted-foreground"
+                              'w-[200px] justify-between',
+                              !field.value && 'text-muted-foreground',
                             )}
                           >
                             {field.value
                               ? rounds.find(
-                                  (round) => round.round_id === field.value
+                                  (round) => round.round_id === field.value,
                                 )?.round_name
-                              : "Select the round"}
+                              : 'Select the round'}
                             <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                           </Button>
                         </FormControl>
@@ -338,15 +360,15 @@ const AddMatches = ({ teams, competitions, rounds, strategies, reviews }: Matche
                                 value={round.round_name}
                                 key={round.round_id}
                                 onSelect={() => {
-                                  form.setValue("round", round.round_id);
+                                  form.setValue('round', round.round_id)
                                 }}
                               >
                                 <Check
                                   className={cn(
-                                    "mr-2 h-4 w-4",
+                                    'mr-2 h-4 w-4',
                                     round.round_id === field.value
-                                      ? "opacity-100"
-                                      : "opacity-0"
+                                      ? 'opacity-100'
+                                      : 'opacity-0',
                                   )}
                                 />
                                 {round.round_name}
@@ -372,15 +394,16 @@ const AddMatches = ({ teams, competitions, rounds, strategies, reviews }: Matche
                             variant="outline"
                             role="combobox"
                             className={cn(
-                              "w-[200px] justify-between",
-                              !field.value && "text-muted-foreground"
+                              'w-[200px] justify-between',
+                              !field.value && 'text-muted-foreground',
                             )}
                           >
                             {field.value
                               ? strategies.find(
-                                  (strategy) => strategy.strategy_id === field.value
+                                  (strategy) =>
+                                    strategy.strategy_id === field.value,
                                 )?.strategy_name
-                              : "Select a strategy"}
+                              : 'Select a strategy'}
                             <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                           </Button>
                         </FormControl>
@@ -395,15 +418,18 @@ const AddMatches = ({ teams, competitions, rounds, strategies, reviews }: Matche
                                 value={strategy.strategy_name}
                                 key={strategy.strategy_id}
                                 onSelect={() => {
-                                  form.setValue("strategy", strategy.strategy_id);
+                                  form.setValue(
+                                    'strategy',
+                                    strategy.strategy_id,
+                                  )
                                 }}
                               >
                                 <Check
                                   className={cn(
-                                    "mr-2 h-4 w-4",
+                                    'mr-2 h-4 w-4',
                                     strategy.strategy_id === field.value
-                                      ? "opacity-100"
-                                      : "opacity-0"
+                                      ? 'opacity-100'
+                                      : 'opacity-0',
                                   )}
                                 />
                                 {strategy.strategy_name}
@@ -424,22 +450,28 @@ const AddMatches = ({ teams, competitions, rounds, strategies, reviews }: Matche
                   <FormItem className="flex flex-col">
                     <FormLabel>Odd</FormLabel>
                     <FormControl>
-                      <Input className='w-[200px]' placeholder="ex 1.50" {...field} />
+                      <Input
+                        className="w-[200px]"
+                        placeholder="ex 1.50"
+                        {...field}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
-              <div className='flex items-center justify-around'>
+              <div className="flex items-center justify-around">
                 <Button type="submit">Cadastrar</Button>
-                <Button variant={'outline'} onClick={handleModal}>Cancelar</Button>
+                <Button variant={'outline'} onClick={handleModal}>
+                  Cancelar
+                </Button>
               </div>
             </form>
           </Form>
         </div>
       </div>
     </div>
-  );
+  )
 }
 
 export default AddMatches

@@ -32,7 +32,7 @@ const getMatches = async () => {
       competition_id: true,
       ticket: {
         select: {
-          result: true,
+          result_id: true,
         },
       },
       ticketId: true,
@@ -65,25 +65,29 @@ export default async function Matches() {
   const strategies = await prisma.strategies.findMany()
   const results = await prisma.results.findMany()
   const reviews = await prisma.reviews.findMany()
+  console.log('T: ', matches)
 
   return (
-    <div className="mt-12 grid grid-cols-1 items-center space-y-4">
-      <AddMatches 
-        teams={teams} 
-        competitions={competitions} 
-        rounds={rounds}
-        strategies={strategies} 
-        reviews={reviews} />
-      <MatchesList
-        competitions={competitions}
-        matches={matches}
-        rounds={rounds}
-        teams={teams}
-        results={results}
-        tickets={tickets}
-        strategies={strategies}
-        reviews={reviews}
-      />
-    </div>
+    <section className="flex w-full flex-col py-32 pb-10 sm:pb-32 lg:pb-[110px]">
+      <div className="container flex flex-col justify-between gap-4 lg:justify-center">
+        <AddMatches
+          teams={teams}
+          competitions={competitions}
+          rounds={rounds}
+          strategies={strategies}
+          reviews={reviews}
+        />
+        <MatchesList
+          competitions={competitions}
+          matches={matches}
+          rounds={rounds}
+          teams={teams}
+          results={results}
+          tickets={tickets}
+          strategies={strategies}
+          reviews={reviews}
+        />
+      </div>
+    </section>
   )
 }

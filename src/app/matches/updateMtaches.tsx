@@ -1,81 +1,56 @@
 'use client'
-import { ChangeEvent, FormEvent, useState } from 'react'
+import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import axios from 'axios'
-import { Competition, Results, Reviews, Strategies, Teams, Tickets } from '@prisma/client'
+import {
+  Competition,
+  Results,
+  Reviews,
+  Strategies,
+  Teams,
+  Tickets,
+} from '@prisma/client'
 import { Pencil } from '@phosphor-icons/react'
 import { z } from 'zod'
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form'
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/popover'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 import { Check, ChevronsUpDown } from 'lucide-react'
-import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from '@/components/ui/command'
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+} from '@/components/ui/command'
 // import { strategies } from '@/utils/estrategies'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
-import { toast } from '@/components/ui/use-toast'
 import { Input } from '@/components/ui/input'
+import { MatchesType } from './types'
 
 type roundsType = {
   round_id: number
   round_name: string
 }
 
-type Match = {
-  match_id: number
-  home_goals: number
-  visitor_goals: number
-  home_team_id: number
-  visitor_team_id: number
-  odd: number | null
-  strategy: {
-    strategy_id: number
-    strategy_name: string
-  }
-  result: {
-    result_id: number;
-    result_name: string;
-  } | null;
-  review: {
-    review_id: number
-    review_name: string
-  } | null
-  competition_id?: number
-  competition: {
-    competition_name: string
-  } | null
-  round: number
-  home_team: {
-    team_name: string
-  }
-  visitor_team: {
-    team_name: string
-  }
-  ticketId?: number | null
-  ticket: {
-    result: {
-      result_id: number, 
-      result_name: string 
-    } | null
-  } | null
-}
-
-// type Results = {
-//   result_id: number
-//   label: string
-// }
-
-// type Tickets = {
-//   ticketId: number
-//   result: string | null
-// }
-
 type MatchesProps = {
   competitions: Competition[]
   teams: Teams[]
   rounds: roundsType[]
-  match: Match
+  match: MatchesType
   results: Results[]
   tickets: Tickets[]
   strategies: Strategies[]
@@ -84,38 +59,38 @@ type MatchesProps = {
 
 const FormSchema = z.object({
   home_team: z.number({
-    required_error: "Please select a home team.",
+    required_error: 'Please select a home team.',
   }),
   away_team: z.number({
-    required_error: "Please select a away team.",
+    required_error: 'Please select a away team.',
   }),
   competition: z.number({
-    required_error: "Please select a competition.",
+    required_error: 'Please select a competition.',
   }),
   round: z.number({
-    required_error: "Please select a round.",
+    required_error: 'Please select a round.',
   }),
   result: z.number({
-    required_error: "Please select a round.",
+    required_error: 'Please select a round.',
   }),
   strategy: z.number({
-    required_error: "Please select a round.",
+    required_error: 'Please select a round.',
   }),
-  odd: z.number ({
-    required_error: "Please select a round.",
-  }), 
-  home_goals: z.coerce.number ({
-    required_error: "Please select a round.",
+  odd: z.number({
+    required_error: 'Please select a round.',
   }),
-  away_goals: z.coerce.number ({
-    required_error: "Please select a round.",
+  home_goals: z.coerce.number({
+    required_error: 'Please select a round.',
   }),
-  ticket: z.number ({
-    required_error: "Please select a round.",
+  away_goals: z.coerce.number({
+    required_error: 'Please select a round.',
   }),
-  review: z.number ({
-    required_error: "Please select a round.",
-  })
+  ticket: z.number({
+    required_error: 'Please select a round.',
+  }),
+  review: z.number({
+    required_error: 'Please select a round.',
+  }),
 })
 
 const UpdateMatch = ({
@@ -126,51 +101,12 @@ const UpdateMatch = ({
   results,
   tickets,
   strategies,
-  reviews
+  reviews,
 }: MatchesProps) => {
-  const [formData, setFormData] = useState({
-    home_team: match.home_team_id,
-    home_goals: match.home_goals,
-    visitor_team: match.visitor_team_id,
-    visitor_goals: match.visitor_goals,
-    competition: match.competition_id,
-    round: match.round,
-    result: match.result?.result_id,
-    ticket: match.ticketId,
-  })
-
   const [isOpen, setIsOpen] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
 
   const router = useRouter()
-
-  const handleChange = async (
-    event: ChangeEvent<
-      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-    >,
-  ) => {
-    const { name, value } = event.target
-    setFormData((prevState) => ({ ...prevState, [name]: value }))
-  }
-
-  async function handleUpdate(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault()
-
-    setIsLoading(true)
-    await axios.patch(`/api/matches/${match.match_id}`, {
-      home_team_id: formData.home_team,
-      home_goals: formData.home_goals,
-      visitor_team_id: formData.visitor_team,
-      visitor_goals: formData.visitor_goals,
-      competition_id: formData.competition,
-      round: formData.round,
-      result_id: formData.result,
-      ticketId: formData.ticket,
-    })
-    setIsLoading(false)
-    router.refresh()
-    setIsOpen(false)
-  }
 
   const handleModal = () => {
     form.reset()
@@ -178,7 +114,6 @@ const UpdateMatch = ({
   }
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
-    
     setIsLoading(true)
 
     await axios.patch(`/api/matches/${match.match_id}`, {
@@ -215,7 +150,9 @@ const UpdateMatch = ({
       </Button>
       <div className={isOpen ? `modal modal-open z-0` : 'modal'}>
         <div className="modal-box sm:w-3/5 sm:max-w-none">
-          <h3 className="text-lg font-bold text-center">Atualizar jogo {match.match_id}</h3>
+          <h3 className="text-center text-lg font-bold">
+            Atualizar jogo {match.match_id}
+          </h3>
           {/* <form onSubmit={handleUpdate}>
             <div className="form-control w-full">
               <label className="label font-bold" htmlFor="home_team">
@@ -394,13 +331,16 @@ const UpdateMatch = ({
             </div>
           </form> */}
           <Form {...form}>
-            <form className="space-x-4 space-y-4 grid grid-cols-1 sm:grid-cols-3 gap-2 sm:items-center" onSubmit={form.handleSubmit(onSubmit)}>
+            <form
+              className="grid grid-cols-1 gap-2 space-x-4 space-y-4 sm:grid-cols-3 sm:items-center"
+              onSubmit={form.handleSubmit(onSubmit)}
+            >
               <FormField
                 defaultValue={match.home_team_id}
                 control={form.control}
                 name="home_team"
                 render={({ field }) => (
-                  <FormItem className="flex flex-col mt-4 ml-4">
+                  <FormItem className="ml-4 mt-4 flex flex-col">
                     <FormLabel>Casa</FormLabel>
                     <Popover>
                       <PopoverTrigger asChild>
@@ -409,15 +349,15 @@ const UpdateMatch = ({
                             variant="outline"
                             role="combobox"
                             className={cn(
-                              "w-[200px] justify-between",
-                              !field.value && "text-muted-foreground"
+                              'w-[200px] justify-between',
+                              !field.value && 'text-muted-foreground',
                             )}
                           >
                             {field.value
                               ? teams.find(
-                                  (team) => team.team_id === field.value
+                                  (team) => team.team_id === field.value,
                                 )?.team_name
-                              : "Select the team"}
+                              : 'Select the team'}
                             <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                           </Button>
                         </FormControl>
@@ -432,15 +372,15 @@ const UpdateMatch = ({
                                 value={team.team_name}
                                 key={team.team_id}
                                 onSelect={() => {
-                                  form.setValue("home_team", team.team_id);
+                                  form.setValue('home_team', team.team_id)
                                 }}
                               >
                                 <Check
                                   className={cn(
-                                    "mr-2 h-4 w-4",
+                                    'mr-2 h-4 w-4',
                                     team.team_id === field.value
-                                      ? "opacity-100"
-                                      : "opacity-0"
+                                      ? 'opacity-100'
+                                      : 'opacity-0',
                                   )}
                                 />
                                 {team.team_name}
@@ -461,7 +401,7 @@ const UpdateMatch = ({
                   <FormItem className="flex flex-col">
                     <FormLabel>Gols casa</FormLabel>
                     <FormControl>
-                      <Input className='w-[200px]' placeholder="1" {...field} />
+                      <Input className="w-[200px]" placeholder="1" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -481,15 +421,15 @@ const UpdateMatch = ({
                             variant="outline"
                             role="combobox"
                             className={cn(
-                              "w-[200px] justify-between",
-                              !field.value && "text-muted-foreground"
+                              'w-[200px] justify-between',
+                              !field.value && 'text-muted-foreground',
                             )}
                           >
                             {field.value
                               ? teams.find(
-                                  (team) => team.team_id === field.value
+                                  (team) => team.team_id === field.value,
                                 )?.team_name
-                              : "Select the team"}
+                              : 'Select the team'}
                             <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                           </Button>
                         </FormControl>
@@ -504,15 +444,15 @@ const UpdateMatch = ({
                                 value={team.team_name}
                                 key={team.team_id}
                                 onSelect={() => {
-                                  form.setValue("away_team", team.team_id);
+                                  form.setValue('away_team', team.team_id)
                                 }}
                               >
                                 <Check
                                   className={cn(
-                                    "mr-2 h-4 w-4",
+                                    'mr-2 h-4 w-4',
                                     team.team_id === field.value
-                                      ? "opacity-100"
-                                      : "opacity-0"
+                                      ? 'opacity-100'
+                                      : 'opacity-0',
                                   )}
                                 />
                                 {team.team_name}
@@ -533,7 +473,7 @@ const UpdateMatch = ({
                   <FormItem className="flex flex-col">
                     <FormLabel>Gols fora</FormLabel>
                     <FormControl>
-                      <Input className='w-[200px]' placeholder="0" {...field} />
+                      <Input className="w-[200px]" placeholder="0" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -553,16 +493,16 @@ const UpdateMatch = ({
                             variant="outline"
                             role="combobox"
                             className={cn(
-                              "w-[200px] justify-between",
-                              !field.value && "text-muted-foreground"
+                              'w-[200px] justify-between',
+                              !field.value && 'text-muted-foreground',
                             )}
                           >
                             {field.value
                               ? competitions.find(
                                   (competition) =>
-                                    competition.competition_id === field.value
+                                    competition.competition_id === field.value,
                                 )?.competition_name
-                              : "Select the team"}
+                              : 'Select the team'}
                             <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                           </Button>
                         </FormControl>
@@ -578,17 +518,17 @@ const UpdateMatch = ({
                                 key={competition.competition_id}
                                 onSelect={() => {
                                   form.setValue(
-                                    "competition",
-                                    competition.competition_id
-                                  );
+                                    'competition',
+                                    competition.competition_id,
+                                  )
                                 }}
                               >
                                 <Check
                                   className={cn(
-                                    "mr-2 h-4 w-4",
+                                    'mr-2 h-4 w-4',
                                     competition.competition_id === field.value
-                                      ? "opacity-100"
-                                      : "opacity-0"
+                                      ? 'opacity-100'
+                                      : 'opacity-0',
                                   )}
                                 />
                                 {competition.competition_name}
@@ -615,15 +555,15 @@ const UpdateMatch = ({
                             variant="outline"
                             role="combobox"
                             className={cn(
-                              "w-[200px] justify-between",
-                              !field.value && "text-muted-foreground"
+                              'w-[200px] justify-between',
+                              !field.value && 'text-muted-foreground',
                             )}
                           >
                             {field.value
                               ? rounds.find(
-                                  (round) => round.round_id === field.value
+                                  (round) => round.round_id === field.value,
                                 )?.round_name
-                              : "Select the round"}
+                              : 'Select the round'}
                             <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                           </Button>
                         </FormControl>
@@ -638,15 +578,15 @@ const UpdateMatch = ({
                                 value={round.round_name}
                                 key={round.round_id}
                                 onSelect={() => {
-                                  form.setValue("round", round.round_id);
+                                  form.setValue('round', round.round_id)
                                 }}
                               >
                                 <Check
                                   className={cn(
-                                    "mr-2 h-4 w-4",
+                                    'mr-2 h-4 w-4',
                                     round.round_id === field.value
-                                      ? "opacity-100"
-                                      : "opacity-0"
+                                      ? 'opacity-100'
+                                      : 'opacity-0',
                                   )}
                                 />
                                 {round.round_name}
@@ -673,15 +613,15 @@ const UpdateMatch = ({
                             variant="outline"
                             role="combobox"
                             className={cn(
-                              "w-[200px] justify-between",
-                              !field.value && "text-muted-foreground"
+                              'w-[200px] justify-between',
+                              !field.value && 'text-muted-foreground',
                             )}
                           >
                             {field.value
                               ? results.find(
-                                  (result) => result.result_id === field.value
+                                  (result) => result.result_id === field.value,
                                 )?.result_name
-                              : "Select a resultado"}
+                              : 'Select a resultado'}
                             <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                           </Button>
                         </FormControl>
@@ -696,15 +636,15 @@ const UpdateMatch = ({
                                 value={result.result_name}
                                 key={result.result_id}
                                 onSelect={() => {
-                                  form.setValue("result", result.result_id);
+                                  form.setValue('result', result.result_id)
                                 }}
                               >
                                 <Check
                                   className={cn(
-                                    "mr-2 h-4 w-4",
+                                    'mr-2 h-4 w-4',
                                     result.result_id === field.value
-                                      ? "opacity-100"
-                                      : "opacity-0"
+                                      ? 'opacity-100'
+                                      : 'opacity-0',
                                   )}
                                 />
                                 {result.result_name}
@@ -731,15 +671,15 @@ const UpdateMatch = ({
                             variant="outline"
                             role="combobox"
                             className={cn(
-                              "w-[200px] justify-between",
-                              !field.value && "text-muted-foreground"
+                              'w-[200px] justify-between',
+                              !field.value && 'text-muted-foreground',
                             )}
                           >
                             {field.value
                               ? tickets.find(
-                                  (ticket) => ticket.ticketId === field.value
+                                  (ticket) => ticket.ticketId === field.value,
                                 )?.ticketId
-                              : "Select a ticket"}
+                              : 'Select a ticket'}
                             <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                           </Button>
                         </FormControl>
@@ -754,15 +694,15 @@ const UpdateMatch = ({
                                 // value={ticket.ticket_name!}
                                 key={ticket.ticketId}
                                 onSelect={() => {
-                                  form.setValue("ticket", ticket.ticketId);
+                                  form.setValue('ticket', ticket.ticketId)
                                 }}
                               >
                                 <Check
                                   className={cn(
-                                    "mr-2 h-4 w-4",
+                                    'mr-2 h-4 w-4',
                                     ticket.ticketId === field.value
-                                      ? "opacity-100"
-                                      : "opacity-0"
+                                      ? 'opacity-100'
+                                      : 'opacity-0',
                                   )}
                                 />
                                 {ticket.ticketId}
@@ -789,15 +729,16 @@ const UpdateMatch = ({
                             variant="outline"
                             role="combobox"
                             className={cn(
-                              "w-[200px] justify-between",
-                              !field.value && "text-muted-foreground"
+                              'w-[200px] justify-between',
+                              !field.value && 'text-muted-foreground',
                             )}
                           >
                             {field.value
                               ? strategies.find(
-                                  (strategy) => strategy.strategy_id === field.value
+                                  (strategy) =>
+                                    strategy.strategy_id === field.value,
                                 )?.strategy_name
-                              : "Select a strategy"}
+                              : 'Select a strategy'}
                             <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                           </Button>
                         </FormControl>
@@ -812,15 +753,18 @@ const UpdateMatch = ({
                                 value={strategy.strategy_name}
                                 key={strategy.strategy_id}
                                 onSelect={() => {
-                                  form.setValue("strategy", strategy.strategy_id);
+                                  form.setValue(
+                                    'strategy',
+                                    strategy.strategy_id,
+                                  )
                                 }}
                               >
                                 <Check
                                   className={cn(
-                                    "mr-2 h-4 w-4",
+                                    'mr-2 h-4 w-4',
                                     strategy.strategy_id === field.value
-                                      ? "opacity-100"
-                                      : "opacity-0"
+                                      ? 'opacity-100'
+                                      : 'opacity-0',
                                   )}
                                 />
                                 {strategy.strategy_name}
@@ -841,7 +785,11 @@ const UpdateMatch = ({
                   <FormItem className="flex flex-col">
                     <FormLabel>Odd</FormLabel>
                     <FormControl>
-                      <Input className='w-[200px]' placeholder="ex 1.50" {...field} />
+                      <Input
+                        className="w-[200px]"
+                        placeholder="ex 1.50"
+                        {...field}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -861,15 +809,15 @@ const UpdateMatch = ({
                             variant="outline"
                             role="combobox"
                             className={cn(
-                              "w-[200px] justify-between",
-                              !field.value && "text-muted-foreground"
+                              'w-[200px] justify-between',
+                              !field.value && 'text-muted-foreground',
                             )}
                           >
                             {field.value
                               ? reviews.find(
-                                  (review) => review.review_id === field.value
+                                  (review) => review.review_id === field.value,
                                 )?.review_name
-                              : "Select a strategy"}
+                              : 'Select a strategy'}
                             <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                           </Button>
                         </FormControl>
@@ -884,15 +832,15 @@ const UpdateMatch = ({
                                 value={review.review_name}
                                 key={review.review_id}
                                 onSelect={() => {
-                                  form.setValue("review", review.review_id);
+                                  form.setValue('review', review.review_id)
                                 }}
                               >
                                 <Check
                                   className={cn(
-                                    "mr-2 h-4 w-4",
+                                    'mr-2 h-4 w-4',
                                     review.review_id === field.value
-                                      ? "opacity-100"
-                                      : "opacity-0"
+                                      ? 'opacity-100'
+                                      : 'opacity-0',
                                   )}
                                 />
                                 {review.review_name}
@@ -905,9 +853,11 @@ const UpdateMatch = ({
                   </FormItem>
                 )}
               />
-              <div className='flex items-center justify-around'>
+              <div className="flex items-center justify-around">
                 <Button type="submit">Atualizar</Button>
-                <Button variant={'outline'} onClick={handleModal}>Cancelar</Button>
+                <Button variant={'outline'} onClick={handleModal}>
+                  Cancelar
+                </Button>
               </div>
             </form>
           </Form>

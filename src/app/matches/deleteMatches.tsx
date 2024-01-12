@@ -3,34 +3,9 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import axios from 'axios'
 import { Trash } from '@phosphor-icons/react'
+import { MatchesType } from './types'
 
-type Match = {
-  match_id: number
-  match_date: Date | null
-  home_goals: number
-  visitor_goals: number
-  odd?: number | null
-  strategy: {
-    strategy_id: number;
-    strategy_name: string;
-  };
-  result: {
-    result_id: number;
-    result_name: string;
-  } | null;
-  review: {
-    review_id: number;
-    review_name: string;
-  } | null;
-  stake?: number | null
-  round: number
-  leverage_id?: number | null
-  competition_id?: number | null
-  home_team_id: number
-  visitor_team_id: number
-}
-
-const DeleteMatch = ({ match }: { match: Match }) => {
+const DeleteMatch = ({ match }: { match: MatchesType }) => {
   const [isOpen, setIsOpen] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
 

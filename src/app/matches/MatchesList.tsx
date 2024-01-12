@@ -1,74 +1,31 @@
 'use client'
 import { formatDate } from '@/utils/dateUtils'
 import DeleteMatch from './deleteMatches'
-import { Competition, Matches, Results, Reviews, Strategies, Teams, Tickets } from '@prisma/client'
+import {
+  Competition,
+  Results,
+  Reviews,
+  Strategies,
+  Teams,
+  Tickets,
+} from '@prisma/client'
 import UpdateMatch from './updateMtaches'
 import { useState } from 'react'
 import Pagination from '@/components/pagination/pagination'
 import { techBadgeAnimation } from '@/lib/animations'
 import { Badge } from '@/components/badge'
-
-type Match = {
-  match_id: number
-  match_date: Date
-  home_goals: number
-  visitor_goals: number
-  odd: number | null
-  strategy: {
-    strategy_id: number;
-    strategy_name: string;
-  };
-  result: {
-    result_id: number;
-    result_name: string;
-  } | null;
-  review: {
-    review_id: number;
-    review_name: string;
-  } | null;
-  stake: number | null
-  round: number
-  leverage: {
-    goal: string | null
-  } | null
-  leverageId?: number | null
-  competition: {
-    competition_name: string
-  } | null
-  competititon_id?: number
-  home_team: {
-    team_name: string
-  }
-  home_team_id: number
-  visitor_team: {
-    team_name: string
-  }
-  visitor_team_id: number
-  ticket: {
-    result: {
-      result_id: number, 
-      result_name: string 
-    } | null
-  } | null
-  ticketId?: number | null
-  // odd: number | null
-}
+import { MatchesType } from './types'
 
 type roundsType = {
   round_id: number
   round_name: string
 }
 
-// type Tickets = {
-//   ticketId: number
-//   result: string | null
-// }
-
 type MatchesProps = {
   competitions: Competition[]
   teams: Teams[]
   rounds: roundsType[]
-  matches: Match[]
+  matches: MatchesType[]
   results: Results[]
   tickets: Tickets[]
   strategies: Strategies[]
@@ -83,7 +40,7 @@ export default function MatchesList({
   results,
   tickets,
   strategies,
-  reviews
+  reviews,
 }: MatchesProps) {
   // TODO: melhorar paginação
   const [currentPage, setCurrentPage] = useState(1)
@@ -154,16 +111,20 @@ export default function MatchesList({
             <div className="grid grid-cols-app items-center justify-center">
               <div className="flex items-center justify-start px-3 py-2">
                 <Badge
+                  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion, @typescript-eslint/no-non-null-asserted-optional-chain
                   name={match.result?.result_name!}
-                  textColor='text-white'
-                  bg={`${match.result?.result_id === 3 ? 'bg-red-600'
-                  : match.result?.result_id === 2
-                  ? 'bg-green-600'
-                  : match.result?.result_id === 4
-                  ? 'bg-yellow-400'
-                  : match.result?.result_id === 5
-                  ? 'bg-gradient-to-r from-red-600 to-yellow-400'
-                  : 'bg-sky-600'}`}
+                  textColor="text-white"
+                  bg={`${
+                    match.result?.result_id === 3
+                      ? 'bg-red-600'
+                      : match.result?.result_id === 2
+                        ? 'bg-green-600'
+                        : match.result?.result_id === 4
+                          ? 'bg-yellow-400'
+                          : match.result?.result_id === 5
+                            ? 'bg-gradient-to-r from-red-600 to-yellow-400'
+                            : 'bg-sky-600'
+                  }`}
                   {...techBadgeAnimation}
                   transition={{ duration: 0.2, delay: i * 0.1 }}
                 />
@@ -171,23 +132,29 @@ export default function MatchesList({
               <div className="flex items-center justify-start px-3 py-2">
                 <Badge
                   name={match.strategy.strategy_name}
-                  textColor='text-white'
+                  textColor="text-white"
                   {...techBadgeAnimation}
                   transition={{ duration: 0.2, delay: i * 0.1 }}
                 />
               </div>
-              <div className="flex flex-wrap items-center justify-start px-3 py-2 bg-">
+              <div className="bg- flex flex-wrap items-center justify-start px-3 py-2">
                 <Badge
-                  name={match.review?.review_name!}
-                  textColor='text-white'
-                  bg={`${match.review?.review_name === 'race' || match.review?.review_name === 'home' || match.review?.review_name === 'must-win' || match.review?.review_name === '+goal' ? 'bg-zinc-800'
-                        : match.review?.review_name === 'live'
+                  name={match.review?.review_name || ''}
+                  textColor="text-white"
+                  bg={`${
+                    match.review?.review_name === 'race' ||
+                    match.review?.review_name === 'home' ||
+                    match.review?.review_name === 'must-win' ||
+                    match.review?.review_name === '+goal'
+                      ? 'bg-zinc-800'
+                      : match.review?.review_name === 'live'
                         ? 'bg-black'
                         : match.review?.review_name === 'cycles'
-                        ? 'bg-blue-600'
-                        : match.review?.review_name === 'BT'
-                        ? 'bg-orange-500'
-                        : 'bg-red-600'}`}
+                          ? 'bg-blue-600'
+                          : match.review?.review_name === 'BT'
+                            ? 'bg-orange-500'
+                            : 'bg-red-600'
+                  }`}
                   {...techBadgeAnimation}
                   transition={{ duration: 0.2, delay: i * 0.1 }}
                 />
