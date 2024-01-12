@@ -4,16 +4,16 @@ import { Label } from '@/components/ui/label'
 import { DataTable } from './data-table'
 import { columns } from './columns'
 import { AddTicket } from './addTicket'
-import { Tickets } from '@prisma/client'
+// import { Tickets } from '@prisma/client'
 
-interface Match extends Tickets {
-  Matches?: object[]
-  match_id?: number | null
-  result: {
-    result_id: number
-    result_name: String
-  } | null
-}
+// interface Match extends Tickets {
+//   Matches?: object[]
+//   match_id?: number | null
+//   result: {
+//     result_id: number
+//     result_name: string
+//   } | null
+// }
 
 const getTickets = async () => {
   const ticketsWithRelations = await prisma.tickets.findMany({
@@ -28,12 +28,12 @@ const getTickets = async () => {
           strategy: true, // Assuming 'strategy' is a relation in the Matches model
           review: true, // Assuming 'review' is a relation in the Matches model
           result: true, // Assuming 'result' is a relation in the Matches model
-        }
+        },
       },
       result: true, // Assuming 'result' is a relation in the Tickets model
     },
-    orderBy: [{ ticketId: 'desc'}]
-  }); 
+    orderBy: [{ ticketId: 'desc' }],
+  })
 
   return ticketsWithRelations
 }
@@ -57,15 +57,17 @@ const TicketsList = async () => {
   const results = await getResults()
 
   return (
-    <section className="flex-col justify-end w-full space-y-2 flex">
-      <div className="m-auto">
-        <AddTicket />
+    <section className="flex w-full flex-col py-32 pb-10 sm:pb-32 lg:pb-[110px]">
+      <div className="container flex flex-col justify-between gap-4 lg:justify-center">
+        <div className="m-auto">
+          <AddTicket />
+        </div>
+        <Label htmlFor="date" className="ml-4 shrink-0">
+          Selecione uma data
+        </Label>
+        <DatePicker tickets={tickets} leverages={leverages} results={results} />
+        <DataTable columns={columns} data={tickets} />
       </div>
-      <Label htmlFor="date" className="ml-4 shrink-0">
-        Selecione uma data
-      </Label>
-      <DatePicker tickets={tickets} leverages={leverages} results={results} />
-      <DataTable columns={columns} data={tickets}/>
     </section>
   )
 }
