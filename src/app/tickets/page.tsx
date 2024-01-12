@@ -57,7 +57,7 @@ const TicketsList = async () => {
   const results = await getResults()
 
   return (
-    <div className="col-span-1 mt-16 grid min-h-screen w-full space-y-2">
+    <section className="flex-col justify-end w-full space-y-2 flex">
       <div className="m-auto">
         <AddTicket />
       </div>
@@ -66,7 +66,7 @@ const TicketsList = async () => {
       </Label>
       <DatePicker tickets={tickets} leverages={leverages} results={results} />
       <DataTable columns={columns} data={tickets}/>
-    </div>
+    </section>
   )
 }
 
