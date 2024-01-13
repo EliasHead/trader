@@ -6,18 +6,18 @@ import { Pencil } from '@phosphor-icons/react'
 import { Leverage, Matches, Results } from '@prisma/client'
 
 type TicketType = {
-  ticketId: number;
-  createdAt: Date;
-  updatedAt: Date;
-  odd?: number | null;
-  stake?: number | null;
-  resultStake: number;
-  leverage?: Leverage | null;
-  leverageId?: number | null;
-  Matches: Matches[];
-  result?: Results | null;
+  ticketId: number
+  createdAt: Date
+  updatedAt: Date
+  odd?: number | null
+  stake?: number | null
+  resultStake: number
+  leverage?: Leverage | null
+  leverageId?: number | null
+  Matches: Matches[]
+  result?: Results | null
   // result_id?: number | null;
-};
+}
 
 type LeverageType = {
   leverageId: number
@@ -83,8 +83,8 @@ export const UpdateTicket = ({ ticket, leverages, results }: TicketsProps) => {
         formData.result === 2
           ? (formData.odd! - 1).toFixed(2)
           : formData.result === 3
-          ? -1
-          : 0,
+            ? -1
+            : 0,
       leverageId: formData.leverage,
     })
     setIsLoading(false)

@@ -12,8 +12,8 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { Button } from '@/components/ui/button'
 import { ArrowUpDown, MoreHorizontal } from 'lucide-react'
-import UpdateTeams from './updateTeams'
-import DeleteTeam from './deleteTeam'
+import { UpdateTeams } from './updateTeams'
+// import DeleteTeam from './deleteTeam'
 // import { Badge } from '@/components/ui/badge'
 // import { EditTicket } from '@/components/edit-ticket'
 // import { DeleteTicket } from './deleteTicket'
@@ -69,12 +69,7 @@ export const columns: ColumnDef<Teams>[] = [
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuItem asChild>
-              {/* <EditTicket ticket={ticket} /> */}
               <UpdateTeams team={team} />
-            </DropdownMenuItem>
-            <DropdownMenuItem asChild>
-              {/* <DeleteTicket ticket={ticket} /> */}
-              <DeleteTeam team={team} />
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

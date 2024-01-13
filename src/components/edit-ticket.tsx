@@ -1,6 +1,6 @@
 'use client'
 
-import { Button } from "@/components/ui/button"
+import { Button } from '@/components/ui/button'
 import {
   Dialog,
   DialogClose,
@@ -10,13 +10,13 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog"
-import { ChangeEvent, FormEvent, useEffect, useState } from "react"
-import axios from "axios"
-import { useRouter } from "next/navigation"
-import { Leverage, Results } from "@prisma/client"
+} from '@/components/ui/dialog'
+import { ChangeEvent, FormEvent, useEffect, useState } from 'react'
+import axios from 'axios'
+import { useRouter } from 'next/navigation'
+import { Leverage, Results } from '@prisma/client'
 
-export function EditTicket({ticket}:any) {
+export function EditTicket({ ticket }: any) {
   const [formData, setFormData] = useState({
     result: ticket.result?.result_id,
     odd: ticket.odd,
@@ -28,7 +28,7 @@ export function EditTicket({ticket}:any) {
   const [isLoading, setIsLoading] = useState(false)
   const [results, setResults] = useState<Results[]>([])
   const [leverages, setLeverages] = useState<Leverage[]>([])
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(false)
 
   useEffect(() => {
     fetch('/api/results')
@@ -36,13 +36,14 @@ export function EditTicket({ticket}:any) {
       .then((data) => {
         setResults(data)
         // setLoading(false)
-      }),
-      fetch('/api/leverages')
+      })
+
+    fetch('/api/leverages')
       .then((res) => res.json())
       .then((data) => {
         setLeverages(data)
         // setLoading(false)
-      })  
+      })
   }, [])
 
   const router = useRouter()
@@ -67,8 +68,8 @@ export function EditTicket({ticket}:any) {
         formData.result === 'green'
           ? (formData.odd! - 1).toFixed(2)
           : formData.result === 'red'
-          ? -1
-          : 0,
+            ? -1
+            : 0,
       leverageId: formData.leverage,
     })
     setIsLoading(false)
@@ -79,7 +80,12 @@ export function EditTicket({ticket}:any) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button className="justify-start text-popover-foreground self-start px-2 w-full hover:no-underline hover:bg-background/50" variant="link">Editar</Button>
+        <Button
+          className="w-full justify-start self-start px-2 text-popover-foreground hover:bg-background/50 hover:no-underline"
+          variant="link"
+        >
+          Editar
+        </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
@@ -174,9 +180,7 @@ export function EditTicket({ticket}:any) {
               </button> */}
               {!isLoading ? (
                 <div className="flex items-center gap-2">
-                  <Button type="submit">
-                    Save
-                  </Button>
+                  <Button type="submit">Save</Button>
                   <DialogClose asChild>
                     <Button type="button" variant="secondary">
                       Close
@@ -189,13 +193,10 @@ export function EditTicket({ticket}:any) {
                 </button>
               )}
             </div>
-            
-            <DialogFooter className="sm:justify-start">
-            
-          </DialogFooter>
+
+            <DialogFooter className="sm:justify-start"></DialogFooter>
           </form>
         </div>
-        
       </DialogContent>
     </Dialog>
   )

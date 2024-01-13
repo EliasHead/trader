@@ -1,24 +1,37 @@
 'use client'
+
+import { Teams } from '@prisma/client'
 import { ChangeEvent, FormEvent, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import axios from 'axios'
-import { Pencil } from '@phosphor-icons/react'
+import { Button } from '@/components/ui/button'
+import {
+  Dialog,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog'
 
-type Team = {
-  team_id: number
-  team_name: string
-  team_country: string
-  team_initials: string | null
-  createdAt: Date
-}
+// type Team = {
+//   team_id: number
+//   team_name: string
+//   team_country: string
+//   team_initials: string | null
+//   createdAt: Date
+// }
 
-const UpdateTeams = ({ team }: { team: Team }) => {
+export const UpdateTeams = ({ team }: { team: Teams }) => {
   const [formData, setFormData] = useState({
     name: team.team_name,
     country: team.team_country,
   })
+
+  console.log(team)
   const [isOpen, setIsOpen] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
+  const [open, setOpen] = useState(false)
 
   const router = useRouter()
 
@@ -46,36 +59,58 @@ const UpdateTeams = ({ team }: { team: Team }) => {
   }
 
   return (
-    <div>
-      <button className="btn btn-info btn-sm" onClick={handleModal}>
-        <Pencil size={24} />
-      </button>
-      <div className={isOpen ? `modal modal-open` : 'modal'}>
-        <div className="modal-box">
-          <h3 className="text-lg font-bold">Atualizar{team.team_name}</h3>
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger asChild>
+        <Button
+          className="w-full justify-start self-start px-2 text-popover-foreground hover:bg-background/50 hover:no-underline"
+          // onClick={handleModal}
+          variant={'link'}
+        >
+          Editar
+        </Button>
+      </DialogTrigger>
+      <DialogContent className="sm:max-w-md">
+        <DialogHeader>
+          <DialogTitle>Editar o time {team.team_name}</DialogTitle>
+        </DialogHeader>
+        <div className="flex items-center space-x-2">
           <form onSubmit={handleUpdate}>
             <div className="form-control w-full">
-              <label className="label font-bold" htmlFor="team_name">
+              <label className="label font-bold" htmlFor="name">
+                Nome
+              </label>
+              <input
+                name="name"
+                id="name"
+                value={formData.name}
+                className="input input-bordered"
+                placeholder="stake ex: 10"
+                aria-label="stake"
+                onChange={handleChange}
+              />
+            </div>
+            {/* <div className="form-control w-full">
+              <label className="label font-bold" htmlFor="name">
                 Nome do time
               </label>
               <input
                 type="text"
                 name="name"
-                id="team_name"
+                id="name"
                 value={formData.name}
                 className="input input-bordered"
                 placeholder="Nome do time"
                 aria-label="Nome do time"
                 onChange={handleChange}
               />
-            </div>
-            <div className="form-control w-full">
+            </div> */}
+            {/* <div className="form-control w-full">
               <label className="label font-bold" htmlFor="team_country">
                 País do time
               </label>
               <input
                 type="text"
-                name="country"
+                name="team_country"
                 id="team_country"
                 value={formData.country}
                 className="input input-bordered"
@@ -83,9 +118,9 @@ const UpdateTeams = ({ team }: { team: Team }) => {
                 aria-label="País"
                 onChange={handleChange}
               />
-            </div>
-            <div className="modal-action">
-              <button type="button" className="btn" onClick={handleModal}>
+            </div> */}
+            {/* <div className="modal-action">
+              <button type="button" className="btn">
                 Fechar
               </button>
               {!isLoading ? (
@@ -97,12 +132,16 @@ const UpdateTeams = ({ team }: { team: Team }) => {
                   Salva...
                 </button>
               )}
-            </div>
+            </div> */}
+            <DialogFooter className="sm:justify-start"></DialogFooter>
           </form>
         </div>
-      </div>
-    </div>
+      </DialogContent>
+      {/* <div className={isOpen ? `modal modal-open` : 'modal'}>
+        <div className="modal-box">
+          <h3 className="text-lg font-bold">Atualizar{team.team_name}</h3>
+        </div>
+      </div> */}
+    </Dialog>
   )
 }
-
-export default UpdateTeams

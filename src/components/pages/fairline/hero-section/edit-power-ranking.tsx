@@ -1,6 +1,6 @@
 'use client'
 
-import { Button } from "@/components/ui/button"
+import { Button } from '@/components/ui/button'
 import {
   Dialog,
   DialogClose,
@@ -10,19 +10,19 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog"
-import { ChangeEvent, FormEvent, useEffect, useState } from "react"
-import axios from "axios"
-import { useRouter } from "next/navigation"
-import { Competition, Leverage, Results, Teams } from "@prisma/client"
-import { PowerRankingType } from "@/app/fairlines/types"
-import { DATA_POSITION } from "./add-power-ranking"
+} from '@/components/ui/dialog'
+import { ChangeEvent, FormEvent, useEffect, useState } from 'react'
+import axios from 'axios'
+import { useRouter } from 'next/navigation'
+import { Competition, Leverage, Results, Teams } from '@prisma/client'
+import { PowerRankingType } from '@/app/fairlines/types'
+import { DATA_POSITION } from './add-power-ranking'
 
 type EditPowerRankingProps = {
   powerRinking: PowerRankingType
 }
 
-export function EditPowerRanking({powerRinking}: EditPowerRankingProps) {
+export function EditPowerRanking({ powerRinking }: EditPowerRankingProps) {
   const [formData, setFormData] = useState({
     position: powerRinking.position,
     team: powerRinking.team.team_id,
@@ -32,8 +32,8 @@ export function EditPowerRanking({powerRinking}: EditPowerRankingProps) {
   const [isLoading, setIsLoading] = useState(false)
   const [teams, setTeams] = useState<Teams[]>([])
   const [competitions, setCompetitions] = useState<Competition[]>([])
-  const [open, setOpen] = useState(false);
- 
+  const [open, setOpen] = useState(false)
+
   useEffect(() => {
     fetch('/api/teams')
       .then((res) => res.json())
@@ -41,12 +41,12 @@ export function EditPowerRanking({powerRinking}: EditPowerRankingProps) {
         setTeams(data)
         // setLoading(false)
       })
-      fetch('/api/competitions')
+    fetch('/api/competitions')
       .then((res) => res.json())
       .then((data) => {
         setCompetitions(data)
         // setLoading(false)
-      })  
+      })
   }, [])
 
   const router = useRouter()
@@ -76,7 +76,12 @@ export function EditPowerRanking({powerRinking}: EditPowerRankingProps) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button className="justify-start text-popover-foreground self-start px-2 w-full hover:no-underline hover:bg-background/50" variant="link">Editar</Button>
+        <Button
+          className="w-full justify-start self-start px-2 text-popover-foreground hover:bg-background/50 hover:no-underline"
+          variant="link"
+        >
+          Editar
+        </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
@@ -98,7 +103,10 @@ export function EditPowerRanking({powerRinking}: EditPowerRankingProps) {
                 <option>Escolha à posição</option>
                 {DATA_POSITION.map((position) => {
                   return (
-                    <option key={position.positionId} value={position.positionId}>
+                    <option
+                      key={position.positionId}
+                      value={position.positionId}
+                    >
                       {position.positionName}
                     </option>
                   )
@@ -120,17 +128,14 @@ export function EditPowerRanking({powerRinking}: EditPowerRankingProps) {
                 <option>Escolha a alavancagem</option>
                 {teams.map((team) => {
                   return (
-                    <option
-                      key={team.team_id}
-                      value={team.team_id}
-                    >
+                    <option key={team.team_id} value={team.team_id}>
                       {team.team_name}
                     </option>
                   )
                 })}
               </select>
             </div>
-            
+
             <div className="form-control w-full">
               <label className="label font-bold" htmlFor="team">
                 Campeonato
@@ -162,9 +167,7 @@ export function EditPowerRanking({powerRinking}: EditPowerRankingProps) {
               </button> */}
               {!isLoading ? (
                 <div className="flex items-center gap-2">
-                  <Button type="submit">
-                    Save
-                  </Button>
+                  <Button type="submit">Save</Button>
                   <DialogClose asChild>
                     <Button type="button" variant="secondary">
                       Close
@@ -177,13 +180,10 @@ export function EditPowerRanking({powerRinking}: EditPowerRankingProps) {
                 </button>
               )}
             </div>
-            
-            <DialogFooter className="sm:justify-start">
-            
-          </DialogFooter>
+
+            <DialogFooter className="sm:justify-start"></DialogFooter>
           </form>
         </div>
-        
       </DialogContent>
     </Dialog>
   )
