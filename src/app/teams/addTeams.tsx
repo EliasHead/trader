@@ -1,12 +1,12 @@
 'use client'
 import { ChangeEvent, FormEvent, useState } from 'react'
-import type { Teams } from '@prisma/client'
+// import type { Teams } from '@prisma/client'
 import { useRouter } from 'next/navigation'
 import axios from 'axios'
 import { Button } from '@/components/ui/button'
 import { PlusCircle } from 'lucide-react'
 
-const AddTeams = ({ teams }: { teams: Teams[] }) => {
+const AddTeams = () => {
   const [formData, setFormData] = useState({
     name: '',
     country: '',

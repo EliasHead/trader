@@ -62,7 +62,7 @@ export const UpdateTeams = ({ team }: { team: TeamType }) => {
     })
 
     setIsLoading(false)
-    form.reset()
+    // form.reset()
     router.refresh()
     setOpen(!open)
   }
