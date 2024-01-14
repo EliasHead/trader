@@ -1,61 +1,70 @@
 'use client'
 
-import { Teams } from '@prisma/client'
-import { ChangeEvent, FormEvent, useState } from 'react'
+import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import axios from 'axios'
 import { Button } from '@/components/ui/button'
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog'
+import { Input } from '@/components/ui/input'
+import { z } from 'zod'
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form'
 
-// type Team = {
-//   team_id: number
-//   team_name: string
-//   team_country: string
-//   team_initials: string | null
-//   createdAt: Date
-// }
+import { Loader2 } from 'lucide-react'
 
-export const UpdateTeams = ({ team }: { team: Teams }) => {
-  const [formData, setFormData] = useState({
-    name: team.team_name,
-    country: team.team_country,
-  })
+import { TeamType } from './types'
 
-  console.log(team)
-  const [isOpen, setIsOpen] = useState(false)
+const FormSchema = z.object({
+  team_name: z.string({
+    required_error: 'Please select a home team.',
+  }),
+  team_country: z.string({
+    required_error: 'Please select a away team.',
+  }),
+})
+
+export const UpdateTeams = ({ team }: { team: TeamType }) => {
   const [isLoading, setIsLoading] = useState(false)
   const [open, setOpen] = useState(false)
 
   const router = useRouter()
 
-  const handleChange = async (
-    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-  ) => {
-    const { name, value } = event.target
-    setFormData((prevState) => ({ ...prevState, [name]: value }))
-  }
+  const form = useForm<z.infer<typeof FormSchema>>({
+    resolver: zodResolver(FormSchema),
+    defaultValues: {
+      team_name: team.team_name,
+      team_country: team.team_country,
+    },
+  })
 
-  async function handleUpdate(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault()
+  function onSubmit(data: z.infer<typeof FormSchema>) {
+    console.log(data)
     setIsLoading(true)
-    await axios.patch(`/api/teams/${team.team_id}`, {
-      team_name: formData.name,
-      team_country: formData.country,
+    axios.patch(`/api/teams/${team.team_id}`, {
+      team_name: data.team_name,
+      team_country: data.team_country,
     })
-    setIsLoading(false)
-    router.refresh()
-    setIsOpen(false)
-  }
 
-  const handleModal = () => {
-    setIsOpen(!isOpen)
+    setIsLoading(false)
+    form.reset()
+    router.refresh()
+    setOpen(!open)
   }
 
   return (
@@ -63,7 +72,6 @@ export const UpdateTeams = ({ team }: { team: Teams }) => {
       <DialogTrigger asChild>
         <Button
           className="w-full justify-start self-start px-2 text-popover-foreground hover:bg-background/50 hover:no-underline"
-          // onClick={handleModal}
           variant={'link'}
         >
           Editar
@@ -74,74 +82,64 @@ export const UpdateTeams = ({ team }: { team: Teams }) => {
           <DialogTitle>Editar o time {team.team_name}</DialogTitle>
         </DialogHeader>
         <div className="flex items-center space-x-2">
-          <form onSubmit={handleUpdate}>
-            <div className="form-control w-full">
-              <label className="label font-bold" htmlFor="name">
-                Nome
-              </label>
-              <input
-                name="name"
-                id="name"
-                value={formData.name}
-                className="input input-bordered"
-                placeholder="stake ex: 10"
-                aria-label="stake"
-                onChange={handleChange}
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
+              <FormField
+                control={form.control}
+                name="team_name"
+                render={({ field }) => (
+                  <FormItem className="flex flex-col">
+                    <FormLabel>Time</FormLabel>
+                    <FormControl>
+                      <Input
+                        type="text"
+                        className="w-[200px]"
+                        placeholder="1"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
               />
-            </div>
-            {/* <div className="form-control w-full">
-              <label className="label font-bold" htmlFor="name">
-                Nome do time
-              </label>
-              <input
-                type="text"
-                name="name"
-                id="name"
-                value={formData.name}
-                className="input input-bordered"
-                placeholder="Nome do time"
-                aria-label="Nome do time"
-                onChange={handleChange}
-              />
-            </div> */}
-            {/* <div className="form-control w-full">
-              <label className="label font-bold" htmlFor="team_country">
-                País do time
-              </label>
-              <input
-                type="text"
+              <FormField
+                control={form.control}
                 name="team_country"
-                id="team_country"
-                value={formData.country}
-                className="input input-bordered"
-                placeholder="ex: BRAZIL"
-                aria-label="País"
-                onChange={handleChange}
+                render={({ field }) => (
+                  <FormItem className="flex flex-col">
+                    <FormLabel>Time</FormLabel>
+                    <FormControl>
+                      <Input
+                        type="text"
+                        className="w-[200px]"
+                        placeholder="1"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
               />
-            </div> */}
-            {/* <div className="modal-action">
-              <button type="button" className="btn">
-                Fechar
-              </button>
-              {!isLoading ? (
-                <button type="submit" className="btn btn-primary">
-                  Salvar
-                </button>
-              ) : (
-                <button type="button" className="btn loading">
-                  Salva...
-                </button>
-              )}
-            </div> */}
-            <DialogFooter className="sm:justify-start"></DialogFooter>
-          </form>
+              <div className="modal-action">
+                <DialogClose asChild>
+                  <Button type="button" variant="secondary">
+                    Close
+                  </Button>
+                </DialogClose>
+                {!isLoading ? (
+                  <Button type="submit">Save</Button>
+                ) : (
+                  <Button type="button" disabled>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    Deletando...
+                  </Button>
+                )}
+              </div>
+              <DialogFooter className="sm:justify-start"></DialogFooter>
+            </form>
+          </Form>
         </div>
       </DialogContent>
-      {/* <div className={isOpen ? `modal modal-open` : 'modal'}>
-        <div className="modal-box">
-          <h3 className="text-lg font-bold">Atualizar{team.team_name}</h3>
-        </div>
-      </div> */}
     </Dialog>
   )
 }
