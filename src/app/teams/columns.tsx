@@ -35,6 +35,7 @@ import { Input } from '@/components/ui/input'
 import { z } from 'zod'
 import { useForm } from 'react-hook-form'
 import DeleteTeam from './deleteTeam'
+import Link from 'next/link'
 // import DeleteTeam from './deleteTeam'
 
 // import DeleteTeam from './deleteTeam'
@@ -119,8 +120,8 @@ export const columns: ColumnDef<TeamType>[] = [
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem onSelect={(e) => e.preventDefault()} asChild>
+            {/* <DropdownMenuSeparator /> */}
+            <DropdownMenuItem asChild>
               <UpdateTeams team={team} />
             </DropdownMenuItem>
             {/* <Dialog>

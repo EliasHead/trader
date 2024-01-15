@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { FormEvent, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import axios from 'axios'
 import { Button } from '@/components/ui/button'
@@ -53,18 +53,16 @@ export const UpdateTeams = ({ team }: { team: TeamType }) => {
     },
   })
 
-  function onSubmit(data: z.infer<typeof FormSchema>) {
-    console.log(data)
+  async function onSubmit(data: z.infer<typeof FormSchema>) {
     setIsLoading(true)
-    axios.patch(`/api/teams/${team.team_id}`, {
+    await axios.patch(`/api/teams/${team.team_id}`, {
       team_name: data.team_name,
       team_country: data.team_country,
     })
 
     setIsLoading(false)
-    // form.reset()
-    router.refresh()
     setOpen(!open)
+    router.refresh()
   }
 
   return (
