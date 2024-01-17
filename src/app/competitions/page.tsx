@@ -1,6 +1,9 @@
-import { Competition } from '@prisma/client';
+import { Competition } from '@prisma/client'
 import SearchCompetition from './SearchCompetition'
 import { db as prisma } from '@/lib/db'
+import { DataTable } from './data-table'
+import { columns } from './columns'
+import AddCompetitions from './addCompetitions'
 
 const getCompetitions = async () => {
   const result: Competition[] = await prisma.$queryRaw`
@@ -8,20 +11,21 @@ const getCompetitions = async () => {
     FROM competitions c
     LEFT JOIN matches m ON c.competition_id = m.competition_id AND m.result_id = 2
     GROUP BY c.competition_id
-    ORDER BY green_matches_count DESC`;
-  
+    ORDER BY green_matches_count DESC`
+
   return result
 }
 
 const Competitions = async () => {
   const competitions = await getCompetitions()
   return (
-    <main className="mt-16 flex h-screen flex-col items-center justify-start gap-4">
-      <h1>
-        <strong>Campeonatos</strong>
-      </h1>
-      <SearchCompetition competitions={competitions} />
-    </main>
+    <section className="flex w-full flex-col py-32 pb-10 sm:pb-32 lg:pb-[110px]">
+      <div className="container flex flex-col justify-between gap-4 lg:justify-center">
+        <AddCompetitions competitions={competitions} />
+        <DataTable columns={columns} data={competitions} />
+        {/* <SearchCompetition competitions={competitions} /> */}
+      </div>
+    </section>
   )
 }
 

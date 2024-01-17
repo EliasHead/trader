@@ -1,7 +1,7 @@
 import { db as prisma } from '@/lib/db'
 import { AddLeverage } from './addLeverage'
 import { DataTable } from './data-table'
-import { columns } from './laverage-columns'
+import { columns } from './columns'
 
 export default async function Leverage() {
   const leverages = await prisma.leverage.findMany({
