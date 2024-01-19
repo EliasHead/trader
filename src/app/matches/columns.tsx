@@ -32,46 +32,59 @@ import { MatchesType } from './types'
 //   result_id?: number | null
 // }
 
-const columnHelper = createColumnHelper<MatchesType>()
+// const columnHelper = createColumnHelper<MatchesType>()
 
 export const columns: ColumnDef<MatchesType>[] = [
-  columnHelper.group({
-    header: 'Jogos',
-    footer: (match) => match.column.id,
-    columns: [
-      columnHelper.accessor('home_team', {
-        cell: (info) => info.getValue(),
-        footer: (props) => props.column.id,
-      }),
-    ],
-  }),
+  // {
+  //   id: 'select',
+  //   header: ({ table }) => (
+  //     <Checkbox
+  //       checked={
+  //         table.getIsAllPageRowsSelected() ||
+  //         (table.getIsSomePageRowsSelected() && 'indeterminate')
+  //       }
+  //       onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+  //       aria-label="Select all"
+  //     />
+  //   ),
+  //   cell: ({ row }) => (
+  //     <Checkbox
+  //       checked={row.getIsSelected()}
+  //       onCheckedChange={(value) => row.toggleSelected(!!value)}
+  //       aria-label="Select row"
+  //     />
+  //   ),
+  // },
+  // {
+  //   accessorKey: 'match_id',
+  //   header: 'Id',
+  // },
   {
-    id: 'select',
-    header: ({ table }) => (
-      <Checkbox
-        checked={
-          table.getIsAllPageRowsSelected() ||
-          (table.getIsSomePageRowsSelected() && 'indeterminate')
-        }
-        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-        aria-label="Select all"
-      />
-    ),
-    cell: ({ row }) => (
-      <Checkbox
-        checked={row.getIsSelected()}
-        onCheckedChange={(value) => row.toggleSelected(!!value)}
-        aria-label="Select row"
-      />
-    ),
+    id: 'times',
+    accessorFn: (row) =>
+      `${row.home_team.team_name} ${row.visitor_team.team_name}`,
+    cell: ({ row }) => {
+      const match = row.original
+      return (
+        <div className="flex flex-col">
+          <span className="text-clip">{match.home_team.team_name}</span>
+          <span className="truncate">{match.visitor_team.team_name}</span>
+        </div>
+      )
+    },
   },
   {
-    accessorKey: 'ticketId',
-    header: 'Id',
-  },
-  {
-    accessorKey: 'Matches.length',
-    header: 'Jogos',
+    id: '-',
+    accessorFn: (row) => `${row.home_goals} ${row.visitor_goals}`,
+    cell: ({ row }) => {
+      const match = row.original
+      return (
+        <div className="flex flex-col">
+          <span>{match.home_goals}</span>
+          <span>{match.visitor_goals}</span>
+        </div>
+      )
+    },
   },
   {
     accessorKey: 'result',
@@ -107,10 +120,6 @@ export const columns: ColumnDef<MatchesType>[] = [
       )
       // <div className="text-right font-medium">{formatted}</div>
     },
-  },
-  {
-    accessorKey: 'odd',
-    header: 'Odd',
   },
   {
     id: 'actions',

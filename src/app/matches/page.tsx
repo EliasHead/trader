@@ -3,6 +3,8 @@ import MatchesList from './MatchesList'
 import AddMatches from './addMatches'
 import { db as prisma } from '@/lib/db'
 import { dataRounds } from '@/utils/rounds'
+import { DataTable } from './data-table'
+import { columns } from './columns'
 
 // TODO: melhorar chamada api
 const getMatches = async () => {
@@ -70,6 +72,8 @@ export default async function Matches() {
   return (
     <section className="flex w-full flex-col py-32 pb-10 sm:pb-32 lg:pb-[110px]">
       <div className="container flex flex-col justify-between gap-4 lg:justify-center">
+        <DataTable columns={columns} data={matches} />
+
         <AddMatches
           teams={teams}
           competitions={competitions}
