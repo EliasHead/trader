@@ -141,7 +141,7 @@ const AddMatches = ({
       <Button className="font-bold uppercase" size={'lg'} onClick={handleModal}>
         novo jogo
       </Button>
-      <div className={isOpen ? 'modal modal-open z-0' : 'modal'}>
+      <div className={isOpen ? 'modal modal-open z-50' : 'modal'}>
         <div className="modal-box sm:w-3/5 sm:max-w-none">
           <h3 className="text-center text-lg font-bold">Adicionar novo jogo</h3>
           <Form {...form}>
