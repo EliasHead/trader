@@ -72,8 +72,6 @@ export default async function Matches() {
   return (
     <section className="flex w-full flex-col py-32 pb-10 sm:pb-32 lg:pb-[110px]">
       <div className="container flex flex-col justify-between gap-4 lg:justify-center">
-        <DataTable columns={columns} data={matches} />
-
         <AddMatches
           teams={teams}
           competitions={competitions}
@@ -81,7 +79,8 @@ export default async function Matches() {
           strategies={strategies}
           reviews={reviews}
         />
-        <MatchesList
+        <DataTable columns={columns} data={matches} />
+        {/* <MatchesList
           competitions={competitions}
           matches={matches}
           rounds={rounds}
@@ -90,7 +89,7 @@ export default async function Matches() {
           tickets={tickets}
           strategies={strategies}
           reviews={reviews}
-        />
+        /> */}
       </div>
     </section>
   )

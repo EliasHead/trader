@@ -29,6 +29,7 @@ import {
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
+import { Input } from '@/components/ui/input'
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
@@ -69,16 +70,16 @@ export function DataTable<TData, TValue>({
   })
 
   return (
-    <div>
-      <div className="flex items-center p-4 py-4">
-        {/* <Input
+    <div className="space-y-2">
+      <div className="flex items-center gap-2">
+        <Input
           placeholder="Filtre por resultados..."
-          value={(table.getColumn("result")?.getFilterValue() as string) ?? ""}
+          value={(table.getColumn('times')?.getFilterValue() as string) ?? ''}
           onChange={(event) =>
-            table.getColumn("result")?.setFilterValue(event.target.value)
+            table.getColumn('times')?.setFilterValue(event.target.value)
           }
           className="max-w-sm"
-        /> */}
+        />
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="ml-auto">
