@@ -72,7 +72,7 @@ export default async function Matches() {
   return (
     <section className="flex w-full flex-col py-32 pb-10 sm:pb-32 lg:pb-[110px]">
       <div className="container flex flex-col justify-between gap-4 lg:justify-center">
-        {/* <DataTable columns={columns} data={matches} /> */}
+        <DataTable columns={columns} data={matches} />
 
         <AddMatches
           teams={teams}

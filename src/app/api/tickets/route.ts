@@ -14,3 +14,9 @@ export const POST = async (request: Request) => {
   })
   return NextResponse.json(team, { status: 201 })
 }
+
+export const GET = async () => {
+  const tickets: Tickets[] = await prisma.tickets.findMany()
+
+  return NextResponse.json(tickets, { status: 200 })
+}

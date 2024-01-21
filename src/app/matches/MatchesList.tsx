@@ -9,7 +9,7 @@ import {
   Teams,
   Tickets,
 } from '@prisma/client'
-import UpdateMatch from './updateMtaches'
+import UpdateMatch from './updateMatches'
 import { useState } from 'react'
 import Pagination from '@/components/pagination/pagination'
 import { techBadgeAnimation } from '@/lib/animations'
@@ -97,7 +97,7 @@ export default function MatchesList({
                 <div className="text-xs">{match.home_goals}</div>
                 <div className="text-xs">{match.visitor_goals}</div>
               </div>
-              <UpdateMatch
+              {/* <UpdateMatch
                 match={match}
                 competitions={competitions}
                 teams={teams}
@@ -106,7 +106,7 @@ export default function MatchesList({
                 tickets={tickets}
                 strategies={strategies}
                 reviews={reviews}
-              />
+              /> */}
             </div>
             <div className="grid grid-cols-app items-center justify-center">
               <div className="flex items-center justify-start px-3 py-2">

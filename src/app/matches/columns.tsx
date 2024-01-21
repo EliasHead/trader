@@ -14,6 +14,7 @@ import { Button } from '@/components/ui/button'
 import { ArrowUpDown, MoreHorizontal } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import { MatchesType } from './types'
+import UpdateMatch from './updateMatches'
 // import { match } from 'assert'
 // import { EditTicket } from '@/components/edit-ticket'
 // import { DeleteTicket } from './deleteTicket'
@@ -125,7 +126,7 @@ export const columns: ColumnDef<MatchesType>[] = [
     id: 'actions',
     enableHiding: false,
     cell: ({ row }) => {
-      const ticket = row.original
+      const match = row.original
 
       return (
         <DropdownMenu>
@@ -139,7 +140,7 @@ export const columns: ColumnDef<MatchesType>[] = [
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuItem asChild>
-              {/* <EditTicket ticket={ticket} /> */}
+              <UpdateMatch match={match} />
             </DropdownMenuItem>
             <DropdownMenuItem asChild>
               {/* <DeleteTicket ticket={ticket} /> */}

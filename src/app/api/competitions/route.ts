@@ -14,7 +14,6 @@ export const POST = async (request: Request) => {
   return NextResponse.json(competition, { status: 201 })
 }
 
-
 export const GET = async () => {
   const competitions: Competition[] = await prisma.competition.findMany()
 
