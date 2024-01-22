@@ -91,6 +91,8 @@ const FormSchema = z.object({
   }),
 })
 
+type CreateMatchSchema = z.infer<typeof FormSchema>
+
 const UpdateMatch = ({ match }: MatchesProps) => {
   const [open, setOpen] = useState(false)
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -149,7 +151,7 @@ const UpdateMatch = ({ match }: MatchesProps) => {
 
   const router = useRouter()
 
-  async function onSubmit(data: z.infer<typeof FormSchema>) {
+  async function onSubmit(data: CreateMatchSchema) {
     setIsLoading(true)
 
     await axios.patch(`/api/matches/${match.match_id}`, {
@@ -173,7 +175,7 @@ const UpdateMatch = ({ match }: MatchesProps) => {
     // form.reset()
   }
 
-  const form = useForm<z.infer<typeof FormSchema>>({
+  const form = useForm<CreateMatchSchema>({
     resolver: zodResolver(FormSchema),
   })
 

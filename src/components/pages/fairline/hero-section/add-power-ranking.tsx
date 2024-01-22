@@ -1,8 +1,24 @@
 'use client'
 import { Button } from '@/components/ui/button'
-import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from '@/components/ui/command'
-import { Form, FormControl, FormField, FormItem, FormLabel } from '@/components/ui/form'
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+} from '@/components/ui/command'
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+} from '@/components/ui/form'
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/popover'
 import { cn } from '@/lib/utils'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Competition, Teams } from '@prisma/client'
@@ -43,13 +59,13 @@ type PowerRankingAdd = {
 
 const FormSchema = z.object({
   position: z.number({
-    required_error: "Please select a home team.",
+    required_error: 'Please select a home team.',
   }),
   team: z.number({
-    required_error: "Please select a away team.",
+    required_error: 'Please select a away team.',
   }),
   competition: z.number({
-    required_error: "Please select a competition.",
+    required_error: 'Please select a competition.',
   }),
 })
 
@@ -96,7 +112,6 @@ export const AddPowerRanking = ({ teams, competitions }: PowerRankingAdd) => {
   }
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
-    
     setIsLoading(true)
 
     await axios.post('/api/power-rankings', {
@@ -121,14 +136,15 @@ export const AddPowerRanking = ({ teams, competitions }: PowerRankingAdd) => {
 
   return (
     <div className="flex items-center">
-      <Button onClick={handleModal}>
-        Adicionar
-      </Button>
+      <Button onClick={handleModal}>Adicionar</Button>
       <div className={isOpen ? 'modal modal-open z-50' : 'modal'}>
         <div className="modal-box">
           <h3 className="text-lg font-bold">Adicionar novo time</h3>
           <Form {...form}>
-            <form className="space-x-4 space-y-4 grid grid-cols-1 gap-2 sm:items-center" onSubmit={form.handleSubmit(onSubmit)}>
+            <form
+              className="grid grid-cols-1 gap-2 space-x-4 space-y-4 sm:items-center"
+              onSubmit={form.handleSubmit(onSubmit)}
+            >
               <FormField
                 control={form.control}
                 name="position"
@@ -142,16 +158,16 @@ export const AddPowerRanking = ({ teams, competitions }: PowerRankingAdd) => {
                             variant="outline"
                             role="combobox"
                             className={cn(
-                              "w-[200px] justify-between",
-                              !field.value && "text-muted-foreground"
+                              'w-[200px] justify-between',
+                              !field.value && 'text-muted-foreground',
                             )}
                           >
                             {field.value
                               ? DATA_POSITION.find(
-                                (position) =>
-                                  position.positionId === field.value
-                              )?.positionName
-                              : "Selecione a posição"}
+                                  (position) =>
+                                    position.positionId === field.value,
+                                )?.positionName
+                              : 'Selecione a posição'}
                             <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                           </Button>
                         </FormControl>
@@ -166,18 +182,15 @@ export const AddPowerRanking = ({ teams, competitions }: PowerRankingAdd) => {
                                 value={position.positionName}
                                 key={position.positionId}
                                 onSelect={() => {
-                                  form.setValue(
-                                    "position",
-                                    position.positionId
-                                  );
+                                  form.setValue('position', position.positionId)
                                 }}
                               >
                                 <Check
                                   className={cn(
-                                    "mr-2 h-4 w-4",
+                                    'mr-2 h-4 w-4',
                                     position.positionId === field.value
-                                      ? "opacity-100"
-                                      : "opacity-0"
+                                      ? 'opacity-100'
+                                      : 'opacity-0',
                                   )}
                                 />
                                 {position.positionName}
@@ -203,16 +216,15 @@ export const AddPowerRanking = ({ teams, competitions }: PowerRankingAdd) => {
                             variant="outline"
                             role="combobox"
                             className={cn(
-                              "w-[200px] justify-between",
-                              !field.value && "text-muted-foreground"
+                              'w-[200px] justify-between',
+                              !field.value && 'text-muted-foreground',
                             )}
                           >
                             {field.value
                               ? teams.find(
-                                (team) =>
-                                  team.team_id === field.value
-                              )?.team_name
-                              : "Select the team"}
+                                  (team) => team.team_id === field.value,
+                                )?.team_name
+                              : 'Select the team'}
                             <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                           </Button>
                         </FormControl>
@@ -227,18 +239,15 @@ export const AddPowerRanking = ({ teams, competitions }: PowerRankingAdd) => {
                                 value={team.team_name}
                                 key={team.team_id}
                                 onSelect={() => {
-                                  form.setValue(
-                                    "team",
-                                    team.team_id
-                                  );
+                                  form.setValue('team', team.team_id)
                                 }}
                               >
                                 <Check
                                   className={cn(
-                                    "mr-2 h-4 w-4",
+                                    'mr-2 h-4 w-4',
                                     team.team_id === field.value
-                                      ? "opacity-100"
-                                      : "opacity-0"
+                                      ? 'opacity-100'
+                                      : 'opacity-0',
                                   )}
                                 />
                                 {team.team_name}
@@ -264,16 +273,16 @@ export const AddPowerRanking = ({ teams, competitions }: PowerRankingAdd) => {
                             variant="outline"
                             role="combobox"
                             className={cn(
-                              "w-[200px] justify-between",
-                              !field.value && "text-muted-foreground"
+                              'w-[200px] justify-between',
+                              !field.value && 'text-muted-foreground',
                             )}
                           >
                             {field.value
                               ? competitions.find(
-                                (competition) =>
-                                  competition.competition_id === field.value
-                              )?.competition_name
-                              : "Select the team"}
+                                  (competition) =>
+                                    competition.competition_id === field.value,
+                                )?.competition_name
+                              : 'Select the team'}
                             <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                           </Button>
                         </FormControl>
@@ -289,17 +298,17 @@ export const AddPowerRanking = ({ teams, competitions }: PowerRankingAdd) => {
                                 key={competition.competition_id}
                                 onSelect={() => {
                                   form.setValue(
-                                    "competition",
-                                    competition.competition_id
-                                  );
+                                    'competition',
+                                    competition.competition_id,
+                                  )
                                 }}
                               >
                                 <Check
                                   className={cn(
-                                    "mr-2 h-4 w-4",
+                                    'mr-2 h-4 w-4',
                                     competition.competition_id === field.value
-                                      ? "opacity-100"
-                                      : "opacity-0"
+                                      ? 'opacity-100'
+                                      : 'opacity-0',
                                   )}
                                 />
                                 {competition.competition_name}
@@ -376,13 +385,11 @@ export const AddPowerRanking = ({ teams, competitions }: PowerRankingAdd) => {
             </div> */}
 
               <div className="modal-action">
-                <Button type="button" variant={"outline"} onClick={handleModal}>
+                <Button type="button" variant={'outline'} onClick={handleModal}>
                   Close
                 </Button>
                 {!isLoading ? (
-                  <Button type="submit">
-                    Salvar
-                  </Button>
+                  <Button type="submit">Salvar</Button>
                 ) : (
                   <Button type="button" disabled>
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
