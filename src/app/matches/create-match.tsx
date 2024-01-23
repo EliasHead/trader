@@ -115,7 +115,7 @@ export const CreateMatch = ({
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button
-          className="w-full justify-start self-start px-2 text-popover-foreground hover:bg-background/50 hover:no-underline"
+          className="justify-start self-start px-2 text-popover-foreground hover:bg-background/50 hover:no-underline"
           variant="link"
         >
           Adicionar
