@@ -113,7 +113,11 @@ export const columns: ColumnDef<MatchesType>[] = [
                 ? 'bg-yellow-400'
                 : result?.result_id === 3
                   ? 'bg-red-600'
-                  : 'bg-blue-600'
+                  : result?.result_id === 5
+                    ? 'bg-gradient-to-r from-red-600 via-red-600 to-yellow-400'
+                    : result?.result_id === 6
+                      ? 'bg-gradient-to-r from-green-600 via-green-600 to-yellow-400'
+                      : 'bg-blue-600'
           }`}
         >
           {result?.result_name}
