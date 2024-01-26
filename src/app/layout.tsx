@@ -5,6 +5,7 @@ import { cn } from '@/lib/utils'
 import { Toaster } from '@/components/ui/toaster'
 import AuthProvider from '@/components/auth-provider'
 import { Header } from '@/components/header'
+import { ReactQueryClientProvider } from '@/services/react-query'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -20,8 +21,10 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <div className="">
           <Toaster />
           <AuthProvider>
-            <Header />
-            {children}
+            <ReactQueryClientProvider>
+              <Header />
+              {children}
+            </ReactQueryClientProvider>
           </AuthProvider>
         </div>
       </body>
