@@ -43,4 +43,5 @@ export const dataRounds = [
   { round_id: 42, round_name: 'FINAL' },
   { round_id: 43, round_name: '1/32-FINALS' },
   { round_id: 44, round_name: 'OITAVAS DE FINAL' },
+  { round_id: 45, round_name: '1/16-FINALS' },
 ]
