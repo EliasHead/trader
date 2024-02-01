@@ -1,8 +1,15 @@
 'use client'
 import { Leverage, Matches, Results, Tickets } from '@prisma/client'
 import { ColumnDef } from '@tanstack/react-table'
-import { Checkbox } from "@/components/ui/checkbox"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
+import { Checkbox } from '@/components/ui/checkbox'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu'
 import { Button } from '@/components/ui/button'
 import { ArrowUpDown, MoreHorizontal } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
@@ -51,11 +58,11 @@ export const columns: ColumnDef<PowerRankingType>[] = [
     // },
   },
   {
-    id: "actions",
+    id: 'actions',
     enableHiding: false,
     cell: ({ row }) => {
       const powerRanking = row.original
- 
+
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -77,5 +84,5 @@ export const columns: ColumnDef<PowerRankingType>[] = [
         </DropdownMenu>
       )
     },
-  } 
+  },
 ]
