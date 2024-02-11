@@ -59,13 +59,13 @@ const TicketsList = async () => {
   return (
     <section className="flex w-full flex-col py-32 pb-10 sm:pb-32 lg:pb-[110px]">
       <div className="container flex flex-col justify-between gap-4 lg:justify-center">
-        <div className="m-auto">
-          <AddTicket />
-        </div>
         <Label htmlFor="date" className="ml-4 shrink-0">
           Selecione uma data
         </Label>
         <DatePicker tickets={tickets} leverages={leverages} results={results} />
+        <div className="m-auto">
+          <AddTicket />
+        </div>
         <DataTable columns={columns} data={tickets} />
       </div>
     </section>
