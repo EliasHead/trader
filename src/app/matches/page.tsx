@@ -1,14 +1,13 @@
 // import { resultsData } from '@/utils/results'
 import MatchesList from './MatchesList'
-import AddMatches from './addMatches'
 import { db as prisma } from '@/lib/db'
 import { dataRounds } from '@/utils/rounds'
-import { DataTable } from './data-table'
-import { columns } from './columns'
 import { CreateMatch } from './create-match'
+import getQueryClient from '@/lib/get-query-client'
+import { HydrationBoundary, dehydrate } from '@tanstack/react-query'
 
 // TODO: melhorar chamada api
-const getMatches = async () => {
+export const getMatches = async () => {
   const res = await prisma.matches.findMany({
     select: {
       match_id: true,
@@ -58,28 +57,20 @@ const getMatches = async () => {
 }
 
 export default async function Matches() {
+  const queryClient = getQueryClient()
+  await queryClient.prefetchQuery({
+    queryKey: ['matches'],
+    queryFn: getMatches,
+  })
   const teams = await prisma.teams.findMany()
   const competitions = await prisma.competition.findMany()
-  const tickets = await prisma.tickets.findMany({
-    orderBy: [{ ticketId: 'desc' }],
-  })
+
   const rounds = dataRounds
-  const matches = await getMatches()
   const strategies = await prisma.strategies.findMany()
-  const results = await prisma.results.findMany()
-  const reviews = await prisma.reviews.findMany()
-  // console.log('T: ', matches)
 
   return (
     <section className="flex w-full flex-col py-32 pb-10 sm:pb-32 lg:pb-[110px]">
       <div className="container flex flex-col justify-between gap-4 lg:justify-center">
-        {/* <AddMatches
-          teams={teams}
-          competitions={competitions}
-          rounds={rounds}
-          strategies={strategies}
-          reviews={reviews}
-        /> */}
         <CreateMatch
           teams={teams}
           competitions={competitions}
@@ -87,17 +78,10 @@ export default async function Matches() {
           strategies={strategies}
           // reviews={reviews}
         />
-        <DataTable columns={columns} data={matches} />
-        {/* <MatchesList
-          competitions={competitions}
-          matches={matches}
-          rounds={rounds}
-          teams={teams}
-          results={results}
-          tickets={tickets}
-          strategies={strategies}
-          reviews={reviews}
-        /> */}
+
+        <HydrationBoundary state={dehydrate(queryClient)}>
+          <MatchesList />
+        </HydrationBoundary>
       </div>
     </section>
   )

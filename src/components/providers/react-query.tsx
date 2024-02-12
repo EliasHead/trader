@@ -1,11 +1,14 @@
 'use client'
 
-import { useQueryClientInstance } from '@/context/query-client-context-client'
+import {
+  QueryClientInstanceProvider,
+  useQueryClientInstance,
+} from '@/context/query-client-context-client'
 import { QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { ReactNode } from 'react'
 
-export const ReactQueryClientProvider = ({
+const AppQueryClientInstanceWapper = ({
   children,
 }: {
   children: ReactNode
@@ -13,9 +16,21 @@ export const ReactQueryClientProvider = ({
   const { queryClient } = useQueryClientInstance()
 
   return (
-    <QueryClientProvider client={queryClient}>
-      {children}
-      <ReactQueryDevtools initialIsOpen={false} />
-    </QueryClientProvider>
+    <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+  )
+}
+
+export const ReactQueryClientProvider = ({
+  children,
+}: {
+  children: ReactNode
+}) => {
+  return (
+    <QueryClientInstanceProvider>
+      <AppQueryClientInstanceWapper>
+        {children}
+        <ReactQueryDevtools initialIsOpen={false} />
+      </AppQueryClientInstanceWapper>
+    </QueryClientInstanceProvider>
   )
 }
