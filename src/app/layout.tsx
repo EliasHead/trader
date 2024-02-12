@@ -5,7 +5,7 @@ import { cn } from '@/lib/utils'
 import { Toaster } from '@/components/ui/toaster'
 import AuthProvider from '@/components/auth-provider'
 import { Header } from '@/components/header'
-import { ReactQueryClientProvider } from '@/services/react-query'
+import { ReactQueryClientProvider } from '@/components/providers/react-query'
 
 const inter = Inter({ subsets: ['latin'] })
 
