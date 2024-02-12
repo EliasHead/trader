@@ -5,7 +5,7 @@ import { DataTable } from './data-table'
 import { columns } from './columns'
 import AddTeams from './addTeams'
 
-const getTeams = async () => {
+export const getTeams = async () => {
   const teams = await prisma.teams.findMany()
   return teams
 }

@@ -1,11 +1,11 @@
 import { Competition } from '@prisma/client'
-import SearchCompetition from './SearchCompetition'
+// import SearchCompetition from './SearchCompetition'
 import { db as prisma } from '@/lib/db'
 import { DataTable } from './data-table'
 import { columns } from './columns'
 import AddCompetitions from './addCompetitions'
 
-const getCompetitions = async () => {
+export const getCompetitions = async () => {
   const result: Competition[] = await prisma.$queryRaw`
     SELECT c.*, COUNT(m.match_id) as green_matches_count
     FROM competitions c

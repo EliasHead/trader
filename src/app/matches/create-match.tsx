@@ -31,13 +31,17 @@ import {
 } from '@/components/ui/popover'
 import { cn } from '@/lib/utils'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Competition, Strategies, Teams } from '@prisma/client'
+import { useQuery } from '@tanstack/react-query'
 import axios from 'axios'
 import { ChevronsUpDown, Check, Loader2 } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
+import { getTeams } from '../teams/page'
+import { getCompetitions } from '../competitions/page'
+import { dataRounds } from '@/utils/rounds'
+import getStrategies from '@/lib/getStrategies'
 
 const FormSchema = z.object({
   home_team: z.number({
@@ -62,24 +66,24 @@ const FormSchema = z.object({
 
 type CreateMatchSchema = z.infer<typeof FormSchema>
 
-type roundsType = {
-  round_id: number
-  round_name: string
-}
+export const CreateMatch = () => {
+  const { data: teams = [] } = useQuery({
+    queryKey: ['teams'],
+    queryFn: getTeams,
+  })
 
-type Props = {
-  teams: Teams[]
-  competitions: Competition[]
-  rounds: roundsType[]
-  strategies: Strategies[]
-}
+  const { data: competitions = [] } = useQuery({
+    queryKey: ['competitions'],
+    queryFn: getCompetitions,
+  })
 
-export const CreateMatch = ({
-  teams,
-  competitions,
-  rounds,
-  strategies,
-}: Props) => {
+  const { data: strategies = [] } = useQuery({
+    queryKey: ['strategies'],
+    queryFn: getStrategies,
+  })
+
+  const rounds = dataRounds
+
   const [open, setOpen] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
 
@@ -437,9 +441,11 @@ export const CreateMatch = ({
               )}
             />
             <div className="modal-action">
-              <Button type="button" variant={'outline'}>
-                Close
-              </Button>
+              <DialogClose asChild>
+                <Button type="button" variant={'outline'}>
+                  Close
+                </Button>
+              </DialogClose>
               {!isLoading ? (
                 <Button type="submit">Salvar</Button>
               ) : (

@@ -1,10 +1,11 @@
 // import { resultsData } from '@/utils/results'
 import MatchesList from './MatchesList'
 import { db as prisma } from '@/lib/db'
-import { dataRounds } from '@/utils/rounds'
+// import { dataRounds } from '@/utils/rounds'
 import { CreateMatch } from './create-match'
 import getQueryClient from '@/lib/get-query-client'
 import { HydrationBoundary, dehydrate } from '@tanstack/react-query'
+// import { getCompetitions } from '../competitions/page'
 
 // TODO: melhorar chamada api
 export const getMatches = async () => {
@@ -62,25 +63,13 @@ export default async function Matches() {
     queryKey: ['matches'],
     queryFn: getMatches,
   })
-  const teams = await prisma.teams.findMany()
-  const competitions = await prisma.competition.findMany()
-
-  const rounds = dataRounds
-  const strategies = await prisma.strategies.findMany()
 
   return (
     <section className="flex w-full flex-col py-32 pb-10 sm:pb-32 lg:pb-[110px]">
       <div className="container flex flex-col justify-between gap-4 lg:justify-center">
-        <CreateMatch
-          teams={teams}
-          competitions={competitions}
-          rounds={rounds}
-          strategies={strategies}
-          // reviews={reviews}
-        />
-
         <HydrationBoundary state={dehydrate(queryClient)}>
           <MatchesList />
+          <CreateMatch />
         </HydrationBoundary>
       </div>
     </section>
