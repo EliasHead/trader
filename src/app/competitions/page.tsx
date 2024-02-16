@@ -1,28 +1,29 @@
-import { Competition } from '@prisma/client'
-// import SearchCompetition from './SearchCompetition'
-import { db as prisma } from '@/lib/db'
-import { DataTable } from './data-table'
-import { columns } from './columns'
-import AddCompetitions from './addCompetitions'
+import axios from 'axios'
+import getQueryClient from '@/lib/get-query-client'
+import { HydrationBoundary, dehydrate } from '@tanstack/react-query'
+import { ListCompetitions } from './list-competitions'
 
 export const getCompetitions = async () => {
-  const result: Competition[] = await prisma.$queryRaw`
-    SELECT c.*, COUNT(m.match_id) as green_matches_count
-    FROM competitions c
-    LEFT JOIN matches m ON c.competition_id = m.competition_id AND m.result_id = 2
-    GROUP BY c.competition_id
-    ORDER BY green_matches_count DESC`
-
-  return result
+  const res = await axios.get('/api/competitions')
+  return res.data
 }
 
 const Competitions = async () => {
-  const competitions = await getCompetitions()
+  const queryClient = getQueryClient()
+
+  await queryClient.prefetchQuery({
+    queryKey: ['competitions'],
+    queryFn: getCompetitions,
+  })
+
   return (
     <section className="flex w-full flex-col py-32 pb-10 sm:pb-32 lg:pb-[110px]">
       <div className="container flex flex-col justify-between gap-4 lg:justify-center">
-        <AddCompetitions competitions={competitions} />
-        <DataTable columns={columns} data={competitions} />
+        <HydrationBoundary state={dehydrate(queryClient)}>
+          <ListCompetitions />
+        </HydrationBoundary>
+        {/* <AddCompetitions competitions={competitions} /> */}
+        {/* <DataTable columns={columns} data={competitions} /> */}
         {/* <SearchCompetition competitions={competitions} /> */}
       </div>
     </section>

@@ -40,7 +40,6 @@ export function DataTable<TData, TValue>({
   columns,
   data,
 }: DataTableProps<TData, TValue>) {
-  console.log(data)
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     [],
   )
