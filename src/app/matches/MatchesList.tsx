@@ -13,6 +13,7 @@ export default function MatchesList() {
     queryKey: ['matches'],
     queryFn: getMatches,
   })
+  console.log(matches)
 
   if (isPending) return 'Loading...'
 

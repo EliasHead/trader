@@ -18,3 +18,53 @@ export const POST = async (request: Request) => {
   })
   return NextResponse.json(matches, { status: 201 })
 }
+
+export const GET = async () => {
+  const matches = await prisma.matches.findMany({
+    select: {
+      match_id: true,
+      match_date: true,
+      home_goals: true,
+      visitor_goals: true,
+      odd: true,
+      strategy: true,
+      result: true,
+      review: true,
+      stake: true,
+      round: true,
+      leverage: {
+        select: {
+          goal: true,
+        },
+      },
+      leverageId: true,
+      competition: {
+        select: {
+          competition_name: true,
+        },
+      },
+      competition_id: true,
+      ticket: {
+        select: {
+          result_id: true,
+        },
+      },
+      ticketId: true,
+      home_team: {
+        select: {
+          team_name: true,
+        },
+      },
+      home_team_id: true,
+      visitor_team: {
+        select: {
+          team_name: true,
+        },
+      },
+      visitor_team_id: true,
+    },
+    orderBy: [{ match_id: 'desc' }],
+  })
+
+  return NextResponse.json(matches, { status: 200 })
+}
