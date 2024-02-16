@@ -42,6 +42,8 @@ import { getTeams } from '../teams/page'
 import { getCompetitions } from '../competitions/page'
 import { dataRounds } from '@/utils/rounds'
 import getStrategies from '@/lib/getStrategies'
+import { TeamType } from '../teams/types'
+import { Competition, Strategies } from '@prisma/client'
 
 const FormSchema = z.object({
   home_team: z.number({
@@ -67,17 +69,17 @@ const FormSchema = z.object({
 type CreateMatchSchema = z.infer<typeof FormSchema>
 
 export const CreateMatch = () => {
-  const { data: teams = [] } = useQuery({
+  const { data: teams = [] } = useQuery<TeamType[]>({
     queryKey: ['teams'],
     queryFn: getTeams,
   })
 
-  const { data: competitions = [] } = useQuery({
+  const { data: competitions = [] } = useQuery<Competition[]>({
     queryKey: ['competitions'],
     queryFn: getCompetitions,
   })
 
-  const { data: strategies = [] } = useQuery({
+  const { data: strategies = [] } = useQuery<Strategies[]>({
     queryKey: ['strategies'],
     queryFn: getStrategies,
   })

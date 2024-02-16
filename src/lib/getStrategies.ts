@@ -1,7 +1,7 @@
-import { db as prisma } from '@/lib/db'
+import axios from 'axios'
 
 export default async function getStrategies() {
-  const res = await prisma.strategies.findMany()
+  const res = await axios.get('/api/strategies')
 
-  return res
+  return res.data
 }
