@@ -1,23 +1,29 @@
-// import SearchTeams from './SearchTeams'
-// import AddTeams from './addTeams'
-import { db as prisma } from '@/lib/db'
-import { DataTable } from './data-table'
-import { columns } from './columns'
 import AddTeams from './addTeams'
+import axios from 'axios'
+import ListTeams from './list-teams'
+import getQueryClient from '@/lib/get-query-client'
+import { HydrationBoundary, dehydrate } from '@tanstack/react-query'
 
 export const getTeams = async () => {
-  const teams = await prisma.teams.findMany()
-  return teams
+  const res = await axios.get('/api/teams')
+  return res.data
 }
 
 export default async function Teams() {
-  const teams = await getTeams()
+  const queryClient = getQueryClient()
+
+  await queryClient.prefetchQuery({
+    queryKey: ['matches'],
+    queryFn: getTeams,
+  })
+
   return (
     <section className="flex w-full flex-col py-32 pb-10 sm:pb-32 lg:pb-[110px]">
       <div className="container flex flex-col justify-between gap-4 lg:justify-center">
-        <AddTeams />
-        <DataTable columns={columns} data={teams} />
-        {/* <SearchTeams teams={teams} /> */}
+        <HydrationBoundary state={dehydrate(queryClient)}>
+          <AddTeams />
+          <ListTeams />
+        </HydrationBoundary>
       </div>
     </section>
   )
