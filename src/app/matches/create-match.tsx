@@ -31,10 +31,9 @@ import {
 } from '@/components/ui/popover'
 import { cn } from '@/lib/utils'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery } from '@tanstack/react-query'
 import axios from 'axios'
 import { ChevronsUpDown, Check, Loader2 } from 'lucide-react'
-import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
@@ -44,6 +43,7 @@ import { dataRounds } from '@/utils/rounds'
 import getStrategies from '@/lib/getStrategies'
 import { TeamType } from '../teams/types'
 import { Competition, Strategies } from '@prisma/client'
+import { useQueryClientInstance } from '@/context/query-client-context-client'
 
 const FormSchema = z.object({
   home_team: z.number({
@@ -69,6 +69,7 @@ const FormSchema = z.object({
 type CreateMatchSchema = z.infer<typeof FormSchema>
 
 export const CreateMatch = () => {
+  const { queryClient } = useQueryClientInstance()
   const { data: teams = [] } = useQuery<TeamType[]>({
     queryKey: ['teams'],
     queryFn: getTeams,
@@ -84,33 +85,40 @@ export const CreateMatch = () => {
     queryFn: getStrategies,
   })
 
+  const { mutate: createMatch, isPending } = useMutation({
+    mutationFn: async (data: CreateMatchSchema) =>
+      await axios.post('/api/matches', {
+        home_team_id: data.home_team,
+        visitor_team_id: data.away_team,
+        competition_id: data.competition,
+        round: data.round,
+        strategy_id: data.strategy,
+        // review_id: data.reviews,
+        odd: data.odd,
+      }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['matches'] })
+      // queryClient.setQueryData(['exercises', { id: variables.name }], data)
+    },
+  })
+
   const rounds = dataRounds
 
   const [open, setOpen] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
+  // const [isLoading, setIsLoading] = useState(false)
 
   const form = useForm<CreateMatchSchema>({
     resolver: zodResolver(FormSchema),
   })
 
-  const router = useRouter()
+  // const router = useRouter()
 
-  async function onSubmit(data: z.infer<typeof FormSchema>) {
-    setIsLoading(true)
+  async function onSubmit(data: CreateMatchSchema) {
+    // setIsLoading(true)
+    createMatch(data)
+    // setIsLoading(false)
 
-    await axios.post('/api/matches', {
-      home_team_id: data.home_team,
-      visitor_team_id: data.away_team,
-      competition_id: data.competition,
-      round: data.round,
-      strategy_id: data.strategy,
-      // review_id: data.reviews,
-      odd: data.odd,
-    })
-
-    setIsLoading(false)
-
-    router.refresh()
+    // router.refresh()
 
     setOpen(false)
 
@@ -448,7 +456,7 @@ export const CreateMatch = () => {
                   Close
                 </Button>
               </DialogClose>
-              {!isLoading ? (
+              {!isPending ? (
                 <Button type="submit">Salvar</Button>
               ) : (
                 <Button type="button" disabled>
