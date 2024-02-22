@@ -1,6 +1,5 @@
 'use client'
 import { useEffect, useState } from 'react'
-import { useRouter } from 'next/navigation'
 import axios from 'axios'
 import {
   Competition,
@@ -10,7 +9,6 @@ import {
   Teams,
   Tickets,
 } from '@prisma/client'
-import { Pencil } from '@phosphor-icons/react'
 import { z } from 'zod'
 import {
   Form,
@@ -50,6 +48,8 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog'
+import { useMutation } from '@tanstack/react-query'
+import { useQueryClientInstance } from '@/context/query-client-context-client'
 
 type MatchesProps = {
   match: MatchesType
@@ -91,12 +91,11 @@ const FormSchema = z.object({
   }),
 })
 
-type CreateMatchSchema = z.infer<typeof FormSchema>
+type updateMatchSchema = z.infer<typeof FormSchema>
 
 const UpdateMatch = ({ match }: MatchesProps) => {
+  const { queryClient } = useQueryClientInstance()
   const [open, setOpen] = useState(false)
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [isLoading, setIsLoading] = useState(false)
   const [teams, setTeams] = useState<Teams[]>([])
   const [competitions, setCompetitions] = useState<Competition[]>([])
   const [results, setResults] = useState<Results[]>([])
@@ -149,33 +148,33 @@ const UpdateMatch = ({ match }: MatchesProps) => {
       })
   }, [])
 
-  const router = useRouter()
+  const { mutate: updateMatch, isPending } = useMutation({
+    mutationFn: async (data: updateMatchSchema) =>
+      await axios.patch(`/api/matches/${match.match_id}`, {
+        home_team_id: data.home_team,
+        home_goals: data.home_goals,
+        visitor_team_id: data.away_team,
+        visitor_goals: data.away_goals,
+        competition_id: data.competition,
+        round: data.round,
+        result_id: data.result,
+        ticketId: data.ticket,
+        strategy_id: data.strategy,
+        odd: data.odd,
+        review_id: data.review,
+      }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['matches'] })
+    },
+  })
 
-  async function onSubmit(data: CreateMatchSchema) {
-    setIsLoading(true)
-
-    await axios.patch(`/api/matches/${match.match_id}`, {
-      home_team_id: data.home_team,
-      home_goals: data.home_goals,
-      visitor_team_id: data.away_team,
-      visitor_goals: data.away_goals,
-      competition_id: data.competition,
-      round: data.round,
-      result_id: data.result,
-      ticketId: data.ticket,
-      strategy_id: data.strategy,
-      odd: data.odd,
-      review_id: data.review,
-    })
-
-    setIsLoading(false)
+  async function onSubmit(data: updateMatchSchema) {
+    updateMatch(data)
     setOpen(!open)
-    router.refresh()
-
-    // form.reset()
+    form.reset()
   }
 
-  const form = useForm<CreateMatchSchema>({
+  const form = useForm<updateMatchSchema>({
     resolver: zodResolver(FormSchema),
   })
 
@@ -720,7 +719,7 @@ const UpdateMatch = ({ match }: MatchesProps) => {
                   Close
                 </Button>
               </DialogClose>
-              {!isLoading ? (
+              {!isPending ? (
                 <Button type="submit">Save</Button>
               ) : (
                 <Button type="button" disabled>
