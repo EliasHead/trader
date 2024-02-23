@@ -2,6 +2,7 @@ import axios from 'axios'
 import getQueryClient from '@/lib/get-query-client'
 import { HydrationBoundary, dehydrate } from '@tanstack/react-query'
 import { ListCompetitions } from './list-competitions'
+import AddCompetitions from './addCompetitions'
 
 export const getCompetitions = async () => {
   const res = await axios.get('/api/competitions')
@@ -20,9 +21,9 @@ const Competitions = async () => {
     <section className="flex w-full flex-col py-32 pb-10 sm:pb-32 lg:pb-[110px]">
       <div className="container flex flex-col justify-between gap-4 lg:justify-center">
         <HydrationBoundary state={dehydrate(queryClient)}>
+          <AddCompetitions />
           <ListCompetitions />
         </HydrationBoundary>
-        {/* <AddCompetitions competitions={competitions} /> */}
         {/* <DataTable columns={columns} data={competitions} /> */}
         {/* <SearchCompetition competitions={competitions} /> */}
       </div>

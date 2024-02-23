@@ -1,105 +1,140 @@
 'use client'
-import { ChangeEvent, FormEvent, useState } from 'react'
-import type { Competition } from '@prisma/client'
-import { useRouter } from 'next/navigation'
 import axios from 'axios'
 import { Button } from '@/components/ui/button'
+import { z } from 'zod'
+import { useQueryClientInstance } from '@/context/query-client-context-client'
+import { useMutation } from '@tanstack/react-query'
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog'
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form'
+import { Input } from '@/components/ui/input'
+import { Loader2 } from 'lucide-react'
+import { useState } from 'react'
 
-const AddCompetitions = ({ competitions }: { competitions: Competition[] }) => {
-  const [formData, setFormData] = useState({
-    name: '',
-    season: '',
+const FormAddCompetitionSchema = z.object({
+  competition_name: z.string({
+    required_error: 'Por favor preencher o nome.',
+  }),
+  season_name: z.string({
+    required_error: 'Por favor preencher o ano.',
+  }),
+})
+
+type CreateCompetitionSchema = z.infer<typeof FormAddCompetitionSchema>
+
+const AddCompetitions = () => {
+  const [open, setOpen] = useState(false)
+  const { queryClient } = useQueryClientInstance()
+
+  const { mutate: createCompetition, isPending } = useMutation({
+    mutationFn: async (data: CreateCompetitionSchema) =>
+      await axios.post('/api/competitions', {
+        competition_name: data.competition_name,
+        season_name: data.season_name,
+      }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['competitions'] })
+    },
   })
 
-  const [isOpen, setIsOpen] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
-
-  const router = useRouter()
-
-  const handleChange = async (
-    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-  ) => {
-    const { name, value } = event.target
-    setFormData((prevState) => ({ ...prevState, [name]: value }))
+  async function onSubmit(data: CreateCompetitionSchema) {
+    createCompetition(data)
+    setOpen(false)
+    form.reset()
   }
 
-  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault()
-    setIsLoading(true)
-    await axios.post('/api/competitions', {
-      competition_name: formData.name,
-      season_name: formData.season,
-    })
-    setIsLoading(false)
-    setFormData({
-      name: '',
-      season: '',
-    })
-    router.refresh()
-    setIsOpen(false)
-  }
-
-  const handleModal = () => {
-    setIsOpen(!isOpen)
-  }
+  const form = useForm<CreateCompetitionSchema>({
+    resolver: zodResolver(FormAddCompetitionSchema),
+  })
 
   return (
-    <div className="w[45%] flex items-center">
-      <Button className="font-bold uppercase" size={'lg'} onClick={handleModal}>
-        novo campeonato
-      </Button>
-      <div className={isOpen ? 'modal modal-open' : 'modal'}>
-        <div className="modal-box">
-          <h3 className="text-lg font-bold">Adicionar novo Campeonato</h3>
-          <form onSubmit={handleSubmit}>
-            <div className="form-control w-full">
-              <label className="label font-bold" htmlFor="nome-do-campeonato">
-                Nome do Campeonato
-              </label>
-              <input
-                type="text"
-                name="name"
-                id="nome-do-campeonato"
-                value={formData.name}
-                className="input input-bordered"
-                placeholder="Nome do Campeonato"
-                aria-label="Nome do Campeonato"
-                onChange={handleChange}
-              />
-            </div>
-            <div className="form-control w-full">
-              <label className="label font-bold" htmlFor="season">
-                Temporada
-              </label>
-              <input
-                type="text"
-                name="season"
-                id="season"
-                value={formData.season}
-                className="input input-bordered"
-                placeholder="Temporada ex: 2023"
-                aria-label="Temporada"
-                onChange={handleChange}
-              />
-            </div>
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger asChild>
+        <Button
+          className="justify-start self-start px-2 text-popover-foreground hover:bg-background/50 hover:no-underline"
+          variant="link"
+        >
+          novo campeonato
+        </Button>
+      </DialogTrigger>
+
+      <DialogContent className='className="sm:max-w-3xl'>
+        <DialogHeader>
+          <DialogTitle>Nova Competição</DialogTitle>
+        </DialogHeader>
+        <Form {...form}>
+          <form
+            className="flex flex-wrap gap-3"
+            onSubmit={form.handleSubmit(onSubmit)}
+          >
+            <FormField
+              control={form.control}
+              name="competition_name"
+              render={({ field }) => (
+                <FormItem className="flex flex-col">
+                  <FormLabel>Competição</FormLabel>
+                  <FormControl>
+                    <Input
+                      className="w-[200px]"
+                      placeholder="Copa do Brasil"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="season_name"
+              render={({ field }) => (
+                <FormItem className="flex flex-col">
+                  <FormLabel>Ano</FormLabel>
+                  <FormControl>
+                    <Input
+                      className="w-[200px]"
+                      placeholder="2023/2024"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
             <div className="modal-action">
-              <button type="button" className="btn" onClick={handleModal}>
-                Close
-              </button>
-              {!isLoading ? (
-                <button type="submit" className="btn btn-primary">
-                  Save
-                </button>
+              <DialogClose asChild>
+                <Button type="button" variant={'outline'}>
+                  Close
+                </Button>
+              </DialogClose>
+              {!isPending ? (
+                <Button type="submit">Salvar</Button>
               ) : (
-                <button type="button" className="btn loading">
-                  Saving...
-                </button>
+                <Button type="button" disabled>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Salvando...
+                </Button>
               )}
             </div>
           </form>
-        </div>
-      </div>
-    </div>
+        </Form>
+      </DialogContent>
+    </Dialog>
   )
 }
 
