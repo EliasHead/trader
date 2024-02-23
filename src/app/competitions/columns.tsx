@@ -21,6 +21,7 @@ import { ArrowUpDown, MoreHorizontal } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import { EditTicket } from '@/components/edit-ticket'
 import { DeleteTicket } from '@/app/tickets/deleteTicket'
+import UpdateCompetition from './updateCompetition'
 // import { PowerRankingType } from '@/app/fairlines/types'
 // import { DeletePowerRanking } from './delete-power-ranking'
 // import { EditPowerRanking } from './edit-power-ranking'
@@ -63,7 +64,7 @@ export const columns: ColumnDef<Competition>[] = [
     id: 'actions',
     enableHiding: false,
     cell: ({ row }) => {
-      // const laverages = row.original
+      const competition = row.original
 
       return (
         <DropdownMenu>
@@ -77,7 +78,7 @@ export const columns: ColumnDef<Competition>[] = [
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuItem asChild>
-              {/* <EditPowerRanking powerRinking={powerRanking} /> */}
+              <UpdateCompetition competition={competition} />
             </DropdownMenuItem>
             <DropdownMenuItem asChild>
               {/* <DeletePowerRanking powerRanking={powerRanking} /> */}
