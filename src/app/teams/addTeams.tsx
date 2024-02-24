@@ -76,55 +76,63 @@ const AddTeams = () => {
         <DialogHeader>
           <DialogTitle>Nova Competição</DialogTitle>
         </DialogHeader>
+        <Form {...form}>
+          <form
+            className="flex flex-wrap gap-3"
+            onSubmit={form.handleSubmit(onSubmit)}
+          >
+            <FormField
+              control={form.control}
+              name="team_name"
+              render={({ field }) => (
+                <FormItem className="flex flex-col">
+                  <FormLabel>Nome</FormLabel>
+                  <FormControl>
+                    <Input
+                      className="w-[200px]"
+                      placeholder="Ex: Inter"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="team_country"
+              render={({ field }) => (
+                <FormItem className="flex flex-col">
+                  <FormLabel>País</FormLabel>
+                  <FormControl>
+                    <Input
+                      className="w-[200px]"
+                      placeholder="Ex: Brasil"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <div className="modal-action">
+              <DialogClose asChild>
+                <Button type="button" variant={'outline'}>
+                  Close
+                </Button>
+              </DialogClose>
+              {!isPending ? (
+                <Button type="submit">Salvar</Button>
+              ) : (
+                <Button type="button" disabled>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Salvando...
+                </Button>
+              )}
+            </div>
+          </form>
+        </Form>
       </DialogContent>
-      <Form {...form}>
-        <form
-          className="flex flex-wrap gap-3"
-          onSubmit={form.handleSubmit(onSubmit)}
-        >
-          <FormField
-            control={form.control}
-            name="team_name"
-            render={({ field }) => (
-              <FormItem className="flex flex-col">
-                <FormLabel>Nome</FormLabel>
-                <FormControl>
-                  <Input className="w-[200px]" placeholder="Inter" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="team_country"
-            render={({ field }) => (
-              <FormItem className="flex flex-col">
-                <FormLabel>País</FormLabel>
-                <FormControl>
-                  <Input className="w-[200px]" placeholder="Inter" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <div className="modal-action">
-            <DialogClose asChild>
-              <Button type="button" variant={'outline'}>
-                Close
-              </Button>
-            </DialogClose>
-            {!isPending ? (
-              <Button type="submit">Salvar</Button>
-            ) : (
-              <Button type="button" disabled>
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Salvando...
-              </Button>
-            )}
-          </div>
-        </form>
-      </Form>
     </Dialog>
   )
 }
