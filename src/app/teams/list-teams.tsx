@@ -14,7 +14,6 @@ export default function ListTeams() {
     queryKey: ['teams'],
     queryFn: getTeams,
   })
-  console.log(teams)
 
   if (isPending) return 'Loading...'
 

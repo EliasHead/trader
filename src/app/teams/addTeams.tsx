@@ -1,105 +1,131 @@
 'use client'
-import { ChangeEvent, FormEvent, useState } from 'react'
-// import type { Teams } from '@prisma/client'
-import { useRouter } from 'next/navigation'
+import { useState } from 'react'
 import axios from 'axios'
 import { Button } from '@/components/ui/button'
-import { PlusCircle } from 'lucide-react'
+import { Loader2 } from 'lucide-react'
+import { z } from 'zod'
+import { useMutation } from '@tanstack/react-query'
+import { useQueryClientInstance } from '@/context/query-client-context-client'
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog'
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form'
+import { Input } from '@/components/ui/input'
+
+const FormAddTeamsSchema = z.object({
+  team_name: z.string({
+    required_error: 'Por favor preencher o nome.',
+  }),
+  team_country: z.string({
+    required_error: 'Por favor preencher o país.',
+  }),
+})
+
+type CreateTeamSchema = z.infer<typeof FormAddTeamsSchema>
 
 const AddTeams = () => {
-  const [formData, setFormData] = useState({
-    name: '',
-    country: '',
+  const [open, setOpen] = useState(false)
+  const { queryClient } = useQueryClientInstance()
+
+  const { mutate: createTeam, isPending } = useMutation({
+    mutationFn: async (data: CreateTeamSchema) =>
+      await axios.post('/api/teams', {
+        team_name: data.team_name,
+        team_country: data.team_country,
+      }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['teams'] })
+    },
   })
-  const [isOpen, setIsOpen] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
 
-  const router = useRouter()
-
-  const handleChange = async (
-    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-  ) => {
-    const { name, value } = event.target
-    setFormData((prevState) => ({ ...prevState, [name]: value }))
+  async function onSubmit(data: CreateTeamSchema) {
+    createTeam(data)
+    setOpen(false)
+    form.reset()
   }
 
-  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault()
-    setIsLoading(true)
-    await axios.post('/api/teams', {
-      team_name: formData.name,
-      team_country: formData.country,
-    })
-    setIsLoading(false)
-    setFormData({
-      name: '',
-      country: '',
-    })
-    router.refresh()
-    setIsOpen(false)
-  }
-
-  const handleModal = () => {
-    setIsOpen(!isOpen)
-  }
+  const form = useForm<CreateTeamSchema>({
+    resolver: zodResolver(FormAddTeamsSchema),
+  })
 
   return (
-    <div>
-      <Button className="font-bold" size="sm" onClick={handleModal}>
-        <PlusCircle />
-      </Button>
-      <div className={isOpen ? 'modal modal-open' : 'modal'}>
-        <div className="modal-box">
-          <h3 className="text-lg font-bold">Adicionar novo time</h3>
-          <form onSubmit={handleSubmit}>
-            <div className="form-control w-full">
-              <label className="label font-bold" htmlFor="nome-do-time">
-                Nome do time
-              </label>
-              <input
-                type="text"
-                name="name"
-                id="nome-do-time"
-                value={formData.name}
-                className="input input-bordered"
-                placeholder="Nome do Time"
-                aria-label="Nome do Time"
-                onChange={handleChange}
-              />
-            </div>
-            <div className="form-control w-full">
-              <label className="label font-bold" htmlFor="country">
-                País do time
-              </label>
-              <input
-                type="text"
-                name="country"
-                id="country"
-                value={formData.country}
-                className="input input-bordered"
-                placeholder="ex: BRAZIL"
-                aria-label="País"
-                onChange={handleChange}
-              />
-            </div>
-            <div className="modal-action">
-              <button type="button" className="btn" onClick={handleModal}>
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger asChild>
+        <Button
+          className="justify-start self-start px-2 text-popover-foreground hover:bg-background/50 hover:no-underline"
+          variant="link"
+        >
+          Novo time
+        </Button>
+      </DialogTrigger>
+      <DialogContent className='className="sm:max-w-3xl'>
+        <DialogHeader>
+          <DialogTitle>Nova Competição</DialogTitle>
+        </DialogHeader>
+      </DialogContent>
+      <Form {...form}>
+        <form
+          className="flex flex-wrap gap-3"
+          onSubmit={form.handleSubmit(onSubmit)}
+        >
+          <FormField
+            control={form.control}
+            name="team_name"
+            render={({ field }) => (
+              <FormItem className="flex flex-col">
+                <FormLabel>Nome</FormLabel>
+                <FormControl>
+                  <Input className="w-[200px]" placeholder="Inter" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="team_country"
+            render={({ field }) => (
+              <FormItem className="flex flex-col">
+                <FormLabel>País</FormLabel>
+                <FormControl>
+                  <Input className="w-[200px]" placeholder="Inter" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <div className="modal-action">
+            <DialogClose asChild>
+              <Button type="button" variant={'outline'}>
                 Close
-              </button>
-              {!isLoading ? (
-                <button type="submit" className="btn btn-primary">
-                  Save
-                </button>
-              ) : (
-                <button type="button" className="btn loading">
-                  Saving...
-                </button>
-              )}
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
+              </Button>
+            </DialogClose>
+            {!isPending ? (
+              <Button type="submit">Salvar</Button>
+            ) : (
+              <Button type="button" disabled>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                Salvando...
+              </Button>
+            )}
+          </div>
+        </form>
+      </Form>
+    </Dialog>
   )
 }
 

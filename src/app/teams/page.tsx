@@ -13,7 +13,7 @@ export default async function Teams() {
   const queryClient = getQueryClient()
 
   await queryClient.prefetchQuery({
-    queryKey: ['matches'],
+    queryKey: ['teams'],
     queryFn: getTeams,
   })
 
