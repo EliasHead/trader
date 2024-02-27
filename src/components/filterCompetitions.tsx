@@ -42,9 +42,12 @@ export const FilterCompetitions = ({
 
   const totalMatches = greens + reds + draws + progress
 
-  const rateGreens = totalMatches > 0 ? ((greens / totalMatches) * 100).toFixed(0) : '0'
-  const rateReds = totalMatches > 0 ? ((reds / totalMatches) * 100).toFixed(0) : '0'
-  const rateDraws = totalMatches > 0 ? ((draws / totalMatches) * 100).toFixed(0) : '0'
+  const rateGreens =
+    totalMatches > 0 ? ((greens / totalMatches) * 100).toFixed(0) : '0'
+  const rateReds =
+    totalMatches > 0 ? ((reds / totalMatches) * 100).toFixed(0) : '0'
+  const rateDraws =
+    totalMatches > 0 ? ((draws / totalMatches) * 100).toFixed(0) : '0'
 
   const handleChang = (
     event: ChangeEvent<
