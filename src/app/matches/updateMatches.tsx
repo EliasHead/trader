@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import axios from 'axios'
 import {
   Competition,
+  Leverage,
   Results,
   Reviews,
   Strategies,
@@ -48,8 +49,9 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog'
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQuery } from '@tanstack/react-query'
 import { useQueryClientInstance } from '@/context/query-client-context-client'
+import { getLeverages } from '../leverage/page'
 
 type MatchesProps = {
   match: MatchesType
@@ -89,6 +91,9 @@ const FormSchema = z.object({
   review: z.number({
     required_error: 'Please select a round.',
   }),
+  leverage: z.number({
+    required_error: 'Please select a round.',
+  }),
 })
 
 type updateMatchSchema = z.infer<typeof FormSchema>
@@ -103,6 +108,11 @@ const UpdateMatch = ({ match }: MatchesProps) => {
   const [strategies, setStrategies] = useState<Strategies[]>([])
   const [reviews, setReviews] = useState<Reviews[]>([])
   const rounds = dataRounds
+
+  const { data: leverages = [] } = useQuery<Leverage[]>({
+    queryKey: ['leverages'],
+    queryFn: getLeverages,
+  })
 
   useEffect(() => {
     fetch('/api/teams')
@@ -162,6 +172,7 @@ const UpdateMatch = ({ match }: MatchesProps) => {
         strategy_id: data.strategy,
         odd: data.odd,
         review_id: data.review,
+        leverageId: data.leverage,
       }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['matches'] })
@@ -704,6 +715,65 @@ const UpdateMatch = ({ match }: MatchesProps) => {
                                 )}
                               />
                               {review.review_name}
+                            </CommandItem>
+                          ))}
+                        </CommandGroup>
+                      </Command>
+                    </PopoverContent>
+                  </Popover>
+                </FormItem>
+              )}
+            />
+            <FormField
+              defaultValue={match.leverage?.leverageId}
+              control={form.control}
+              name="leverage"
+              render={({ field }) => (
+                <FormItem className="flex flex-col">
+                  <FormLabel>Alavancagem</FormLabel>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <FormControl>
+                        <Button
+                          variant="outline"
+                          role="combobox"
+                          className={cn(
+                            'w-[200px] justify-between',
+                            !field.value && 'text-muted-foreground',
+                          )}
+                        >
+                          {field.value
+                            ? leverages.find(
+                                (leverage) =>
+                                  leverage.leverageId === field.value,
+                              )?.goal
+                            : 'Select a strategy'}
+                          <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                        </Button>
+                      </FormControl>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-[200px] p-0">
+                      <Command>
+                        <CommandInput placeholder="Search strategy..." />
+                        <CommandEmpty>No review found.</CommandEmpty>
+                        <CommandGroup>
+                          {leverages.map((leverage) => (
+                            <CommandItem
+                              value={leverage.goal!}
+                              key={leverage.leverageId}
+                              onSelect={() => {
+                                form.setValue('leverage', leverage.leverageId)
+                              }}
+                            >
+                              <Check
+                                className={cn(
+                                  'mr-2 h-4 w-4',
+                                  leverage.leverageId === field.value
+                                    ? 'opacity-100'
+                                    : 'opacity-0',
+                                )}
+                              />
+                              {leverage.goal}
                             </CommandItem>
                           ))}
                         </CommandGroup>

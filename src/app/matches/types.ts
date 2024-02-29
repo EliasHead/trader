@@ -20,6 +20,7 @@ export type MatchesType = {
   round: number
   leverage: {
     goal: string | null
+    leverageId: number | undefined
   } | null
   leverageId: number | null
   competition: { competition_name: string } | null

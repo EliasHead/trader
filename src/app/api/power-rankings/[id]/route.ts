@@ -8,7 +8,6 @@ export const PATCH = async (
   { params }: { params: { id: string } },
 ) => {
   const body: PowerRankings = await request.json()
-  console.log('body',body)
   const powerRankings = await prisma.powerRankings.update({
     where: {
       powerRankingId: Number(params.id),

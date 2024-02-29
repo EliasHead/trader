@@ -24,6 +24,7 @@ export const PATCH = async (
       strategy_id: Number(body.strategy_id),
       odd: Number(body.odd),
       review_id: Number(body.review_id),
+      leverageId: Number(body.leverageId),
     },
   })
   return NextResponse.json(matches, { status: 200 })

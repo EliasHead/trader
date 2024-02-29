@@ -2,6 +2,12 @@ import { db as prisma } from '@/lib/db'
 import { AddLeverage } from './addLeverage'
 import { DataTable } from './data-table'
 import { columns } from './columns'
+import axios from 'axios'
+
+export const getLeverages = async () => {
+  const res = await axios.get('/api/leverages')
+  return res.data
+}
 
 export default async function Leverage() {
   const leverages = await prisma.leverage.findMany({

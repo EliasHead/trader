@@ -35,6 +35,7 @@ export const GET = async () => {
       leverage: {
         select: {
           goal: true,
+          leverageId: true,
         },
       },
       leverageId: true,
