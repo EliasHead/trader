@@ -91,9 +91,7 @@ const FormSchema = z.object({
   review: z.number({
     required_error: 'Please select a round.',
   }),
-  leverage: z.number({
-    required_error: 'Please select a round.',
-  }),
+  leverage: z.number().optional(),
 })
 
 type updateMatchSchema = z.infer<typeof FormSchema>
