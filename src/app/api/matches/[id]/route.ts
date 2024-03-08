@@ -23,6 +23,7 @@ export const PATCH = async (
       ticketId: Number(body.ticketId),
       strategy_id: Number(body.strategy_id),
       odd: Number(body.odd),
+      profit_loss: Number(body.profit_loss),
       review_id: Number(body.review_id),
       leverageId: Number(body.leverageId),
     },

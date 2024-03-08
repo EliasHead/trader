@@ -15,6 +15,7 @@ import { ArrowUpDown, MoreHorizontal } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import { MatchesType } from './types'
 import UpdateMatch from './updateMatches'
+import { cn } from '@/lib/utils'
 // import { match } from 'assert'
 // import { EditTicket } from '@/components/edit-ticket'
 // import { DeleteTicket } from './deleteTicket'
@@ -84,6 +85,21 @@ export const columns: ColumnDef<MatchesType>[] = [
           <span>{match.home_goals}</span>
           <span>{match.visitor_goals}</span>
         </div>
+      )
+    },
+  },
+  {
+    accessorKey: 'profit_loss',
+    header: 'P/L',
+    cell: ({ row }) => {
+      const pl: number = row.getValue('profit_loss')
+
+      return (
+        <span
+          className={cn(pl > 0 && 'text-green-600', pl < 0 && 'text-red-600')}
+        >
+          {pl}
+        </span>
       )
     },
   },

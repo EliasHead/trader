@@ -17,6 +17,7 @@ export type MatchesType = {
     review_name?: string | undefined
   } | null
   stake: number | null
+  profit_loss: number | null
   round: number
   leverage: {
     goal: string | null

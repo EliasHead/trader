@@ -27,6 +27,7 @@ export const GET = async () => {
       home_goals: true,
       visitor_goals: true,
       odd: true,
+      profit_loss: true,
       strategy: true,
       result: true,
       review: true,
