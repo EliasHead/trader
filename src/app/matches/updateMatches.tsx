@@ -76,7 +76,7 @@ const FormSchema = z.object({
   strategy: z.number({
     required_error: 'Please select a round.',
   }),
-  odd: z.number({
+  odd: z.coerce.number({
     required_error: 'Please select a round.',
   }),
   home_goals: z.coerce.number({
