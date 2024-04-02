@@ -104,6 +104,10 @@ export const columns: ColumnDef<MatchesType>[] = [
     },
   },
   {
+    accessorKey: 'strategy.strategy_name',
+    header: 'Filiais',
+  },
+  {
     accessorKey: 'result',
     // accessorFn: (row) => row.result?.result_name,
     header: ({ column }) => {
