@@ -72,7 +72,7 @@ model Matches {
   // result          String?      @default("progress")
   // review          String?
   stake           Float?
-  profit_loss     Float       @default(0)
+  profit_loss     Float        @default(0)
   round           Int          @default(0)
   leverage        Leverage?    @relation(fields: [leverageId], references: [leverageId])
   leverageId      Int?
@@ -90,6 +90,8 @@ model Matches {
   review_id       Int?         @default(1)
   result          Results?     @relation(fields: [result_id], references: [result_id])
   result_id       Int?         @default(1)
+  user            User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId          Int
   // @@id([round, home_team_id, visitor_team_id])
 
   @@unique(fields: [round, home_team_id, visitor_team_id, strategy_id], name: "matchUnique")
@@ -131,8 +133,8 @@ model Tickets {
 
 // autenticação
 model Account {
-  id                 String    @id @default(cuid())
-  userId             String
+  id                 Int       @id @default(autoincrement())
+  userId             Int
   providerType       String
   providerId         String
   providerAccountId  String
@@ -147,8 +149,8 @@ model Account {
 }
 
 model Session {
-  id           String   @id @default(cuid())
-  userId       String
+  id           Int      @id @default(autoincrement())
+  userId       Int
   expires      DateTime
   sessionToken String   @unique
   accessToken  String   @unique
@@ -158,7 +160,7 @@ model Session {
 }
 
 model User {
-  id             String    @id @default(cuid())
+  id             Int       @id @default(autoincrement())
   name           String?
   hashedPassword String?
   email          String?   @unique
@@ -168,10 +170,11 @@ model User {
   updatedAt      DateTime  @updatedAt
   accounts       Account[]
   sessions       Session[]
+  matches        Matches[]
 }
 
 model VerificationRequest {
-  id         String   @id @default(cuid())
+  id         Int   @id @default(autoincrement())
   identifier String
   token      String   @unique
   expires    DateTime
